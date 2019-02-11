@@ -27,11 +27,6 @@ genbaselinemapTS(FCS_Rstate,TSID,filepath,'TS_AICHA_NG_',0)
 genbaselinemapTS(FCS_Rstate,NCID,filepath,'NC_AICHA_NG_',0)
 
 
-% filesppath=g_ls('/data/stalxy/Pipeline4JIN/ResultsRe/SpecialCheck/*/');
-% genbaselinemap(FCS_Rstate1,ID.ID_rest_task,filesppath,'Rstate1_')
-% genbaselinemap(FCS_Rstate2,ID.ID_rest_task,filesppath,'Rstate2_')
-% genbaselinemap(FCS_TstateALL,ID.ID_rest_task,filesppath,'Tstateall_')
-
 %% Part2 compare between STATES
 
 %% Part3 relation of HomoxIntra within each STATE

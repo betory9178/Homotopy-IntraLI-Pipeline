@@ -1,4 +1,4 @@
-[num,txt,atlas2network]=xlsread('/data/stalxy/Pipeline4JIN/Codes/Volume_atlas_toclassify_network.xlsx');
+[num,txt,atlas2network]=xlsread('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/Volume_atlas_toclassify_network.xlsx');
 
 Yeo7nets=cell(7,4);
 for i=1:7

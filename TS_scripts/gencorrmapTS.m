@@ -109,13 +109,13 @@ if figflag==1
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraL_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraR_avgsubR'],[statspath '/'],fisherR2Z(homoxintraRc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraLI_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIc_R));
-    SysDiv2Plot('Yeo7',[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+    SysDiv2Plot('Yeo7',[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_IntraLxIntraR_avgsubR'],[statspath '/'],fisherR2Z(intraLxintraRc_R));
 %     
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraL_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraR_avgsubR'],[statspath '/'],fisherR2Z(homoxintraRc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraLI_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIc_R));
-    SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+    SysDiv2Plot('Hierarchy',[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_IntraLxIntraR_avgsubR'],[statspath '/'],fisherR2Z(intraLxintraRc_R));
     
 end

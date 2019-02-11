@@ -1,4 +1,4 @@
-function [finalFCS] = getFCSTvsR1228(statspath,Sid,taskFC_path,restFC_path,atlas)
+function [finalFCS] = getFCSTvsRHCP(statspath,Sid,taskFC_path,restFC_path,atlas)
 
 %% get FCS
 

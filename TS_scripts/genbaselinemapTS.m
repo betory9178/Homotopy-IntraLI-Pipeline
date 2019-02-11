@@ -17,17 +17,17 @@ intra_RR=FCS.intra_R(iS,:);
 AI_intra=FCS.intra_AI(iS,:);
 AI_intra_abs=FCS.intra_absAI(iS,:);
 
-SysDiv2Plot('Yeo7',[statename,'Homo'],statspath3,ho_FC);
+SysDiv2Plot('Yeo7',[0,2],[statename,'Homo'],statspath3,ho_FC);
 % SysDiv2Plot('Yeo7',[statename,'IntraL'],statspath1,intra_LL);
 % SysDiv2Plot('Yeo7',[statename,'IntraR'],statspath2,intra_RR);
 % SysDiv2Plot('Yeo7',[statename,'IntraLI'],statspath4,AI_intra);
-SysDiv2Plot('Yeo7',[statename,'IntraLIabs'],statspath5,AI_intra_abs);
+SysDiv2Plot('Yeo7',[0,1],[statename,'IntraLIabs'],statspath5,AI_intra_abs);
 
-SysDiv2Plot('Hierarchy',[statename,'Homo'],statspath3,ho_FC);
+SysDiv2Plot('Hierarchy',[0,2],[statename,'Homo'],statspath3,ho_FC);
 % SysDiv2Plot('Hierarchy',[statename,'IntraL'],statspath1,intra_LL);
 % SysDiv2Plot('Hierarchy',[statename,'IntraR'],statspath2,intra_RR);
 % SysDiv2Plot('Hierarchy',[statename,'IntraLI'],statspath4,AI_intra);
-SysDiv2Plot('Hierarchy',[statename,'IntraLIabs'],statspath5,AI_intra_abs);
+SysDiv2Plot('Hierarchy',[0,1],[statename,'IntraLIabs'],statspath5,AI_intra_abs);
 
 IntraL_mean=mean(intra_LL)';
 IntraR_mean=mean(intra_RR)';

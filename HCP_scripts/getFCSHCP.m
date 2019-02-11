@@ -1,4 +1,4 @@
-function [finalFCS] = getFCS1228(statspath,FCmap_path,atlas)
+function [finalFCS] = getFCSHCP(statspath,FCmap_path,atlas)
 
 %% get FCS
 SubSize=length(FCmap_path);

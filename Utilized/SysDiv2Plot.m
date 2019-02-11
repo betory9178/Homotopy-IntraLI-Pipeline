@@ -1,8 +1,8 @@
-function varargout = SysDiv2Plot(SysName,FigTitle,FigPath,varargin)
+function varargout = SysDiv2Plot(SysName,Yrange,FigTitle,FigPath,varargin)
 %UNTITLED3 此处显示有关此函数的摘要
 %   此处显示详细说明
 
-load('/data/stalxy/Pipeline4JIN/Codes/atlas2nets.mat');
+load('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/atlas2nets.mat');
 if strcmp(SysName,'Yeo7')
     a2n=atlas2net.Yeo7nets(:,3);
     a2n_l={'Visual','Somatomotor','Dorsal-attention','Ventral-attention','Limbic','Frontalparietal','Default'};
@@ -54,7 +54,7 @@ Vpot=figure,
 tmp=get(gcf,'Position'),
 set(gcf,'Position', [50, tmp(2) ,tmp(4)*3, tmp(4)*1.5]),
 violinplot(nets,a2n_l,'Width',0.3,'ViolinAlpha',0.1,'BoxColor',[0.1 0.1 0.1],'ShowMean',true),
-yticks([0:0.2:2]),
+yticks(Yrange),
 set(gca,'FontSize',10,'FontWeight','Bold','FontName','Ubuntu Light'),
 
 %xlabel(SysName,'FontName','Ubuntu Light','FontSize',15,'Interpreter','none'),
