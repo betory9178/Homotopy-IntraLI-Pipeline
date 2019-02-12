@@ -17,7 +17,7 @@ elseif strcmp(SysName,'Hierarchy')
 
 end
 
-if nargin==4
+if nargin==5
     VarMap=varargin{1};
     if size(VarMap,1)>1
         nets=zeros(size(VarMap,1),length(a2n));
@@ -35,7 +35,7 @@ if nargin==4
         end
     end
     
-elseif nargin==5
+elseif nargin==6
     VarMap=varargin{1};
     VarMapa=varargin{2};
     nets=zeros(size(VarMap,1),length(a2n));

@@ -1,4 +1,4 @@
-function [finalFCS] = getFCSHCP(statspath,FCmap_path,atlas)
+function [finalFCS] = getFCSCAM(statspath,FCmap_path,atlas)
 
 %% get FCS
 SubSize=length(FCmap_path);
@@ -15,7 +15,7 @@ for k=1:SubSize
     [~,tmpname,~]=fileparts(FCmap_path{k});
     IDS(k,1)=str2num(tmpname(end-5:end));
     tmpFC=load(FCmap_path{k});
-    tempFC=tril(tmpFC.FCMat,-1);
+    tempFC=tril(tmpFC,-1);
 
     temp=tempFC;
     
@@ -62,3 +62,5 @@ finalFCS.global_abs=global_absmean;
 [svp,~,~]=fileparts(statspath);
 system(['mkdir -p ' svp]);
 save([statspath '.mat'],'finalFCS');
+
+

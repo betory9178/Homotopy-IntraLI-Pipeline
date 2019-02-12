@@ -8,14 +8,14 @@ AICHApath='/data/stalxy/Pipeline4JIN/atlas/Cam_Turner_3mm/AICHA.nii';
 % end
 
 RTypes1=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_AICHA.txt');
-RTypes2=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_AICHA.txt');
+RTypes2=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
 RTypes3=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_BNA.txt');
 RTypes4=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
 
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_GR',RTypes1,'AIC');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_NGR',RTypes2,'AIC');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_BNA_GR',RTypes3,'BNA');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_BNA_NGR',RTypes4,'BNA');
+getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_',RTypes,'AIC');
+getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
+getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
+getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
 
 %% Part1 baseline
 system(['mkdir /data/stalxy/ArticleJResults/TSFC/Results/Baseline/Homo']);
