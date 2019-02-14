@@ -1,8 +1,12 @@
-function gencocpmapHCP(S1_Rmap,S1_Rsub,S2_Rmap,S2_Rsub,statspath,statename,cba)
+function gencocpmapHCP(S1_Rmap,S1_Rsub,S2_Rmap,S2_Rsub,atlasflag,statspath,statename,cba)
 % compare relations of HomoxIntra across STATES
 
+if strcmp(atlasflag,'AIC')
+    nid=[1:174,176:190,192];
+elseif strcmp(atlasflag,'BNA')
+    nid=[1:123];
+end
 
-nid=[1:101,103:127,129:173,176:179,181:190,192];
 
 % [mapr_intraL,~] =PlotCorr([statspath '/'],[statename '_intraL_RmapR'],S1_Rmap.homoxintraL_R(1,nid)',S2_Rmap.homoxintraL_R(1,nid)');
 % [mapr_intraR,~] =PlotCorr([statspath '/'],[statename '_intraR_RmapR'],S1_Rmap.homoxintraR_R(1,nid)',S2_Rmap.homoxintraR_R(1,nid)');
@@ -13,22 +17,22 @@ nid=[1:101,103:127,129:173,176:179,181:190,192];
 % [Z_hiL_map,P_hiL_map] = FisherZtest(S1_Rmap.homoxintraL_R,S2_Rmap.homoxintraL_R,904,904);
 % [Z_hiR_map,P_hiR_map] = FisherZtest(S1_Rmap.homoxintraR_R,S2_Rmap.homoxintraR_R,904,904);
 % [Z_hiLI_map,P_hiLI_map] = FisherZtest(S1_Rmap.homoxintraLI_R,S2_Rmap.homoxintraLI_R,904,904);
-[Z_hiLIabs_map,P_hiLIbas_map] = FisherZtest(S1_Rmap.homoxintraLIabs_R,S2_Rmap.homoxintraLIabs_R,904,904);
+[Z_hiLIabs_map,P_hiLIbas_map] = FisherZtest(S1_Rmap.homoxintraLIabs_R,S2_Rmap.homoxintraLIabs_R,length(S1_Rsub.homoxintraLIabs_R),length(S2_Rsub.homoxintraLIabs_R));
 
 % Z_hiL_map_thr=Z_hiL_map .* (P_hiL_map<0.5/186);
 % Z_hiR_map_thr=Z_hiR_map .* (P_hiR_map<0.5/186);
 % Z_hiLI_map_thr=Z_hiLI_map .* (P_hiLI_map<0.5/186);
-Z_hiLIabs_map_thr=Z_hiLIabs_map .* (P_hiLIbas_map<0.5/186);
+Z_hiLIabs_map_thr=Z_hiLIabs_map .* (P_hiLIbas_map<0.5/length(nid));
 
-% SaveAsAtlasNii(Z_hiL_map,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraL' '_Z' '_map'],1)
-% SaveAsAtlasNii(Z_hiR_map,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraR' '_Z' '_map'],1)
-% SaveAsAtlasNii(Z_hiLI_map,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLI' '_Z' '_map'],1)
-SaveAsAtlasNii(Z_hiLIabs_map,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLIabs' '_Z' '_map'],1)
+% SaveAsAtlasNii(Z_hiL_map,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraL' '_Z' '_map'],1)
+% SaveAsAtlasNii(Z_hiR_map,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraR' '_Z' '_map'],1)
+% SaveAsAtlasNii(Z_hiLI_map,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLI' '_Z' '_map'],1)
+SaveAsAtlasNii(Z_hiLIabs_map,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLIabs' '_Z' '_map'],1)
 
-% SaveAsAtlasNii(Z_hiL_map_thr,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraL' '_Z' '_map_THRD'],1)
-% SaveAsAtlasNii(Z_hiR_map_thr,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraR' '_Z' '_map_THRD'],1)
-% SaveAsAtlasNii(Z_hiLI_map_thr,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLI' '_Z' '_map_THRD'],1)
-SaveAsAtlasNii(Z_hiLIabs_map_thr,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLIabs' '_Z' '_map_THRD'],1)
+% SaveAsAtlasNii(Z_hiL_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraL' '_Z' '_map_THRD'],1)
+% SaveAsAtlasNii(Z_hiR_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraR' '_Z' '_map_THRD'],1)
+% SaveAsAtlasNii(Z_hiLI_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLI' '_Z' '_map_THRD'],1)
+SaveAsAtlasNii(Z_hiLIabs_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLIabs' '_Z' '_map_THRD'],1)
 
 % NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_Z' '_map','.nii'],'inf','tri','hemi',cba);
 % NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_Z' '_map','.nii'],'inf','tri','hemi',cba);

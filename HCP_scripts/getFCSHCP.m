@@ -1,11 +1,11 @@
-function [finalFCS] = getFCSHCP(statspath,FCmap_path,atlas)
+function [finalFCS] = getFCSHCP(statspath,FCmap_path,atlasflag)
 
 %% get FCS
 SubSize=length(FCmap_path);
-if strcmp(atlas,'AIC')
+if strcmp(atlasflag,'AIC')
     id=[2:2:384;1:2:384]';
     homonum=384/2;
-elseif strcmp(atlas,'BNA')
+elseif strcmp(atlasflag,'BNA')
     id=[2:2:246;1:2:246]';
     homonum=246/2;
 end

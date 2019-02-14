@@ -1,23 +1,27 @@
-function [HxI_Rmap,HxI_Rsub]=gencorrmapCAM(FCS,subid,cov,statspath,statename,cba,cbc)
+function [HxI_Rmap,HxI_Rsub]=gencorrmapCAM(FCS,atlasflag,subid,cov,statspath,statename,COV,cbc)
 % relation of HomoxIntra within each STATE
 
 figflag=1;
+if strcmp(atlasflag,'AIC')
+    nid=[1:174,176:190,192];
+elseif strcmp(atlasflag,'BNA')
+    nid=[1:123];
+end
 
-nid=[1:174,176:190,192];
 
 %% Group mean - Across subject
 [~,~,iS]=intersect(subid,FCS.subid);
 
 ho_FC=FCS.homo(iS,:);
-intra_LL=FCS.intra_L(iS,:);
-intra_RR=FCS.intra_R(iS,:);
-LI_intra=FCS.intra_AI(iS,:);
+% intra_LL=FCS.intra_L(iS,:);
+% intra_RR=FCS.intra_R(iS,:);
+% LI_intra=FCS.intra_AI(iS,:);
 LI_intra_abs=FCS.intra_absAI(iS,:);
 
-IntraL_mean=mean(intra_LL)';
-IntraR_mean=mean(intra_RR)';
+% IntraL_mean=mean(intra_LL)';
+% IntraR_mean=mean(intra_RR)';
 HomoFC_mean=mean(ho_FC)';
-LI_mean=mean(LI_intra)';
+% LI_mean=mean(LI_intra)';
 LI_abs_mean=mean(LI_intra_abs)';
 
 FCS_global=FCS.global(iS,:);
@@ -34,7 +38,7 @@ end
 % gt_intraLxintraR=tst1.tstat;
 
 
-for j=1:192
+for j=1:length(HomoFC_mean)
     
 %     [~,p_intraLxintraRt(1,j),~,stats1]=ttest(intra_LL(:,j),intra_RR(:,j));
 %     t_intraLxintraRt(1,j)=stats1.tstat;     
@@ -42,7 +46,7 @@ for j=1:192
 %     [homoxintraLc_R(1,j),homoxintraLc_P(1,j)]=partialcorr(ho_FC(:,j),intra_LL(:,j),FCS_global);     
 %     [homoxintraRc_R(1,j),homoxintraRc_P(1,j)]=partialcorr(ho_FC(:,j),intra_RR(:,j),FCS_global);    
 %     [homoxintraLIc_R(1,j),homoxintraLIc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra(:,j),FCS_global);
-    [homoxintraLIabsc_R(1,j),homoxintraLIabsc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra_abs(:,j),[FCS_global,cov]);   
+    [homoxintraLIabsc_R(1,j),homoxintraLIabsc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra_abs(:,j),[FCS_global,COV]);   
 %     [intraLxintraRc_R(1,j),intraLxintraRc_P(1,j)]=partialcorr(intra_LL(:,j),intra_RR(:,j),FCS_global);
 
 end
@@ -56,7 +60,7 @@ HxI_Rmap.homoxintraLIabs_R=homoxintraLIabsc_R;
 % HxI_Rmap.homoxintraLI_P=homoxintraLIc_P;
 HxI_Rmap.homoxintraLIabs_P=homoxintraLIabsc_P;
 
-pbon=0.05/190;
+pbon=0.05/length(nid);
 % [pbon,~] =FDR(homoxintraLIabsc_P,0.05)
 % t_intraLxintraRt_thrd=t_intraLxintraRt .* (p_intraLxintraRt<pbon);
 % 
@@ -72,7 +76,7 @@ if figflag==1
 %     SaveAsAtlasNii(homoxintraLc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraL' '_R' '_map'],1)
 %     SaveAsAtlasNii(homoxintraRc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraR' '_R' '_map'],1)
 %     SaveAsAtlasNii(homoxintraLIc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLI' '_R' '_map'],1)
-    SaveAsAtlasNii(homoxintraLIabsc_R,'/data/stalxy/Pipeline4JIN/atlas/Cam_Turner_3mm/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_map'],1)
+    SaveAsAtlasNii(homoxintraLIabsc_R,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_map'],1)
 %     SaveAsAtlasNii(intraLxintraRc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLxIntraR' '_R' '_map'],1)
 %     
 %     SaveAsAtlasNii(t_intraLxintraRt_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLxIntraR' '_T' '_THRD'],1)
@@ -80,7 +84,7 @@ if figflag==1
 %     SaveAsAtlasNii(homoxintraLc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraL' '_R' '_THRD'],1)
 %     SaveAsAtlasNii(homoxintraRc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraR' '_R' '_THRD'],1)
 %     SaveAsAtlasNii(homoxintraLIc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLI' '_R' '_THRD'],1)
-    SaveAsAtlasNii(homoxintraLIabsc_R_thrd,'/data/stalxy/Pipeline4JIN/atlas/Cam_Turner_3mm/AICHA.nii',[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_THRD'],1)
+    SaveAsAtlasNii(homoxintraLIabsc_R_thrd,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_THRD'],1)
 %     SaveAsAtlasNii(intraLxintraRc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLxIntraR' '_R' '_THRD'],1)
     
     
@@ -103,19 +107,19 @@ if figflag==1
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraL_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_LL(:,nid),2),FCS_global);
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraR_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_RR(:,nid),2),FCS_global);
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraLI_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra(:,nid),2),FCS_global);
-    PlotCorr([statspath '/'],[statename '_HomoxIntraLIabs_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra_abs(:,nid),2),[FCS_global,cov]);
+    PlotCorr([statspath '/'],[statename '_HomoxIntraLIabs_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra_abs(:,nid),2),term(FCS_global)+cov);
 %     PlotCorr([statspath '/'],[statename '_IntraLxIntraR_avgsubR'],mean(intra_LL(:,nid),2),mean(intra_RR(:,nid),2),FCS_global);
 %     
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraL_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraR_avgsubR'],[statspath '/'],fisherR2Z(homoxintraRc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraLI_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIc_R));
-    SysDiv2Plot('Yeo7',[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+    SysDiv2Plot('Yeo7',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
 %     SysDiv2Plot('Yeo7',[statename,'_IntraLxIntraR_avgsubR'],[statspath '/'],fisherR2Z(intraLxintraRc_R));
 %     
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraL_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraR_avgsubR'],[statspath '/'],fisherR2Z(homoxintraRc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_HomoxIntraLI_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIc_R));
-    SysDiv2Plot('Hierarchy',[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+    SysDiv2Plot('Hierarchy',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
 %     SysDiv2Plot('Hierarchy',[statename,'_IntraLxIntraR_avgsubR'],[statspath '/'],fisherR2Z(intraLxintraRc_R));
     
 end
@@ -123,10 +127,10 @@ end
 
 %% Each subject -- across regions 
 for i=1:length(subid)
-    IntraL_sub=intra_LL(i,nid)';
-    IntraR_sub=intra_RR(i,nid)';
+%     IntraL_sub=intra_LL(i,nid)';
+%     IntraR_sub=intra_RR(i,nid)';
     HomoFC_sub=ho_FC(i,nid)';
-    LI_sub=LI_intra(i,nid)';
+%     LI_sub=LI_intra(i,nid)';
     LI_abs_sub=LI_intra_abs(i,nid)';
     
 %     [~,p_intraLxintraRt_sub(i,1),~,stats1]=ttest(IntraL_sub,IntraR_sub);

@@ -57,7 +57,7 @@ cm = interp1(1:n,cmorig,X0);
 
 clim = [min(caxis_range),max(caxis_range)];
 if clim(1) ==0
-%     cm=cm(round(size(cm,1)/2):end,:);
+    cm=cm(round(size(cm,1)/2):end,:);
     Pos=[1];
     cm(Pos, :)=repmat([0.75, 0.75, 0.75],1,1);
 elseif clim(2) ==0

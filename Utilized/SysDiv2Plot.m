@@ -1,8 +1,11 @@
-function varargout = SysDiv2Plot(SysName,Yrange,FigTitle,FigPath,varargin)
+function varargout = SysDiv2Plot(SysName,atlasflag,Yrange,FigTitle,FigPath,varargin)
 %UNTITLED3 此处显示有关此函数的摘要
 %   此处显示详细说明
-
-load('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/atlas2nets.mat');
+if strcmp(atlasflag,'AIC')
+    load(['/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/atlas' atlasflag '2nets.mat']);
+elseif strcmp(atlasflag,'BNA')
+    load(['/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/atlas' atlasflag '2nets.mat']);
+end
 if strcmp(SysName,'Yeo7')
     a2n=atlas2net.Yeo7nets(:,3);
     a2n_l={'Visual','Somatomotor','Dorsal-attention','Ventral-attention','Limbic','Frontalparietal','Default'};
@@ -11,13 +14,13 @@ elseif strcmp(SysName,'Yeo17')
     a2n_l={'Visual_peripheral','Visual_central','Somatomotor_A','Somatomotor_B','Dorsal_attention_A','Dorsal_attention_B','Ventral_attention','Salience','Limbic_A','Limbic_B','Control_C','Control_A','Control_B','Default_D','Default_C','Default_A','Default_B'};
 elseif strcmp(SysName,'Hierarchy')
     a2no=atlas2net.hierarchy6(:,3);
-%     a2n_ol={'Heteromodal','Limbic','Paralimbic','Primary','Subcortical','Unimodal'};
+    %     a2n_ol={'Heteromodal','Limbic','Paralimbic','Primary','Subcortical','Unimodal'};
     a2n_l={'Heteromodal','Unimodal','Primary','Limbic','Paralimbic','Subcortical'};
     a2n=a2no([1;6;4;2;3;5]);
-
+    
 end
 
-if nargin==5
+if nargin==6
     VarMap=varargin{1};
     if size(VarMap,1)>1
         nets=zeros(size(VarMap,1),length(a2n));
@@ -35,7 +38,7 @@ if nargin==5
         end
     end
     
-elseif nargin==6
+elseif nargin==7
     VarMap=varargin{1};
     VarMapa=varargin{2};
     nets=zeros(size(VarMap,1),length(a2n));

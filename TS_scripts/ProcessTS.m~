@@ -1,51 +1,52 @@
 ID=load('/data/stalxy/TSFC/SubInfo_45XOandNC.mat');
 AICHApath='/data/stalxy/Pipeline4JIN/atlas/Cam_Turner_3mm/AICHA.nii';
-% RTypes=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_AICHA.txt');
-% for i=1:4
-%     REST1=g_ls([RTypes{i,1} '/*.mat']);
-%     [~,nr,~]=fileparts(RTypes{i,1});
-%     getFCS1228(['/data/stalxy/Pipeline4JIN/Results1228/FCSmat/REST1_',nr1],REST1,nr1(1:3));
-% end
 
-RTypes1=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_AICHA.txt');
-RTypes2=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
-RTypes3=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_BNA.txt');
-RTypes4=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
+% RTypes1=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_AICHA.txt');
+% RTypes2=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_AICHA.txt');
+% RTypes3=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_BNA.txt');
+% RTypes4=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
+% 
+% getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_GR',RTypes1,'AIC');
+% getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_NGR',RTypes2,'AIC');
+% getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_BNA_GR',RTypes3,'BNA');
+% getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_BNA_NGR',RTypes4,'BNA');
+FCS_Rpath=g_ls('/data/stalxy/ArticleJResults/TSFC/FCSmat/*.mat');
+atlas_flag={'AIC','AIC','BNA','BNA'};
 
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_',RTypes,'AIC');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
-getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA',RTypes,'AIC');
+for k=1:4
+
+af=atlas_flag{k};
 
 %% Part1 baseline
-system(['mkdir /data/stalxy/ArticleJResults/TSFC/Results/Baseline/Homo']);
-system(['mkdir /data/stalxy/ArticleJResults/TSFC/Results/Baseline/IntraLIabs']);
-
-filepath=g_ls('/data/stalxy/ArticleJResults/TSFC/Results/Baseline/*/');
-FCS_R=load('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA.mat');
+FCS_R=load(FCS_Rpath{k});
 FCS_Rstate=FCS_R.finalFCS;
+[~,nm,~]=fileparts(FCS_Rpath{k});
+
+system(['mkdir -p /data/stalxy/ArticleJResults/TSFC/Results/Baseline_' nm '/Homo']);
+system(['mkdir -p /data/stalxy/ArticleJResults/TSFC/Results/Baseline_' nm '/IntraLIabs']);
+filepath=g_ls(['/data/stalxy/ArticleJResults/TSFC/Results/Baseline_' nm '/*/']);
 
 exclude=[22;28;34];
 finalid=setdiff(ID.ID,exclude);
 TSID=intersect(ID.ID(strcmp(ID.Group,'Nonmosaic')),finalid);
 NCID=intersect(ID.ID(strcmp(ID.Group,'NC_female1')),finalid);
-genbaselinemapTS(FCS_Rstate,TSID,filepath,'TS_AICHA_NG_',0)
-genbaselinemapTS(FCS_Rstate,NCID,filepath,'NC_AICHA_NG_',0)
+genbaselinemapTS(FCS_Rstate,af,TSID,filepath,['TS_' nm],0)
+genbaselinemapTS(FCS_Rstate,af,NCID,filepath,['NC_' nm],0)
 
 
 %% Part2 compare between STATES
 
 %% Part3 relation of HomoxIntra within each STATE
-system(['mkdir /data/stalxy/ArticleJResults/TSFC/Results/RelatedinState/TS/']);
-system(['mkdir /data/stalxy/ArticleJResults/TSFC/Results/RelatedinState/NC/']);
-filecorrpath=g_ls('/data/stalxy/ArticleJResults/TSFC/Results/RelatedinState/*');
+system(['mkdir -p /data/stalxy/ArticleJResults/TSFC/Results/RelatedinState_' nm '/TS/']);
+system(['mkdir -p /data/stalxy/ArticleJResults/TSFC/Results/RelatedinState_' nm '/NC/']);
+filecorrpath=g_ls(['/data/stalxy/ArticleJResults/TSFC/Results/RelatedinState_' nm '/*']);
 [~,TSod,~]=intersect(ID.ID,TSID);
 [~,NCod,~]=intersect(ID.ID,NCID);
 
 TSage=ID.Age(TSod);
 NCage=ID.Age(NCod);
-[TS_HxI_Rmap,TS_HxI_Rsub]=gencorrmapTS(FCS_Rstate,TSID,TSage,filecorrpath{2},'TS_AICHA_NG',[-20,20],[-0.6,0.6])
-[NC_HxI_Rmap,NC_HxI_Rsub]=gencorrmapTS(FCS_Rstate,NCID,NCage,filecorrpath{1},'NC_AICHA_NG',[-20,20],[-0.6,0.6])
+[TS_HxI_Rmap,TS_HxI_Rsub]=gencorrmapTS(FCS_Rstate,af,TSID,TSage,filecorrpath{2},['TS_' nm],[-20,20],[-0.6,0.6])
+[NC_HxI_Rmap,NC_HxI_Rsub]=gencorrmapTS(FCS_Rstate,af,NCID,NCage,filecorrpath{1},['NC_' nm],[-20,20],[-0.6,0.6])
 
 
 %% Part4 compare relations of HomoxIntra across STATES
@@ -76,18 +77,19 @@ p_HFTAG=1-fcdf(slmH_FAG.t,slmH_FAG.df(1),slmH_FAG.df(2));
 p_HTA=2*tcdf(-1*abs(slmH_TA.t),slmH_TA.df);
 p_HTG=2*tcdf(-1*abs(slmH_TG.t),slmH_TG.df);
 
-statspath='/data/stalxy/ArticleJResults/TSFC/Results/COM/';
-SaveAsAtlasNii(slmH_FAG.t,AICHApath,statspath,['AgexGroupONhomo' '_F' '_map'],1)
+statspath=['/data/stalxy/ArticleJResults/TSFC/Results/COM_' nm '/'];
+system(['mkdir -p ' statspath]);
+SaveAsAtlasNii(slmH_FAG.t,,[atlasflag '3'],statspath,['AgexGroupONhomo' '_F' '_map'],1)
 NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map'],'.nii'],'inf','tri','hemi',[0,10]);
-SaveAsAtlasNii(slmH_FAG.t.*(p_HFTAG<0.05/190),AICHApath,statspath,['AgexGroupONhomo' '_F' '_map_thresh'],1)
+SaveAsAtlasNii(slmH_FAG.t.*(p_HFTAG<0.05/190),,[atlasflag '3'],statspath,['AgexGroupONhomo' '_F' '_map_thresh'],1)
 NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map_thresh'],'.nii'],'inf','tri','hemi',[0,10]);
 
-SaveAsAtlasNii(slmH_TA.t,AICHApath,statspath,['AgeONhomo' '_T' '_map'],1)
+SaveAsAtlasNii(slmH_TA.t,,[atlasflag '3'],statspath,['AgeONhomo' '_T' '_map'],1)
 NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
-SaveAsAtlasNii(slmH_TA.t.*(p_HTA<0.05/190),AICHApath,statspath,['AgeONhomo' '_T' '_map_thresh'],1)
+SaveAsAtlasNii(slmH_TA.t.*(p_HTA<0.05/190),,[atlasflag '3'],statspath,['AgeONhomo' '_T' '_map_thresh'],1)
 NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
 
-SaveAsAtlasNii(slmH_TG.t,AICHApath,statspath,['NCvTS_GroupONhomo' '_T' '_map'],1)
+SaveAsAtlasNii(slmH_TG.t,,[atlasflag '3'],statspath,['NCvTS_GroupONhomo' '_T' '_map'],1)
 NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
 SaveAsAtlasNii(slmH_TG.t.*(p_HTG<0.05/190),AICHApath,statspath,['NCvTS_GroupONhomo' '_T' '_map_thresh'],1)
 NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
@@ -125,3 +127,4 @@ PlotCorr([statspath '/'],'GroupEffect_HomoxLIabs_similarityacrossregions',[ID.Gr
 nid=[1:174,176:190,192]
 PlotCorr([statspath '/'],'Similaritybetweengroups_HomoxLIabs_similarityacrosssubjects',fisherR2Z(TS_HxI_Rmap.homoxintraLIabs_R(nid)'),fisherR2Z(NC_HxI_Rmap.homoxintraLIabs_R(nid)'),[]);
 
+end

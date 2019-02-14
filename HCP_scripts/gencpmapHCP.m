@@ -1,6 +1,11 @@
-function gencpmapHCP(FCS1,FCS2,subid,statspath,statename,cba,cbb,cbc,cbd)
+function gencpmapHCP(FCS1,FCS2,atlasflag,subid,statspath,statename,cba,cbb,cbc,cbd)
 % compare between STATES
 figflag=1;
+if strcmp(atlasflag,'AIC')
+    nid=[1:174,176:190,192];
+elseif strcmp(atlasflag,'BNA')
+    nid=[1:123];
+end
 
 %% Group mean - Across subject
 
@@ -52,7 +57,7 @@ gt_homo=tst1.tstat;
 gt_intraLIabs=tst5.tstat;
 
 
-for j=1:192
+for j=1:size(ho_FC1,2)
     
     [~,p_homot(1,j),~,stats1]=ttest(ho_FC1(:,j),ho_FC2(:,j));
     t_homot(1,j)=stats1.tstat;     
@@ -61,7 +66,7 @@ for j=1:192
 %     [~,p_intraRt(1,j),~,stats3]=ttest(intra_RR1(:,j),intra_RR2(:,j));
 %     t_intraRt(1,j)=stats3.tstat;      
 %     [~,p_intraLIt(1,j),~,stats4]=ttest(LI_intra1(:,j),LI_intra2(:,j));
-    t_intraLIt(1,j)=stats4.tstat;  
+%     t_intraLIt(1,j)=stats4.tstat;  
     [~,p_intraLIabst(1,j),~,stats5]=ttest(LI_intra_abs1(:,j),LI_intra_abs2(:,j));
     t_intraLIabst(1,j)=stats5.tstat;  
     [homoc_R(1,j),homoc_P(1,j)]=corr(ho_FC1(:,j),ho_FC2(:,j));     
@@ -72,7 +77,7 @@ for j=1:192
 
 end
 
-pbon=0.05/186;
+pbon=0.05/(length(nid));
 t_homot_thrd=t_homot .* (p_homot<pbon);
 % t_intraLt_thrd=t_intraLt .* (p_intraLt<pbon);
 % t_intraRt_thrd=t_intraRt .* (p_intraRt<pbon);
@@ -85,27 +90,27 @@ homoc_R_thrd=homoc_R .* (homoc_P<pbon);
 intraLIabsc_R_thrd=intraLIabsc_R .* (intraLIabsc_P<pbon);
 
 if figflag==1
-    SaveAsAtlasNii(t_homot,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoFC' '_T' '_map'],1)
-%     SaveAsAtlasNii(t_intraLt,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraL' '_T' '_map'],1)
-%     SaveAsAtlasNii(t_intraRt,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraR' '_T' '_map'],1)
-%     SaveAsAtlasNii(t_intraLIt,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLI' '_T' '_map'],1)
-    SaveAsAtlasNii(t_intraLIabst,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLIabs' '_T' '_map'],1)
-    SaveAsAtlasNii(homoc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoFC' '_R' '_map'],1)
-%     SaveAsAtlasNii(intraLc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraL' '_R' '_map'],1)
-%     SaveAsAtlasNii(intraRc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraR' '_R' '_map'],1)
-%     SaveAsAtlasNii(intraLIc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLI' '_R' '_map'],1)
-    SaveAsAtlasNii(intraLIabsc_R,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLIabs' '_R' '_map'],1)
+    SaveAsAtlasNii(t_homot,[atlasflag '2'],[statspath,'/',statename],['_HomoFC' '_T' '_map'],1)
+%     SaveAsAtlasNii(t_intraLt,[atlasflag '2'],[statspath,'/',statename],['_IntraL' '_T' '_map'],1)
+%     SaveAsAtlasNii(t_intraRt,[atlasflag '2'],[statspath,'/',statename],['_IntraR' '_T' '_map'],1)
+%     SaveAsAtlasNii(t_intraLIt,[atlasflag '2'],[statspath,'/',statename],['_IntraLI' '_T' '_map'],1)
+    SaveAsAtlasNii(t_intraLIabst,[atlasflag '2'],[statspath,'/',statename],['_IntraLIabs' '_T' '_map'],1)
+    SaveAsAtlasNii(homoc_R,[atlasflag '2'],[statspath,'/',statename],['_HomoFC' '_R' '_map'],1)
+%     SaveAsAtlasNii(intraLc_R,[atlasflag '2'],[statspath,'/',statename],['_IntraL' '_R' '_map'],1)
+%     SaveAsAtlasNii(intraRc_R,[atlasflag '2'],[statspath,'/',statename],['_IntraR' '_R' '_map'],1)
+%     SaveAsAtlasNii(intraLIc_R,[atlasflag '2'],[statspath,'/',statename],['_IntraLI' '_R' '_map'],1)
+    SaveAsAtlasNii(intraLIabsc_R,[atlasflag '2'],[statspath,'/',statename],['_IntraLIabs' '_R' '_map'],1)
     
-    SaveAsAtlasNii(t_homot_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoFC' '_T' '_THRD'],1)
-%     SaveAsAtlasNii(t_intraLt_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraL' '_T' '_THRD'],1)
-%     SaveAsAtlasNii(t_intraRt_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraR' '_T' '_THRD'],1)
-%     SaveAsAtlasNii(t_intraLIt_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLI' '_T' '_THRD'],1)
-    SaveAsAtlasNii(t_intraLIabst_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLIabs' '_T' '_THRD'],1)
-    SaveAsAtlasNii(homoc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_HomoFC' '_R' '_THRD'],1)
-%     SaveAsAtlasNii(intraLc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraL' '_R' '_THRD'],1)
-%     SaveAsAtlasNii(intraRc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraR' '_R' '_THRD'],1)
-%     SaveAsAtlasNii(intraLIc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLI' '_R' '_THRD'],1)
-    SaveAsAtlasNii(intraLIabsc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLIabs' '_R' '_THRD'],1)
+    SaveAsAtlasNii(t_homot_thrd,[atlasflag '2'],[statspath,'/',statename],['_HomoFC' '_T' '_THRD'],1)
+%     SaveAsAtlasNii(t_intraLt_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraL' '_T' '_THRD'],1)
+%     SaveAsAtlasNii(t_intraRt_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraR' '_T' '_THRD'],1)
+%     SaveAsAtlasNii(t_intraLIt_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLI' '_T' '_THRD'],1)
+    SaveAsAtlasNii(t_intraLIabst_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLIabs' '_T' '_THRD'],1)
+    SaveAsAtlasNii(homoc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_HomoFC' '_R' '_THRD'],1)
+%     SaveAsAtlasNii(intraLc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraL' '_R' '_THRD'],1)
+%     SaveAsAtlasNii(intraRc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraR' '_R' '_THRD'],1)
+%     SaveAsAtlasNii(intraLIc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLI' '_R' '_THRD'],1)
+    SaveAsAtlasNii(intraLIabsc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLIabs' '_R' '_THRD'],1)
     
     
     NiiProj2Surf([statspath,'/',statename,'_HomoFC' '_T' '_map','.nii'],'inf','tri','hemi',cba);
