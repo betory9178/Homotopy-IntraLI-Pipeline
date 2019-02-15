@@ -79,19 +79,19 @@ p_HTG=2*tcdf(-1*abs(slmH_TG.t),slmH_TG.df);
 statspath=['/data/stalxy/ArticleJResults/TSFC/Results/COM_' nm '/'];
 system(['mkdir -p ' statspath]);
 SaveAsAtlasNii(slmH_FAG.t,[af '3'],statspath,['AgexGroupONhomo' '_F' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map'],'.nii'],'inf','tri','hemi',[0,10]);
+NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map'],'.nii'],'inf','cubic','hemi',[0,10]);
 SaveAsAtlasNii(slmH_FAG.t.*(p_HFTAG<0.05/190),[af '3'],statspath,['AgexGroupONhomo' '_F' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map_thresh'],'.nii'],'inf','tri','hemi',[0,10]);
+NiiProj2Surf([statspath,'/',['AgexGroupONhomo' '_F' '_map_thresh'],'.nii'],'inf','cubic','hemi',[0,10]);
 
 SaveAsAtlasNii(slmH_TA.t,[af '3'],statspath,['AgeONhomo' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf','cubic','hemi',[-5,5]);
 SaveAsAtlasNii(slmH_TA.t.*(p_HTA<0.05/190),[af '3'],statspath,['AgeONhomo' '_T' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map_thresh'],'.nii'],'inf','cubic','hemi',[-5,5]);
 
 SaveAsAtlasNii(slmH_TG.t,[af '3'],statspath,['NCvTS_GroupONhomo' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map'],'.nii'],'inf','cubic','hemi',[-5,5]);
 SaveAsAtlasNii(slmH_TG.t.*(p_HTG<0.05/190),[af '3'],statspath,['NCvTS_GroupONhomo' '_T' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['NCvTS_GroupONhomo' '_T' '_map_thresh'],'.nii'],'inf','cubic','hemi',[-5,5]);
 
 slmL=SurfStatLinMod(LIabs,M);
 slmLi=SurfStatLinMod(LIabs,Mi);
@@ -105,19 +105,19 @@ p_LTA=2*tcdf(-1*abs(slmL_TA.t),slmL_TA.df);
 p_LTG=2*tcdf(-1*abs(slmL_TG.t),slmL_TG.df);
 
 SaveAsAtlasNii(slmL_FAG.t,[af '3'],statspath,['AgexGroupONLIabs' '_F' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgexGroupONLIabs' '_F' '_map'],'.nii'],'inf','tri','hemi',[0,10]);
+NiiProj2Surf([statspath,'/',['AgexGroupONLIabs' '_F' '_map'],'.nii'],'inf','cubic','hemi',[0,10]);
 SaveAsAtlasNii(slmL_FAG.t.*(p_LFTAG<0.05/190),[af '3'],statspath,['AgexGroupONLIabs' '_F' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgexGroupONLIabs' '_F' '_map_thresh'],'.nii'],'inf','tri','hemi',[0,10]);
+NiiProj2Surf([statspath,'/',['AgexGroupONLIabs' '_F' '_map_thresh'],'.nii'],'inf','cubic','hemi',[0,10]);
 
 SaveAsAtlasNii(slmL_TA.t,[af '3'],statspath,['AgeONLIabs' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map'],'.nii'],'inf','cubic','hemi',[-5,5]);
 SaveAsAtlasNii(slmL_TA.t.*(p_LTA<0.05/190),[af '3'],statspath,['AgeONLIabs' '_T' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map_thresh'],'.nii'],'inf','cubic','hemi',[-5,5]);
 
 SaveAsAtlasNii(slmL_TG.t,[af '3'],statspath,['NCvTS_GroupONLIabs' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['NCvTS_GroupONLIabs' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['NCvTS_GroupONLIabs' '_T' '_map'],'.nii'],'inf','cubic','hemi',[-5,5]);
 SaveAsAtlasNii(slmL_TG.t.*(p_LTG<0.05/190),[af '3'],statspath,['NCvTS_GroupONLIabs' '_T' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['NCvTS_GroupONLIabs' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
+NiiProj2Surf([statspath,'/',['NCvTS_GroupONLIabs' '_T' '_map_thresh'],'.nii'],'inf','cubic','hemi',[-5,5]);
 PlotCorr([statspath '/'],'NCvTS_GroupONLIabs_clus1',group,LIabs(:,p_LTG<0.05/190),[age,gl],[]);
 
 

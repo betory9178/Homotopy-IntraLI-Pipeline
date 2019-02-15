@@ -34,15 +34,15 @@ SaveAsAtlasNii(Z_hiLIabs_map,[atlasflag '2'],[statspath,'/',statename],['_HomoxI
 % SaveAsAtlasNii(Z_hiLI_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLI' '_Z' '_map_THRD'],1)
 SaveAsAtlasNii(Z_hiLIabs_map_thr,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLIabs' '_Z' '_map_THRD'],1)
 
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_Z' '_map','.nii'],'inf','tri','hemi',cba);
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_Z' '_map','.nii'],'inf','tri','hemi',cba);
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_Z' '_map','.nii'],'inf','tri','hemi',cba);
-NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Z' '_map','.nii'],'inf','tri','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_Z' '_map','.nii'],'inf','cubic','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_Z' '_map','.nii'],'inf','cubic','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_Z' '_map','.nii'],'inf','cubic','hemi',cba);
+NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Z' '_map','.nii'],'inf','cubic','hemi',cba);
 
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_Z' '_map_THRD','.nii'],'inf','tri','hemi',cba);
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_Z' '_map_THRD','.nii'],'inf','tri','hemi',cba);
-% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_Z' '_map_THRD','.nii'],'inf','tri','hemi',cba);
-NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Z' '_map_THRD','.nii'],'inf','tri','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_Z' '_map_THRD','.nii'],'inf','cubic','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_Z' '_map_THRD','.nii'],'inf','cubic','hemi',cba);
+% NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_Z' '_map_THRD','.nii'],'inf','cubic','hemi',cba);
+NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Z' '_map_THRD','.nii'],'inf','cubic','hemi',cba);
 
 
 % [sub_intraL,~] =PlotCorr([statspath '/'],[statename '_intraL_RsubR'],S1_Rsub.homoxintraL_R,S2_Rsub.homoxintraL_R);

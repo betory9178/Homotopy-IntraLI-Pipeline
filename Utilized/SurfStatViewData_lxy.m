@@ -47,13 +47,13 @@ clf;
 %     ones(511,1)    (0:510)'/511  zeros(511,1)];
 % cm(1,:)=ones(1,3)*0.7;
 
-% cm=spectral(512);
-% cm(end-26:end,:)=[];
+cm=spectral(512);
+cm(end-26:end,:)=[];
 
-cmorig=colormap('jet');
-n = length(cmorig);
-X0 = linspace (1, n, 1024);
-cm = interp1(1:n,cmorig,X0);
+% cmorig=colormap('jet');
+% n = length(cmorig);
+% X0 = linspace (1, n, 1024);
+% cm = interp1(1:n,cmorig,X0);
 
 clim = [min(caxis_range),max(caxis_range)];
 if clim(1) ==0

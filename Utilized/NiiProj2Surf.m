@@ -48,8 +48,16 @@ elseif strcmp(projtype,'tri')
     system(cmd_projLti);
     system(cmd_projRti);
     smetricL=gifti([niipath '/' niiname '_L_tri.func.gii']);
-    smetricR=gifti([niipath '/' niiname '_R_tri.func.gii']);    
+    smetricR=gifti([niipath '/' niiname '_R_tri.func.gii']);   
     
+elseif strcmp(projtype,'cubic')
+    cmd_projLti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgMidL ' ' niipath '/' niiname '_L_tri.func.gii'];
+    cmd_projRti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgMidR ' ' niipath '/' niiname '_R_tri.func.gii'];
+    system(cmd_projLti);
+    system(cmd_projRti);
+    smetricL=gifti([niipath '/' niiname '_L_tri.func.gii']);
+    smetricR=gifti([niipath '/' niiname '_R_tri.func.gii']);    
+        
 end
 
 sml=smetricL.cdata';
