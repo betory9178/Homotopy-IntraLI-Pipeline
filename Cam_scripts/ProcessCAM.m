@@ -150,6 +150,14 @@ SaveAsAtlasNii(slmL_TA.t.*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIa
 NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
 PlotCorr([statspath '/'],['LIabsavgxAge_subR'],age,mean(LIabs(:,nid),2),term(gl)+term(age)+term(GD));
 
+%mediation
+age_ef_combined=(p_HTA<0.05/length(nid)) .* (p_LTA<0.05/length(nid));
+for i=1:max(nid)
+   [HxLI_R(1,i),HxLI_P(1,i)]=partialcorr(Homo(:,i),LIabs(:,i),[age,gen,gl]);
+end
+age_mediation=age_ef_combined .* (HxLI_P<0.05/length(nid));
+sum(age_mediation)
+
 %HomoxLIabs Plot
 PlotCorr([statspath '/'],['HomoxLIabsRxAge_subR'],age,ALL_HxI_Rsub.homoxintraLIabs_R,term(gl)+term(GD));
 
