@@ -19,18 +19,18 @@ end
 A=load_untouch_nii(AtlasP);
 B=A;
 if hemiflag==1
-    for i=1:2:(length(unique(A.img))-1)
+    for i=1:2:(max(unique(A.img)))
         
         B.img(A.img==i) = metric((i+1)/2);
     end
     
-    for j=2:2:(length(unique(A.img))-1)
+    for j=2:2:(max(unique(A.img)))
         B.img(A.img==j) = metric((j)/2);
     end
     
 elseif hemiflag==0
     
-    for i=1:(length(unique(A.img))-1)
+    for i=1:(max(unique(A.img)))
         B.img(A.img==i) = metric(i);
     end
 end
