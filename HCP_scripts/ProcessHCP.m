@@ -136,4 +136,8 @@ gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcpp
 % gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,TsR2_HxI_Rmap,TsR2_HxI_Rsub,sufilecrppath{1},'R1vR2',[-5,5])
 % gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,sufilecrppath{2},'R1vTall',[-10,10])
 % gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,sufilecrppath{3},'R2vTall',[-10,10])
+
+% Mediation
+
+
 end
