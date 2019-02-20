@@ -93,9 +93,9 @@ system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/TsvRs1']);
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/TsvRs2']);
 filecorrpath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/*/']);
-[R1_HxI_Rmap,R1_HxI_Rsub]=gencorrmapHCP(FCS_Rstate1,af,ID.StID,term(age)+term(gen),filecorrpath{1},'Rstate1',[age,gennum],[-0.6,0.6])
-[R2_HxI_Rmap,R2_HxI_Rsub]=gencorrmapHCP(FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecorrpath{2},'Rstate2',[age,gennum],[-0.6,0.6])
-[Tk_HxI_Rmap,Tk_HxI_Rsub]=gencorrmapHCP(FCS_TstateA,af,ID.StID,term(age)+term(gen),filecorrpath{3},'Tstate',[age,gennum],[-0.6,0.6])
+[R1_HxI_Rmap,R1_HxI_Rsub]=gencorrmapHCP(FCS_Rstate1,af,ID.StID,term,filecorrpath{1},'Rstate1',[-20,20],[-0.6,0.6])
+[R2_HxI_Rmap,R2_HxI_Rsub]=gencorrmapHCP(FCS_Rstate2,af,ID.StID,filecorrpath{2},'Rstate2',[-20,20],[-0.6,0.6])
+[Tk_HxI_Rmap,Tk_HxI_Rsub]=gencorrmapHCP(FCS_TstateA,af,ID.StID,filecorrpath{3},'Tstate',[-20,20],[-0.6,0.6])
 
 [TsR1_HxI_Rmap,TsR1_HxI_Rsub]=gencorrmapHCP(FCS_TvRs1,af,ID.StID,filecorrpath{4},'TsR1',[-20,20],[-0.6,0.6])
 [TsR2_HxI_Rmap,TsR2_HxI_Rsub]=gencorrmapHCP(FCS_TvRs2,af,ID.StID,filecorrpath{5},'TsR2',[-20,20],[-0.6,0.6])

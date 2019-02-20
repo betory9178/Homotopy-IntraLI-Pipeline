@@ -1,4 +1,4 @@
-function [HxI_Rmap,HxI_Rsub]=gencorrmapHCP(FCS,atlasflag,subid,statspath,statename,cba,cbc)
+function [HxI_Rmap,HxI_Rsub]=gencorrmapHCP(FCS,atlasflag,subid,cov,statspath,statename,COV,cbc)
 % relation of HomoxIntra within each STATE
 
 figflag=1;
@@ -47,7 +47,7 @@ for j=1:size(ho_FC,2)
 %     [homoxintraLc_R(1,j),homoxintraLc_P(1,j)]=partialcorr(ho_FC(:,j),intra_LL(:,j),FCS_global);     
 %     [homoxintraRc_R(1,j),homoxintraRc_P(1,j)]=partialcorr(ho_FC(:,j),intra_RR(:,j),FCS_global);    
 %     [homoxintraLIc_R(1,j),homoxintraLIc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra(:,j),FCS_global);
-    [homoxintraLIabsc_R(1,j),homoxintraLIabsc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra_abs(:,j),FCS_global);   
+    [homoxintraLIabsc_R(1,j),homoxintraLIabsc_P(1,j)]=partialcorr(ho_FC(:,j),LI_intra_abs(:,j),[FCS_global,COV]);   
 %     [intraLxintraRc_R(1,j),intraLxintraRc_P(1,j)]=partialcorr(intra_LL(:,j),intra_RR(:,j),FCS_global);
 
 end
@@ -107,7 +107,7 @@ if figflag==1
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraL_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_LL(:,nid),2),FCS_global);
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraR_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_RR(:,nid),2),FCS_global);
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraLI_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra(:,nid),2),FCS_global);
-    PlotCorr([statspath '/'],[statename '_HomoxIntraLIabs_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra_abs(:,nid),2),FCS_global);
+    PlotCorr([statspath '/'],[statename '_HomoxIntraLIabs_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra_abs(:,nid),2),term(FCS_global)+cov);
 %     PlotCorr([statspath '/'],[statename '_IntraLxIntraR_avgsubR'],mean(intra_LL(:,nid),2),mean(intra_RR(:,nid),2),FCS_global);
 %     
 %     SysDiv2Plot('Yeo7',[statename,'_HomoxIntraL_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLc_R));
