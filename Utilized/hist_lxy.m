@@ -1,4 +1,4 @@
-function hist_lxy(subv,meanv,figpath,figtitle)
+function hist_lxy(subv,pointv,figpath,figtitle)
 
 hfig=figure;
 tmp=get(gcf,'Position');
@@ -6,8 +6,8 @@ set(gcf,'Position', [50, tmp(2) ,tmp(4)*2, tmp(4)*0.9]);
 if size(subv,2)==1
     histdata = histogram(subv,10);
     hold on;
-    y=1:1:max(histdata.Values);
-    x=repmat(meanv,length(y),1);
+    y=min(histdata.Values):(max(histdata.Values)/10):max(histdata.Values);
+    x=repmat(pointv,length(y),1);
     plot(x,y,'LineWidth',3,...
         'MarkerEdgeColor','k',...
         'MarkerFaceColor','g',...
@@ -22,18 +22,23 @@ else
     x_values=min([histdata1.BinLimits,histdata2.BinLimits]):0.01:max([histdata1.BinLimits,histdata2.BinLimits]);
     dpdf1 = pdf(fitdata1,x_values);
     dpdf2 = pdf(fitdata2,x_values);
-    plot(x_values,dpdf1,'LineWidth',2)
-    plot(x_values,dpdf2,'Color','r','LineStyle',':','LineWidth',2)
-    legend(gn,'Location','NorthEast')
-    
-    hold off
+    plot(x_values,dpdf1,'Color','r','LineStyle',':','LineWidth',2)
+    plot(x_values,dpdf2,'Color','b','LineStyle',':','LineWidth',2)
 
-    y=1:1:max(histdata1.Values);
-    x=repmat(meanv(i),length(y),1);
-    plot(x,y,'LineWidth',3,...
-        'MarkerEdgeColor','k',...
-        'MarkerFaceColor','g',...
+    y=min(histdata1.Values):(max(histdata1.Values)/10):max(histdata1.Values);
+    x=repmat(mean(histdata1.Data),length(y),1);
+    plot(x,y,'LineWidth',2,...
+        'MarkerFaceColor','r',...
         'MarkerSize',10)
+    
+    y=min(histdata2.Values):(max(histdata2.Values)/10):max(histdata2.Values);
+    x=repmat(mean(histdata2.Data),length(y),1);
+    plot(x,y,'LineWidth',2,...
+        'MarkerFaceColor','b',...
+        'MarkerSize',10)
+    
+%     legend({'Rest','Task'},'Location','NorthEast')
+    
 end
 % title set
 til=title(figtitle,'Interpreter','none'),
@@ -45,6 +50,8 @@ background='white';
 whitebg(gcf,background);
 set(gcf,'Color',background,'InvertHardcopy','off');
 
+hold off
+    
 saveas(hfig,[figpath '/' figtitle '.tif'],'tif');
 close(hfig);
 

@@ -1,4 +1,4 @@
-function gencpmapHCP(FCS1,FCS2,atlasflag,subid,cov,statspath,statename,cba,COV,cbc,cbd)
+function gencpmapHCP(FCS1,FCS2,atlasflag,subid,statspath,statename,cba,COV,cbc,cbd)
 % compare between STATES
 figflag=1;
 if strcmp(atlasflag,'AIC')
@@ -71,11 +71,11 @@ for j=1:size(ho_FC1,2)
 %     t_intraLIt(1,j)=stats4.tstat;  
     [~,p_intraLIabst(1,j),~,stats5]=ttest(LI_intra_abs1(:,j),LI_intra_abs2(:,j));
     t_intraLIabst(1,j)=stats5.tstat;  
-    [homoc_R(1,j),homoc_P(1,j)]=partialcorr(ho_FC1(:,j),ho_FC2(:,j),[FCS_global1,FCS_global2,COV]);     
+    [homoc_R(1,j),homoc_P(1,j)]=partialcorr(ho_FC1(:,j),ho_FC2(:,j),[FCS_global1,COV]);     
 %     [intraLc_R(1,j),intraLc_P(1,j)]=corr(intra_LL1(:,j),intra_LL2(:,j));    
 %     [intraRc_R(1,j),intraRc_P(1,j)]=corr(intra_RR1(:,j),intra_RR2(:,j));
 %     [intraLIc_R(1,j),intraLIc_P(1,j)]=corr(LI_intra1(:,j),LI_intra2(:,j));   
-    [intraLIabsc_R(1,j),intraLIabsc_P(1,j)]=partialcorr(LI_intra_abs1(:,j),LI_intra_abs2(:,j),[FCS_global1,FCS_global2,COV]);
+    [intraLIabsc_R(1,j),intraLIabsc_P(1,j)]=partialcorr(LI_intra_abs1(:,j),LI_intra_abs2(:,j),[FCS_global1,COV]);
 
 end
 
@@ -138,11 +138,11 @@ if figflag==1
     NiiProj2Surf([statspath,'/',statename,'_IntraLIabs' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
     
     
-    PlotCorr([statspath '/'],[statename '_homo_avgsubR'],mean(ho_FC1,2),mean(ho_FC2,2),term(FCS_global1)+term(FCS_global2)+cov);
+    PlotCorr([statspath '/'],[statename '_homo_avgsubR'],mean(ho_FC1,2),mean(ho_FC2,2),cov);
 %     PlotCorr([statspath '/'],[statename '_intraL_avgsubR'],mean(intra_LL1,2),mean(intra_LL2,2));
 %     PlotCorr([statspath '/'],[statename '_intraR_avgsubR'],mean(intra_RR1,2),mean(intra_RR2,2));
 %     PlotCorr([statspath '/'],[statename '_intraLI_avgsubR'],mean(LI_intra1,2),mean(LI_intra2,2));
-    PlotCorr([statspath '/'],[statename '_intraLIabs_avgsubR'],mean(LI_intra_abs1,2),mean(LI_intra_abs2,2),term(FCS_global1)+term(FCS_global2)+cov);
+    PlotCorr([statspath '/'],[statename '_intraLIabs_avgsubR'],mean(LI_intra_abs1,2),mean(LI_intra_abs2,2),cov);
 end
 
 % single sub

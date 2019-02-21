@@ -59,4 +59,6 @@ finalFCS.intra_absAI=AI_intra_abs;
 finalFCS.global=global_mean;
 finalFCS.global_abs=global_absmean;
 
+[svp,~,~]=fileparts(statspath);
+system(['mkdir -p ' svp]);
 save([statspath '.mat'],'finalFCS');

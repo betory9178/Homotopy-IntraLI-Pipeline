@@ -1,9 +1,9 @@
 ID=load('/data/stalxy/TSFC/SubInfo_45XOandNC.mat');
 
-% RTypes1=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_AICHA.txt');
-% RTypes2=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_AICHA.txt');
-% RTypes3=g_ls('/data/stalxy/TSFC/REST/GR/FC_Z/z*_BNA.txt');
-% RTypes4=g_ls('/data/stalxy/TSFC/REST/NGR/FC_Z/z*_BNA.txt');
+% RTypes1=g_ls('/data/stalxy/TSFC/REST_Gretna/GR/AICHA/FC_Z/z*.txt');
+% RTypes2=g_ls('/data/stalxy/TSFC/REST_Gretna/NGR/AICHA/FC_Z/z*.txt');
+% RTypes3=g_ls('/data/stalxy/TSFC/REST_Gretna/GR/BNA/FC_Z/z*.txt');
+% RTypes4=g_ls('/data/stalxy/TSFC/REST_Gretna/NGR/BNA/FC_Z/z*.txt');
 % 
 % getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_GR',RTypes1,'AIC');
 % getFCSTS('/data/stalxy/ArticleJResults/TSFC/FCSmat/TSR_AICHA_NGR',RTypes2,'AIC');
