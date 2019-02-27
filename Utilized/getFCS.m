@@ -15,9 +15,9 @@ pos_flag=1;
 ho_FC=zeros(SubSize,homonum);
 for k=1:SubSize
     [~,tmpname,~]=fileparts(FCmap_path{k});
-    IDS(k,1)=str2num(tmpname(idrange));
+    IDS(k,1)=str2num(tmpname(end-5:end));
     tmpFC=load(FCmap_path{k});
-    tempFC=tril(tmpFC,-1);
+    tempFC=tril(tmpFC.FCMat,-1);
 
     temp=tempFC;
     
