@@ -1,4 +1,4 @@
-function genbaselinemapHCP(FCS,atlasflag,subid,statpath,statename,colorflag)
+function genbaselinemapHCP(FCS,atlasflag,subid,statpath,statename,colorflag,limrange,lisrange)
 % baseline
 
 % statspath1=statpath{2};
@@ -75,14 +75,14 @@ SaveAsAtlasNii(AI_abs_std,[atlasflag '2'],[statspath5,'/',statename],'IntraFC_LI
 
 if colorflag==-1
 %     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 0.6]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 0.8]);
 %     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],'inf','tri','hemi',[0 0.6]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 0.6]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 0.5]);
 else
 %     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 0.3]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 limrange]);
 %     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],'inf','tri','hemi',[0 0.2]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 0.2]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 lisrange]);
 end
 
 % IntraL_CV=IntraL_std ./ abs(IntraL_mean);

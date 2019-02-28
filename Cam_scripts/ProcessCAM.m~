@@ -156,7 +156,6 @@ SaveAsAtlasNii(slmL_TA.t.*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIa
 NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
 PlotCorr([statspath '/'],['LIabsavgxAge_subR'],age,mean(LIabs(:,nid),2),term(gl)+term(GD));
 
-%Age correlation
 for hl=1:max(nid)
     [homoxage_R(1,hl),homoxage_P(1,hl)]=partialcorr(age,Homo(:,hl),[gl,gen]);   
     [liabsxage_R(1,hl),liabsxage_P(1,hl)]=partialcorr(age,LIabs(:,hl),[gl,gen]);   
@@ -165,18 +164,10 @@ end
 pbon=0.05/length(nid);
 homoxage_R_thrd=homoxage_R .* (homoxage_P<pbon);
 liabsxage_R_thrd=liabsxage_R .* (liabsxage_P<pbon);
-SaveAsAtlasNii(homoxage_R,[af '3'],statspath,['AgexHomo' '_R' '_map'],1);
-NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_map','.nii'],'inf','tri','hemi',[-0.3 0.3]);
+SaveAsAtlasNii(homoxage_R,[af '3'],statspath,['AgexHomo' '_R' '_map'],1)
+SaveAsAtlasNii(homoxage_R_thrd,[af '3'],statspath,['AgexHomoxIntraLIabs' '_R' '_THRD'],1)
 
-SaveAsAtlasNii(homoxage_R_thrd,[af '3'],statspath,['AgexHomo' '_R' '_THRD_map'],1);
-NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_THRD_map','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-
-SaveAsAtlasNii(liabsxage_R,[af '3'],statspath,['AgexLIabs' '_R' '_map'],1);
-NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_map','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-
-SaveAsAtlasNii(liabsxage_R_thrd,[af '3'],statspath,['AgexLIabs' '_R' '_THRD_map'],1);
-NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_THRD_map','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-
+    
 % Mediation
 if ~isempty(p_HTA<0.05/length(nid)) && ~isempty(p_LTA<0.05/length(nid))
     age_ef_combined=(p_HTA<0.05/length(nid)) .* (p_LTA<0.05/length(nid));
