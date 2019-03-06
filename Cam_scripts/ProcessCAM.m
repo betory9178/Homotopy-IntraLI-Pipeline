@@ -198,7 +198,9 @@ if sum(age_mediation)>0
     GenOutput=gen;
     HomOutput=Homo(:,age_mediation==1);
     LIaOutput=LIabs(:,age_mediation==1);
-    MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput);
+    HomAvg=mean(HomOutput,2);
+    LIaAvg=mean(LIaOutput,2);
+    MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput,HomAvg,LIaAvg);
     filename = ['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/MediationAge_' nm '.xlsx'];
     writetable(MediationAge,filename,'Sheet',1,'Range','A1');
     SaveAsAtlasNii(age_mediation,[af '3'],'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/',['AgeMediation_' nm '_map'],1)
