@@ -129,6 +129,11 @@ filecorrcppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' 
 % gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{5},'TsR-1vTA',[-10,10],term(age)+term(gen))
 % gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{6},'TsR2vTA',[-10,10],term(age)+term(gen))
 
+%% Part 4 add  Homo&Intra interaction between state 
+geninteractionHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,filecorrcppath{1},'R1vR2');
+geninteractionHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,filecorrcppath{2},'R1vTS');
+geninteractionHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,filecorrcppath{3},'R2vTS');
+
 %% Part5 heritability and its relation 
 % hefp_R1=g_ls('/data/stalxy/Pipeline4JIN/HCP_FCS_heri/rest1*');
 % hefp_R2=g_ls('/data/stalxy/Pipeline4JIN/HCP_FCS_heri/rest2*');
@@ -160,159 +165,160 @@ filecorrcppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' 
 % gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,sufilecrppath{3},'R2vTall',[-10,10])
 
 % Mediation
-[~,~,iS1]=intersect(ID.StID,FCS_Rstate1.subid);
-[~,~,iS2]=intersect(ID.StID,FCS_TstateA.subid);
+% [~,~,iS1]=intersect(ID.StID,FCS_Rstate1.subid);
+% [~,~,iS2]=intersect(ID.StID,FCS_TstateA.subid);
+% 
+% StateGroup=[zeros(887,1);ones(887,1)];
+% Sr1h=FCS_Rstate1.homo(iS1,:);
+% Sth=FCS_TstateA.homo(iS2,:);
+% Sr1la=FCS_Rstate1.intra_absAI(iS1,:);
+% Stla=FCS_TstateA.intra_absAI(iS2,:);
+% if strcmp(af,'AIC')
+%     nsize=192;
+%     nid=[1:174,176:190,192];
+% elseif strcmp(af,'BNA')
+%     nsize=123;
+%     nid=[1:123];
+% end
+% 
+% TsHomo=zeros(1,nsize);
+% TsLIab=zeros(1,nsize);
+% PsHomo=zeros(1,nsize);
+% PsLIab=zeros(1,nsize);
+% PHoxLI=zeros(1,nsize);
+% RHoxLI=zeros(1,nsize);
+% 
+% for i=1:nsize
+%     [~,PsHomo(1,i),~,STHomo]=ttest(Sr1h(:,i),Sth(:,i));
+%     TsHomo(1,i)=STHomo.tstat;
+%     [~,PsLIab(1,i),~,STLIab]=ttest(Sr1la(:,i),Stla(:,i));
+%     TsLIab(1,i)=STLIab.tstat;
+%     [RHoxLI(1,i),PHoxLI(1,i)]=partialcorr(Sr1h(:,i)-Sth(:,i),Sr1la(:,i)-Stla(:,i),[age,gennum]);
+% end
+% state_mediation=(PsHomo<0.05/length(nid)).*(PsLIab<0.05/length(nid)).*(PHoxLI<0.05/length(nid));
+% Ho_flag=TsHomo.*(PsHomo<0.05/length(nid));
+% LI_flag=TsLIab.*(PsLIab<0.05/length(nid));
+% Re_flag=RHoxLI.*(PHoxLI<0.05/length(nid));
+% 
+% if sum(state_mediation)>0
+%     AgeOutput=age;
+%     GenOutput=gennum;
+%     filename = ['/data/stalxy/ArticleJResults/HCP/Results/MediationAge_' nm '.xlsx'];
+%     type1=(Ho_flag>0).*(LI_flag>0).*(Re_flag>0);
+%     type2=(Ho_flag>0).*(LI_flag>0).*(Re_flag<0);
+%     type3=(Ho_flag>0).*(LI_flag<0).*(Re_flag>0);
+%     type4=(Ho_flag>0).*(LI_flag<0).*(Re_flag<0);
+%     type5=(Ho_flag<0).*(LI_flag>0).*(Re_flag>0);
+%     type6=(Ho_flag<0).*(LI_flag>0).*(Re_flag<0);
+%     type7=(Ho_flag<0).*(LI_flag<0).*(Re_flag>0);
+%     type8=(Ho_flag<0).*(LI_flag<0).*(Re_flag<0);
+%     
+%     if sum(type1)>0
+%         
+%         %type1
+%         R1HomAvg=mean(Sr1h(:,logical(type1)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type1)),2);
+%         TaHomAvg=mean(Sth(:,logical(type1)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type1)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',1,'Range','A1');
+%         SaveAsAtlasNii(type1,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation1_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation1_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type2)>0
+%         
+%         %type2
+%         R1HomAvg=mean(Sr1h(:,logical(type2)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type2)),2);
+%         TaHomAvg=mean(Sth(:,logical(type2)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type2)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',2,'Range','A1');
+%         SaveAsAtlasNii(type2,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation2_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation2_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type3)>0
+%         
+%         %type3
+%         R1HomAvg=mean(Sr1h(:,logical(type3)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type3)),2);
+%         TaHomAvg=mean(Sth(:,logical(type3)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type3)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',3,'Range','A1');
+%         SaveAsAtlasNii(type3,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation3_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation3_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type4)>0
+%         
+%         %type4
+%         R1HomAvg=mean(Sr1h(:,logical(type4)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type4)),2);
+%         TaHomAvg=mean(Sth(:,logical(type4)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type4)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',4,'Range','A1');
+%         SaveAsAtlasNii(type4,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation4_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation4_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type5)>0
+%         
+%         %type5
+%         R1HomAvg=mean(Sr1h(:,logical(type5)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type5)),2);
+%         TaHomAvg=mean(Sth(:,logical(type5)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type5)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',5,'Range','A1');
+%         SaveAsAtlasNii(type5,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation5_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation5_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type6)>0
+%         
+%         %type6
+%         R1HomAvg=mean(Sr1h(:,logical(type6)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type6)),2);
+%         TaHomAvg=mean(Sth(:,logical(type6)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type6)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',6,'Range','A1');
+%         SaveAsAtlasNii(type6,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation6_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation6_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type7)>0
+%         
+%         %type7
+%         R1HomAvg=mean(Sr1h(:,logical(type7)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type7)),2);
+%         TaHomAvg=mean(Sth(:,logical(type7)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type7)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',7,'Range','A1');
+%         SaveAsAtlasNii(type7,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation7_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation7_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%         
+%     end
+%     if sum(type8)>0
+%         
+%         %type8
+%         R1HomAvg=mean(Sr1h(:,logical(type8)),2);
+%         R1LIaAvg=mean(Sr1la(:,logical(type8)),2);
+%         TaHomAvg=mean(Sth(:,logical(type8)),2);
+%         TaLIaAvg=mean(Stla(:,logical(type8)),2);
+%         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
+%         writetable(MediationState,filename,'Sheet',8,'Range','A1');
+%         SaveAsAtlasNii(type8,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation8_' nm '_map'],1)
+%         NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation8_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+%     end
+%     
+% end
 
-StateGroup=[zeros(887,1);ones(887,1)];
-Sr1h=FCS_Rstate1.homo(iS1,:);
-Sth=FCS_TstateA.homo(iS2,:);
-Sr1la=FCS_Rstate1.intra_absAI(iS1,:);
-Stla=FCS_TstateA.intra_absAI(iS2,:);
-if strcmp(af,'AIC')
-    nsize=192;
-    nid=[1:174,176:190,192];
-elseif strcmp(af,'BNA')
-    nsize=123;
-    nid=[1:123];
-end
-
-TsHomo=zeros(1,nsize);
-TsLIab=zeros(1,nsize);
-PsHomo=zeros(1,nsize);
-PsLIab=zeros(1,nsize);
-PHoxLI=zeros(1,nsize);
-RHoxLI=zeros(1,nsize);
-
-for i=1:nsize
-    [~,PsHomo(1,i),~,STHomo]=ttest(Sr1h(:,i),Sth(:,i));
-    TsHomo(1,i)=STHomo.tstat;
-    [~,PsLIab(1,i),~,STLIab]=ttest(Sr1la(:,i),Stla(:,i));
-    TsLIab(1,i)=STLIab.tstat;
-    [RHoxLI(1,i),PHoxLI(1,i)]=partialcorr(Sr1h(:,i)-Sth(:,i),Sr1la(:,i)-Stla(:,i),[age,gennum]);
-end
-state_mediation=(PsHomo<0.05/length(nid)).*(PsLIab<0.05/length(nid)).*(PHoxLI<0.05/length(nid));
-Ho_flag=TsHomo.*(PsHomo<0.05/length(nid));
-LI_flag=TsLIab.*(PsLIab<0.05/length(nid));
-Re_flag=RHoxLI.*(PHoxLI<0.05/length(nid));
-
-if sum(state_mediation)>0
-    AgeOutput=age;
-    GenOutput=gennum;
-    filename = ['/data/stalxy/ArticleJResults/HCP/Results/MediationAge_' nm '.xlsx'];
-    type1=(Ho_flag>0).*(LI_flag>0).*(Re_flag>0);
-    type2=(Ho_flag>0).*(LI_flag>0).*(Re_flag<0);
-    type3=(Ho_flag>0).*(LI_flag<0).*(Re_flag>0);
-    type4=(Ho_flag>0).*(LI_flag<0).*(Re_flag<0);
-    type5=(Ho_flag<0).*(LI_flag>0).*(Re_flag>0);
-    type6=(Ho_flag<0).*(LI_flag>0).*(Re_flag<0);
-    type7=(Ho_flag<0).*(LI_flag<0).*(Re_flag>0);
-    type8=(Ho_flag<0).*(LI_flag<0).*(Re_flag<0);
-    
-    if sum(type1)>0
-        
-        %type1
-        R1HomAvg=mean(Sr1h(:,logical(type1)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type1)),2);
-        TaHomAvg=mean(Sth(:,logical(type1)),2);
-        TaLIaAvg=mean(Stla(:,logical(type1)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',1,'Range','A1');
-        SaveAsAtlasNii(type1,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation1_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation1_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type2)>0
-        
-        %type2
-        R1HomAvg=mean(Sr1h(:,logical(type2)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type2)),2);
-        TaHomAvg=mean(Sth(:,logical(type2)),2);
-        TaLIaAvg=mean(Stla(:,logical(type2)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',2,'Range','A1');
-        SaveAsAtlasNii(type2,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation2_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation2_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type3)>0
-        
-        %type3
-        R1HomAvg=mean(Sr1h(:,logical(type3)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type3)),2);
-        TaHomAvg=mean(Sth(:,logical(type3)),2);
-        TaLIaAvg=mean(Stla(:,logical(type3)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',3,'Range','A1');
-        SaveAsAtlasNii(type3,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation3_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation3_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type4)>0
-        
-        %type4
-        R1HomAvg=mean(Sr1h(:,logical(type4)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type4)),2);
-        TaHomAvg=mean(Sth(:,logical(type4)),2);
-        TaLIaAvg=mean(Stla(:,logical(type4)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',4,'Range','A1');
-        SaveAsAtlasNii(type4,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation4_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation4_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type5)>0
-        
-        %type5
-        R1HomAvg=mean(Sr1h(:,logical(type5)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type5)),2);
-        TaHomAvg=mean(Sth(:,logical(type5)),2);
-        TaLIaAvg=mean(Stla(:,logical(type5)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',5,'Range','A1');
-        SaveAsAtlasNii(type5,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation5_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation5_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type6)>0
-        
-        %type6
-        R1HomAvg=mean(Sr1h(:,logical(type6)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type6)),2);
-        TaHomAvg=mean(Sth(:,logical(type6)),2);
-        TaLIaAvg=mean(Stla(:,logical(type6)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',6,'Range','A1');
-        SaveAsAtlasNii(type6,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation6_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation6_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type7)>0
-        
-        %type7
-        R1HomAvg=mean(Sr1h(:,logical(type7)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type7)),2);
-        TaHomAvg=mean(Sth(:,logical(type7)),2);
-        TaLIaAvg=mean(Stla(:,logical(type7)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',7,'Range','A1');
-        SaveAsAtlasNii(type7,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation7_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation7_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-        
-    end
-    if sum(type8)>0
-        
-        %type8
-        R1HomAvg=mean(Sr1h(:,logical(type8)),2);
-        R1LIaAvg=mean(Sr1la(:,logical(type8)),2);
-        TaHomAvg=mean(Sth(:,logical(type8)),2);
-        TaLIaAvg=mean(Stla(:,logical(type8)),2);
-        MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
-        writetable(MediationState,filename,'Sheet',8,'Range','A1');
-        SaveAsAtlasNii(type8,[af '2'],'/data/stalxy/ArticleJResults/HCP/Results/',['StateMediation8_' nm '_map'],1)
-        NiiProj2Surf(['/data/stalxy/ArticleJResults/HCP/Results/','/',['StateMediation8_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-    end
-    
-end
 % if sum(state_mediation)>0
 %     AgeOutput=age;
 %     GenOutput=gennum;

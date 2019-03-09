@@ -66,9 +66,10 @@ CLI_mean=mean(CLI_intra_abs)';
 
 %% Plot
 
-PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xCAMy_Homo_' af '_RofMeanMap'],HHomo_mean1(nid),CHomo_mean(nid))
-PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP2xCAMy_Homo_' af '_RofMeanMap'],HLI_mean1(nid),CLI_mean(nid))
-PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xCAMy_LIabs_' af '_RofMeanMap'],HHomo_mean2(nid),CHomo_mean(nid))
-PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP2xCAMy_LIabs_' af '_RofMeanMap'],HLI_mean2(nid),CLI_mean(nid))
-
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xCAMy_Homo_' af '_RofMeanMap'],HHomo_mean1(nid),CHomo_mean(nid),[],[],[0,2,0,2])
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xCAMy_LIabs_' af '_RofMeanMap'],HLI_mean1(nid),CLI_mean(nid),[],[],[0,1,0,1])
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP2xCAMy_Homo_' af '_RofMeanMap'],HHomo_mean2(nid),CHomo_mean(nid),[],[],[0,2,0,2])
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP2xCAMy_LIabs_' af '_RofMeanMap'],HLI_mean2(nid),CLI_mean(nid),[],[],[0,1,0,1])
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xHCP2_Homo_' af '_RofMeanMap'],HHomo_mean1(nid),HHomo_mean2(nid),[],[],[0,2,0,2])
+PlotCorr('/data/stalxy/ArticleJResults/Similarity_HCPxCAM/',['HCP1xHCP2_LIabs_' af '_RofMeanMap'],HLI_mean1(nid),HLI_mean2(nid),[],[],[0,1,0,1])
 end

@@ -1,0 +1,34 @@
+function [Fmap] = geninteractionHCP(FCS1,FCS2,atlasflag,subid,statspath,statename)
+%UNTITLED5 此处显示有关此函数的摘要
+%   此处显示详细说明
+if strcmp(atlasflag,'AIC')
+    nid=[1:174,176:190,192];
+elseif strcmp(atlasflag,'BNA')
+    nid=[1:123];
+end
+
+[~,~,iS]=intersect(subid,FCS.subid);
+
+ho_FC1=FCS1.homo(iS,:);
+LI_abs1=FCS1.intra_absAI(iS,:);
+
+ho_FC2=FCS2.homo(iS,:);
+LI_abs2=FCS2.intra_absAI(iS,:);
+
+for i=1:length(iS)
+Homo=[ho_FC1(1,nid),ho_FC2(1,nid)];
+LIabs=[LI_abs1(1,nid),LI_abs2(1,nid)];
+Group=var2fac([ones(1,length(nid)),ones(1,length(nid))*2],{'State1','State2'});
+M1=1+term(Homo')+term(Group');
+M2=1+term(Homo')+term(Group')+term(Homo')*term(Group');
+
+slm1=SurfStatLinMod(M1,LIabs');
+slm2=SurfStatLinMod(M2,LIabs');
+
+Suf
+
+
+end
+
+end
+

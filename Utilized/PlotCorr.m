@@ -1,5 +1,5 @@
 function [r,p] = PlotCorr(savepath,tname,VarA,VarB,Cov,Group)
-
+% ,range
 if nargin<4
     fig = figure,hist(VarA),
     title(tname,'Interpreter','none'),
@@ -28,6 +28,7 @@ if iscolumn(VarA) && iscolumn(VarB)
     end
     fig = figure,SurfStatPlot(term(VarA),term(VarB),1+term(Cov),term(Group),'LineWidth',2, 'MarkerSize',10),
     title([tname ' r=' num2str(r) ' p=' num2str(p)],'Interpreter','none'),
+%     axis(range),
     saveas(fig,[savepath tname '.tif'],'tif'),
     close(fig);
     

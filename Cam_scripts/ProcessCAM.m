@@ -41,16 +41,20 @@ finalid=ID.subject_ID;
 [Oid,Ofinal,OCam]=intersect(finalid,CamID((Caminfo(:,6)==3)));
 [~,~,ACam]=intersect(finalid,CamID);
 if k==1 || k==3
+%     limrange=0.8;
+%     lisrange=0.5;
     limrange=0.8;
     lisrange=0.5;
 elseif k==2 || k==4
-    limrange=0.3;
+%     limrange=0.3;
+%     lisrange=0.2;
+    limrange=0.2;
     lisrange=0.2;
 end
-genbaselinemapCAM(FCS_Rstate,af,finalid,filepath,['All_' nm],0,limrange,lisrange)
-genbaselinemapCAM(FCS_Rstate,af,Yid,filepath,['Youth_' nm],0,limrange,lisrange)
-genbaselinemapCAM(FCS_Rstate,af,Mid,filepath,['Middle_' nm],0,limrange,lisrange)
-genbaselinemapCAM(FCS_Rstate,af,Oid,filepath,['Old_' nm],0,limrange,lisrange)
+% genbaselinemapCAM(FCS_Rstate,af,finalid,filepath,['All_' nm],0,limrange,lisrange)
+% genbaselinemapCAM(FCS_Rstate,af,Yid,filepath,['Youth_' nm],0,limrange,lisrange)
+% genbaselinemapCAM(FCS_Rstate,af,Mid,filepath,['Middle_' nm],0,limrange,lisrange)
+% genbaselinemapCAM(FCS_Rstate,af,Oid,filepath,['Old_' nm],0,limrange,lisrange)
 
 
 %% Part2 compare between STATES
@@ -76,11 +80,11 @@ Aage=Caminfo(ACam,1);
 Agen=Caminfo(ACam,4);
 Agender=Camtext(ACam+1,4);
 
-
-[ALL_HxI_Rmap,ALL_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,finalid,term(Aage)+term(Agender),filecorrpath{1},['All_' nm],[Aage,Agen],[-0.6,0.6])
-[Y_HxI_Rmap,Y_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Yid,term(Yage)+term(Ygender),filecorrpath{4},['Youth_' nm],[Yage,Ygen],[-0.6,0.6])
-[M_HxI_Rmap,M_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Mid,term(Mage)+term(Mgender),filecorrpath{2},['Middle_' nm],[Mage,Mgen],[-0.6,0.6])
-[O_HxI_Rmap,O_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Oid,term(Oage)+term(Ogender),filecorrpath{3},['Old_' nm],[Oage,Ogen],[-0.6,0.6])
+% 
+% [ALL_HxI_Rmap,ALL_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,finalid,term(Aage)+term(Agender),filecorrpath{1},['All_' nm],[Aage,Agen],[-0.6,0.6])
+% [Y_HxI_Rmap,Y_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Yid,term(Yage)+term(Ygender),filecorrpath{4},['Youth_' nm],[Yage,Ygen],[-0.6,0.6])
+% [M_HxI_Rmap,M_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Mid,term(Mage)+term(Mgender),filecorrpath{2},['Middle_' nm],[Mage,Mgen],[-0.6,0.6])
+% [O_HxI_Rmap,O_HxI_Rsub]=gencorrmapCAM(FCS_Rstate,af,Oid,term(Oage)+term(Ogender),filecorrpath{3},['Old_' nm],[Oage,Ogen],[-0.6,0.6])
 
 
 %% Part4 compare relations of HomoxIntra across STATES
@@ -132,7 +136,9 @@ NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf','tri','hemi'
 SaveAsAtlasNii(slmH_TA.t.*(p_HTA<0.05/length(nid)),[af '3'],statspath,['AgeONhomo' '_T' '_map_thresh'],1)
 NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
 
-PlotCorr([statspath '/'],['HomoavgxAge_subR'],age,mean(Homo(:,nid),2),term(gl)+term(GD));
+% PlotCorr([statspath '/'],['HomoavgxAge_subR'],age,mean(Homo(:,nid),2),term(gl)+term(GD));
+PlotCorr([statspath '/'],['HomoSigPosxAge_subR'],age,mean(Homo(:,logical(slmH_TA.t.*(p_HTA<0.05/length(nid))>0)),2),term(gl)+term(GD));
+PlotCorr([statspath '/'],['HomoSigNegxAge_subR'],age,mean(Homo(:,logical(slmH_TA.t.*(p_HTA<0.05/length(nid))<0)),2),term(gl)+term(GD));
 
 %LIabs
 
@@ -154,7 +160,10 @@ SaveAsAtlasNii(slmL_TA.t,[af '3'],statspath,['AgeONLIabs' '_T' '_map'],1)
 NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map'],'.nii'],'inf','tri','hemi',[-5,5]);
 SaveAsAtlasNii(slmL_TA.t.*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIabs' '_T' '_map_thresh'],1)
 NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[-5,5]);
-PlotCorr([statspath '/'],['LIabsavgxAge_subR'],age,mean(LIabs(:,nid),2),term(gl)+term(GD));
+% PlotCorr([statspath '/'],['LIabsavgxAge_subR'],age,mean(LIabs(:,nid),2),term(gl)+term(GD));
+
+PlotCorr([statspath '/'],['LIabsSigPosxAge_subR'],age,mean(LIabs(:,logical(slmL_TA.t.*(p_LTA<0.05/length(nid))>0)),2),term(gl)+term(GD));
+PlotCorr([statspath '/'],['LIabsSigNegxAge_subR'],age,mean(LIabs(:,logical(slmL_TA.t.*(p_LTA<0.05/length(nid))<0)),2),term(gl)+term(GD));
 
 %Age correlation
 for hl=1:max(nid)
@@ -176,39 +185,39 @@ NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_map','.nii'],'inf','tri','hemi',[
 
 SaveAsAtlasNii(liabsxage_R_thrd,[af '3'],statspath,['AgexLIabs' '_R' '_THRD_map'],1);
 NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_THRD_map','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-
-% Mediation
-if ~isempty(p_HTA<0.05/length(nid)) && ~isempty(p_LTA<0.05/length(nid))
-    age_ef_combined=(p_HTA<0.05/length(nid)) .* (p_LTA<0.05/length(nid));
-else
-    age_ef_combined=[];
-end
-HxLI_R=[];
-HxLI_P=[];
-for i=1:max(nid)
-   [HxLI_R(1,i),HxLI_P(1,i)]=partialcorr(Homo(:,i),LIabs(:,i),[age,gen,gl]);
-end
-if ~isempty(HxLI_P<0.05/length(nid)) && ~isempty(age_ef_combined)
-    age_mediation=age_ef_combined .* (HxLI_P<0.05/length(nid));
-else
-    age_mediation=1;
-end
-if sum(age_mediation)>0
-    AgeOutput=age;
-    GenOutput=gen;
-    HomOutput=Homo(:,age_mediation==1);
-    LIaOutput=LIabs(:,age_mediation==1);
-    HomAvg=mean(HomOutput,2);
-    LIaAvg=mean(LIaOutput,2);
-    MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput,HomAvg,LIaAvg);
-    filename = ['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/MediationAge_' nm '.xlsx'];
-    writetable(MediationAge,filename,'Sheet',1,'Range','A1');
-    SaveAsAtlasNii(age_mediation,[af '3'],'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/',['AgeMediation_' nm '_map'],1)
-    NiiProj2Surf(['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/','/',['AgeMediation_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
-end
+% 
+% % Mediation
+% if ~isempty(p_HTA<0.05/length(nid)) && ~isempty(p_LTA<0.05/length(nid))
+%     age_ef_combined=(p_HTA<0.05/length(nid)) .* (p_LTA<0.05/length(nid));
+% else
+%     age_ef_combined=[];
+% end
+% HxLI_R=[];
+% HxLI_P=[];
+% for i=1:max(nid)
+%    [HxLI_R(1,i),HxLI_P(1,i)]=partialcorr(Homo(:,i),LIabs(:,i),[age,gen,gl]);
+% end
+% if ~isempty(HxLI_P<0.05/length(nid)) && ~isempty(age_ef_combined)
+%     age_mediation=age_ef_combined .* (HxLI_P<0.05/length(nid));
+% else
+%     age_mediation=1;
+% end
+% if sum(age_mediation)>0
+%     AgeOutput=age;
+%     GenOutput=gen;
+%     HomOutput=Homo(:,age_mediation==1);
+%     LIaOutput=LIabs(:,age_mediation==1);
+%     HomAvg=mean(HomOutput,2);
+%     LIaAvg=mean(LIaOutput,2);
+%     MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput,HomAvg,LIaAvg);
+%     filename = ['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/MediationAge_' nm '.xlsx'];
+%     writetable(MediationAge,filename,'Sheet',1,'Range','A1');
+%     SaveAsAtlasNii(age_mediation,[af '3'],'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/',['AgeMediation_' nm '_map'],1)
+%     NiiProj2Surf(['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/','/',['AgeMediation_' nm '_map'],'.nii'],'inf','tri','hemi',[0,1]);
+% end
 
 %HomoxLIabs Plot
-PlotCorr([statspath '/'],['HomoxLIabsRxAge_subR'],age,ALL_HxI_Rsub.homoxintraLIabs_R,term(gl)+term(GD));
+% PlotCorr([statspath '/'],['HomoxLIabsRxAge_subR'],age,ALL_HxI_Rsub.homoxintraLIabs_R,term(gl)+term(GD));
 
 %HomoxLIabs
 agetemp={Age,AgeGroup};
@@ -242,6 +251,10 @@ for j=1:2
     NiiProj2Surf([statspath,'/',[agename{j},'xLIabsONHomo' '_T' '_map'],'.nii'],'inf','tri','hemi',[0,3]);
     SaveAsAtlasNii(slmLaxH_FAG.t.*(p_LaxH_FTAG<0.05/length(nid)),[af '3'],statspath,[agename{j},'xLIabsONHomo' '_T' '_map_thresh'],1)
     NiiProj2Surf([statspath,'/',[agename{j},'xLIabsONHomo' '_T' '_map_thresh'],'.nii'],'inf','tri','hemi',[0,3]);
+    
+    PlotCorr([statspath '/'],['HomoxAgeOnLIabs'],mean(Homo(:,logical(p_HxLa_FTAG<0.05/length(nid))),2),mean(LIabs(:,logical(p_HxLa_FTAG<0.05/length(nid))),2),term(gl)+term(GD),TmpAge);
+
+
 end
 
 end

@@ -49,37 +49,37 @@ clf;
 %     ones(511,1)    (0:510)'/511  zeros(511,1)];
 % cm(1,:)=ones(1,3)*0.7;
 
-% cm=spectral(512);
-% cm(end-26:end,:)=[];
+cm=spectral(512);
+cm(end-26:end,:)=[];
 
 
-cm=parula;
-
-% cmorig=parula;
-% n = length(cmorig);
-% X0 = linspace (1, n, 1024);
-% cm = interp1(1:n,cmorig,X0);
-
-% clim = [min(caxis_range),max(caxis_range)];
-% if clim(1) ==0
-%     cm=cm(round(size(cm,1)/2):end,:);
-%     Pos=[1];
-%     cm(Pos, :)=repmat([0.75, 0.75, 0.75],1,1);
-% elseif clim(2) ==0
-%     cm=cm(1:round(size(cm,1)/2),:);
-%     Pos=[size(cm,1)-1:size(cm,1)];
-%     cm(Pos, :)=repmat([0.75, 0.75, 0.75],2,1);
-%    
-% elseif clim(1)*clim(2) > 0
-%     Pos=0;  
-% elseif clim(1)+clim(2)==0
-%     Pos=floor(size(cm,1)/2)+1;
-%     cm(Pos, :)=[0.75, 0.75, 0.75];
-% else   
-%     Pos=floor(size(cm,1)*abs(clim(1))/(abs(clim(1))+abs(clim(2))))+1;
-%     cm(Pos, :)=[0.75, 0.75, 0.75];
+% cm=parula;
 % 
-% end
+% % cmorig=parula;
+% % n = length(cmorig);
+% % X0 = linspace (1, n, 1024);
+% % cm = interp1(1:n,cmorig,X0);
+
+clim = [min(caxis_range),max(caxis_range)];
+if clim(1) ==0
+    cm=cm(round(size(cm,1)/2):end,:);
+    Pos=[1];
+    cm(Pos, :)=repmat([0.75, 0.75, 0.75],1,1);
+elseif clim(2) ==0
+    cm=cm(1:round(size(cm,1)/2),:);
+    Pos=[size(cm,1)-1:size(cm,1)];
+    cm(Pos, :)=repmat([0.75, 0.75, 0.75],2,1);
+   
+elseif clim(1)*clim(2) > 0
+    Pos=0;  
+elseif clim(1)+clim(2)==0
+    Pos=floor(size(cm,1)/2)+1;
+    cm(Pos, :)=[0.75, 0.75, 0.75];
+else   
+    Pos=floor(size(cm,1)*abs(clim(1))/(abs(clim(1))+abs(clim(2))))+1;
+    cm(Pos, :)=[0.75, 0.75, 0.75];
+
+end
 
 colormap(cm);
 % 
