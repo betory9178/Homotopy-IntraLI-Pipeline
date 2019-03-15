@@ -70,9 +70,12 @@ if strcmp(hemitype,'bil')
     close(a);
     
 elseif strcmp(hemitype,'hemi')
-    b=figure,SurfStatViewData_lxy(sml,avsurfl, cbm, niiname),
-    saveas(b,[niipath '/' niiname '.tif'],'tif');
-    close(b)
+    b1=figure,SurfStatViewData_lxy(sml,avsurfl, cbm, niiname,'Vert'),
+    saveas(b1,[niipath '/' niiname '_Vert.tif'],'tif');
+    close(b1)
+    b2=figure,SurfStatViewData_lxy(sml,avsurfl, cbm, niiname,'Hori'),
+    saveas(b2,[niipath '/' niiname '_Hori.tif'],'tif');
+    close(b2)
 end
 
 end

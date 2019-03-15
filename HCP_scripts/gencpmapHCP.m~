@@ -18,7 +18,7 @@ FCS_global2=FCS2.global(iS2,:);
 ho_FC1=FCS1.homo(iS1,:);
 % intra_LL1=FCS1.intra_L(iS1,:);
 % intra_RR1=FCS1.intra_R(iS1,:);
-LI_intra1=FCS1.intra_AI(iS1,:);
+% LI_intra1=FCS1.intra_AI(iS1,:);
 LI_intra_abs1=FCS1.intra_absAI(iS1,:);
 
 % IntraL_mean1=mean(intra_LL1)';
@@ -30,7 +30,7 @@ LI_abs_mean1=mean(LI_intra_abs1)';
 ho_FC2=FCS2.homo(iS2,:);
 % intra_LL2=FCS2.intra_L(iS2,:);
 % intra_RR2=FCS2.intra_R(iS2,:);
-LI_intra2=FCS2.intra_AI(iS2,:);
+% LI_intra2=FCS2.intra_AI(iS2,:);
 LI_intra_abs2=FCS2.intra_absAI(iS2,:);
 
 % IntraL_mean2=mean(intra_LL2)';
@@ -61,7 +61,7 @@ gt_intraLIabs=tst5.tstat;
 
 for j=1:size(ho_FC1,2)
     
-    [~,p_homot(1,j),~,stats1]=ttest(ho_FC2(:,j),ho_FC1(:,j));
+    [~,p_homot(1,j),~,stats1]=ttest(ho_FC1(:,j),ho_FC2(:,j));
     t_homot(1,j)=stats1.tstat;     
 %     [~,p_intraLt(1,j),~,stats2]=ttest(intra_LL1(:,j),intra_LL2(:,j));
 %     t_intraLt(1,j)=stats2.tstat;      
@@ -69,7 +69,7 @@ for j=1:size(ho_FC1,2)
 %     t_intraRt(1,j)=stats3.tstat;      
 %     [~,p_intraLIt(1,j),~,stats4]=ttest(LI_intra1(:,j),LI_intra2(:,j));
 %     t_intraLIt(1,j)=stats4.tstat;  
-    [~,p_intraLIabst(1,j),~,stats5]=ttest(LI_intra_abs2(:,j),LI_intra_abs1(:,j));
+    [~,p_intraLIabst(1,j),~,stats5]=ttest(LI_intra_abs1(:,j),LI_intra_abs2(:,j));
     t_intraLIabst(1,j)=stats5.tstat;  
     [homoc_R(1,j),homoc_P(1,j)]=partialcorr(ho_FC1(:,j),ho_FC2(:,j),[FCS_global1,FCS_global2,COV]);     
 %     [intraLc_R(1,j),intraLc_P(1,j)]=corr(intra_LL1(:,j),intra_LL2(:,j));    
@@ -77,16 +77,14 @@ for j=1:size(ho_FC1,2)
 %     [intraLIc_R(1,j),intraLIc_P(1,j)]=corr(LI_intra1(:,j),LI_intra2(:,j));   
     [intraLIabsc_R(1,j),intraLIabsc_P(1,j)]=partialcorr(LI_intra_abs1(:,j),LI_intra_abs2(:,j),[FCS_global1,FCS_global2,COV]);
 
-%     [sub_R(1,j),sub_P(1,j)]=partialcorr(ho_FC2(:,j)-ho_FC1(:,j),LI_intra_abs2(:,j)-LI_intra_abs1(:,j),[FCS_global2-FCS_global1,COV]);
-    [sub_R(1,j),sub_P(1,j)]=corr(ho_FC2(:,j)-ho_FC1(:,j),LI_intra_abs2(:,j)-LI_intra_abs1(:,j));
+    [sub_R(1,j),sub_P(1,j)]=partialcorr(ho_FC2(:,j)-ho_FC1(:,j),LI_intra_abs2(:,j)-LI_intra_abs1(:,j),[FCS_global2-FCS_global1,COV]);
     
     ICC_homo(1,j)=IPN_icc([ho_FC1(:,j),ho_FC2(:,j)],1,'single');
     ICC_LIabs(1,j)=IPN_icc([LI_intra_abs1(:,j),LI_intra_abs2(:,j)],1,'single');
-    ICC_LI(1,j)=IPN_icc([LI_intra1(:,j),LI_intra2(:,j)],1,'single');
+
 end
 ICC_homo(isnan(ICC_homo))=0;
 ICC_LIabs(isnan(ICC_LIabs))=0;
-ICC_LI(isnan(ICC_LI))=0;
 
 pbon=0.05/(length(nid));
 t_homot_thrd=t_homot .* (p_homot<pbon);
@@ -125,12 +123,11 @@ if figflag==1
 %     SaveAsAtlasNii(intraLIc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLI' '_R' '_THRD'],1)
     SaveAsAtlasNii(intraLIabsc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_IntraLIabs' '_R' '_THRD'],1)
     
-    SaveAsAtlasNii(sub_R,[atlasflag '2'],[statspath,'/',statename],['_SUB' '_R' '_map'],1)
-    SaveAsAtlasNii(sub_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_SUB' '_R' '_THRD'],1)
+    SaveAsAtlasNii(sub_R,[atlasflag '2'],[statspath,'/',statename],['_SUB_' '_R' '_map'],1)
+    SaveAsAtlasNii(sub_R_thrd,[atlasflag '2'],[statspath,'/',statename],['SUB' '_R' '_THRD'],1)
 
     SaveAsAtlasNii(ICC_homo,[atlasflag '2'],[statspath,'/',statename],'_ICC_Homo',1)
     SaveAsAtlasNii(ICC_LIabs,[atlasflag '2'],[statspath,'/',statename],'_ICC_IntraLIabs',1)
-    SaveAsAtlasNii(ICC_LI,[atlasflag '2'],[statspath,'/',statename],'_ICC_IntraLI',1)
     SaveAsAtlasNii(LI_abs_mean2-LI_abs_mean1,[atlasflag '2'],[statspath,'/',statename],'_IntraLIabs_2sub1',1)
 
     NiiProj2Surf([statspath,'/',statename,'_HomoFC' '_T' '_map','.nii'],'inf','tri','hemi',cba);
@@ -155,23 +152,18 @@ if figflag==1
 %     NiiProj2Surf([statspath,'/',statename,'_IntraLI' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
     NiiProj2Surf([statspath,'/',statename,'_IntraLIabs' '_R' '_THRD','.nii'],'inf','tri','hemi',[0,0.5]);
     
-    NiiProj2Surf([statspath,'/',statename,'_SUB' '_R' '_THRD','.nii'],'inf','tri','hemi',[-0.6,0.6]);
-    NiiProj2Surf([statspath,'/',statename,'_SUB' '_R' '_THRD','.nii'],'inf','tri','hemi',[-0.6,0.6]);
+    NiiProj2Surf([statspath,'/',statename,'_IntraLIabs' '_R' '_THRD','.nii'],'inf','tri','hemi',[0,0.5]);
+    NiiProj2Surf([statspath,'/',statename,'_IntraLIabs' '_R' '_THRD','.nii'],'inf','tri','hemi',[0,0.5]);
 
     NiiProj2Surf([statspath,'/',statename,'_ICC_Homo','.nii'],'inf','tri','hemi',[0,1]);
     NiiProj2Surf([statspath,'/',statename,'_ICC_IntraLIabs','.nii'],'inf','tri','hemi',[0,0.5]);
-    NiiProj2Surf([statspath,'/',statename,'_ICC_IntraLI','.nii'],'inf','tri','hemi',[0,1]);
-    
-    NiiProj2Surf([statspath,'/',statename,'_IntraLIabs_2sub1','.nii'],'inf','tri','hemi',[-0.1,0.1]);
+    NiiProj2Surf([statspath,'/',statename,'_IntraLIabs_2sub1','.nii'],'inf','tri','hemi',[-1,1]);
 
     PlotCorr([statspath '/'],[statename '_homo_avgsubR'],mean(ho_FC1,2),mean(ho_FC2,2),term(FCS_global1)+term(FCS_global2)+cov);
 %     PlotCorr([statspath '/'],[statename '_intraL_avgsubR'],mean(intra_LL1,2),mean(intra_LL2,2));
 %     PlotCorr([statspath '/'],[statename '_intraR_avgsubR'],mean(intra_RR1,2),mean(intra_RR2,2));
 %     PlotCorr([statspath '/'],[statename '_intraLI_avgsubR'],mean(LI_intra1,2),mean(LI_intra2,2));
     PlotCorr([statspath '/'],[statename '_intraLIabs_avgsubR'],mean(LI_intra_abs1,2),mean(LI_intra_abs2,2),term(FCS_global1)+term(FCS_global2)+cov);
-    
-    SysDiv2Plot('Hierarchy',atlasflag,[0,2],[statename,'LI_abs_SUB'],statspath,LI_intra_abs2-LI_intra_abs1);
-
 end
 
 % single sub

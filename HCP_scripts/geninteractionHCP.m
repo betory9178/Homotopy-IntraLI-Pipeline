@@ -33,7 +33,7 @@ P_HxLa(i,1)=1-fcdf(slmF.t,slmF.df(1),slmF.df(2));
 
 end
 
-hist_lxy(F_HxLa,mean(F_HxLa),statspath,[statename '_HomoxIntraLIabs_mapFtest_hist']);
+hist_lxy(F_HxLa,13.11,statspath,[statename '_HomoxIntraLIabs_mapFtest_hist']);
 hist_lxy(P_HxLa,0.05/length(887),statspath,[statename '_HomoxIntraLIabs_mapFtestP_hist']);
 
 end

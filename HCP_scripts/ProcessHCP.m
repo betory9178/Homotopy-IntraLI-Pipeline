@@ -39,6 +39,7 @@ FCS_MTvR2path=g_ls('/data/stalxy/ArticleJResults/HCP/FCSmat/MTaskcpRest2_*.mat')
 
 atlas_flag={'AIC','AIC','BNA','BNA'};
 for k=1:4
+    
 [~,nm,~]=fileparts(FCS_R1path{k});
 af=atlas_flag{k};
 
@@ -72,12 +73,12 @@ elseif k==2 || k==4
     lisrange=0.2;
 end
 
-% genbaselinemapHCP(FCS_Rstate1,af,ID.StID,filepath,'Rstate1_',0,limrange,lisrange)
-% genbaselinemapHCP(FCS_Rstate2,af,ID.StID,filepath,'Rstate2_',0,limrange,lisrange)
-% genbaselinemapHCP(FCS_TstateA,af,ID.StID,filepath,'TstateA_',0,limrange,lisrange)
-% 
-% genbaselinemapHCP(FCS_TvRs1,af,ID.StID,filepath,'TvRstate1_',-1,limrange,lisrange)
-% genbaselinemapHCP(FCS_TvRs2,af,ID.StID,filepath,'TvRstate2_',-1,limrange,lisrange)
+genbaselinemapHCP(FCS_Rstate1,af,ID.StID,filepath,'Rstate1_',0,limrange,lisrange)
+genbaselinemapHCP(FCS_Rstate2,af,ID.StID,filepath,'Rstate2_',0,limrange,lisrange)
+genbaselinemapHCP(FCS_TstateA,af,ID.StID,filepath,'TstateA_',0,limrange,lisrange)
+
+genbaselinemapHCP(FCS_TvRs1,af,ID.StID,filepath,'TvRstate1_',-1,limrange,lisrange)
+genbaselinemapHCP(FCS_TvRs2,af,ID.StID,filepath,'TvRstate2_',-1,limrange,lisrange)
 
 % filesppath=g_ls('/data/stalxy/Pipeline4JIN/ResultsRe/SpecialCheck/*/');
 
@@ -90,13 +91,13 @@ system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/TsvRs1
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/TsvRs2vsTstate']);
 filecppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/*/']);
 
-% gencpmapHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecppath{1},'R1vR2',[-5,5],[age,gennum],[-1,1],[0,0.9])
-% gencpmapHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{2},'R1vTA',[-10,120],[age,gennum],[-1,1],[0,0.6])
-% gencpmapHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{3},'R2vTA',[-10,120],[age,gennum],[-1,1],[0,0.6])
-% 
-% gencpmapHCP(FCS_TvRs1,FCS_TvRs2,af,ID.StID,term(age)+term(gen),filecppath{4},'TsR1vTsR2',[-5,5],[age,gennum],[-1,1],[0,0.9])
-% gencpmapHCP(FCS_TvRs1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{5},'TsR1vTA',[-120,10],[age,gennum],[0,0.5],[-30,30])
-% gencpmapHCP(FCS_TvRs2,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{6},'TsR2vTA',[-120,10],[age,gennum],[0,0.5],[-30,30])
+gencpmapHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecppath{1},'R1vR2',[-5,5],[age,gennum],[-1,1],[0,0.9])
+gencpmapHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{2},'R1vTA',[-120,10],[age,gennum],[-1,1],[0,0.6])
+gencpmapHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{3},'R2vTA',[-10,120],[age,gennum],[-1,1],[0,0.6])
+
+gencpmapHCP(FCS_TvRs1,FCS_TvRs2,af,ID.StID,term(age)+term(gen),filecppath{4},'TsR1vTsR2',[-5,5],[age,gennum],[-1,1],[0,0.9])
+gencpmapHCP(FCS_TvRs1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{5},'TsR1vTA',[-120,10],[age,gennum],[0,0.5],[-30,30])
+gencpmapHCP(FCS_TvRs2,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{6},'TsR2vTA',[-120,10],[age,gennum],[0,0.5],[-30,30])
 
 
 %% Part3 relation of HomoxIntra within each STATE
@@ -106,12 +107,12 @@ system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/TsvRs1']);
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/TsvRs2']);
 filecorrpath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/*/']);
-% [R1_HxI_Rmap,R1_HxI_Rsub]=gencorrmapHCP(FCS_Rstate1,af,ID.StID,term(age)+term(gen),filecorrpath{1},'Rstate1',[age,gennum],[-0.6,0.6])
-% [R2_HxI_Rmap,R2_HxI_Rsub]=gencorrmapHCP(FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecorrpath{2},'Rstate2',[age,gennum],[-0.6,0.6])
-% [Tk_HxI_Rmap,Tk_HxI_Rsub]=gencorrmapHCP(FCS_TstateA,af,ID.StID,term(age)+term(gen),filecorrpath{3},'Tstate',[age,gennum],[-0.6,0.6])
-% 
-% [TsR1_HxI_Rmap,TsR1_HxI_Rsub]=gencorrmapHCP(FCS_TvRs1,af,ID.StID,term(age)+term(gen),filecorrpath{4},'TsR1',[age,gennum],[-0.6,0.6])
-% [TsR2_HxI_Rmap,TsR2_HxI_Rsub]=gencorrmapHCP(FCS_TvRs2,af,ID.StID,term(age)+term(gen),filecorrpath{5},'TsR2',[age,gennum],[-0.6,0.6])
+[R1_HxI_Rmap,R1_HxI_Rsub]=gencorrmapHCP(FCS_Rstate1,af,ID.StID,term(age)+term(gen),filecorrpath{1},'Rstate1',[age,gennum],[-0.6,0.6])
+[R2_HxI_Rmap,R2_HxI_Rsub]=gencorrmapHCP(FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecorrpath{2},'Rstate2',[age,gennum],[-0.6,0.6])
+[Tk_HxI_Rmap,Tk_HxI_Rsub]=gencorrmapHCP(FCS_TstateA,af,ID.StID,term(age)+term(gen),filecorrpath{3},'Tstate',[age,gennum],[-0.6,0.6])
+
+[TsR1_HxI_Rmap,TsR1_HxI_Rsub]=gencorrmapHCP(FCS_TvRs1,af,ID.StID,term(age)+term(gen),filecorrpath{4},'TsR1',[age,gennum],[-0.6,0.6])
+[TsR2_HxI_Rmap,TsR2_HxI_Rsub]=gencorrmapHCP(FCS_TvRs2,af,ID.StID,term(age)+term(gen),filecorrpath{5},'TsR2',[age,gennum],[-0.6,0.6])
 
 %% Part4 compare relations of HomoxIntra across STATES
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/Rstat1vsRstat2']);
@@ -121,13 +122,13 @@ system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/TsvRs1vsTstate']);
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/TsvRs2vsTstate']);
 filecorrcppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/*/']);
-% gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,R2_HxI_Rmap,R2_HxI_Rsub,af,filecorrcppath{1},'R1vR2',[-5,5],term(age)+term(gen))
-% gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{2},'R1vTA',[-5,5],term(age)+term(gen))
-% gencocpmapHCP(R2_HxI_Rmap,R2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{3},'R2vTA',[-5,5],term(age)+term(gen))
-% 
-% gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,TsR2_HxI_Rmap,TsR2_HxI_Rsub,af,filecorrcppath{4},'TsR1vTsR2',[-5,5],term(age)+term(gen))
-% gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{5},'TsR-1vTA',[-10,10],term(age)+term(gen))
-% gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{6},'TsR2vTA',[-10,10],term(age)+term(gen))
+gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,R2_HxI_Rmap,R2_HxI_Rsub,af,filecorrcppath{1},'R1vR2',[-5,5],term(age)+term(gen))
+gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{2},'R1vTA',[-5,5],term(age)+term(gen))
+gencocpmapHCP(R2_HxI_Rmap,R2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{3},'R2vTA',[-5,5],term(age)+term(gen))
+
+gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,TsR2_HxI_Rmap,TsR2_HxI_Rsub,af,filecorrcppath{4},'TsR1vTsR2',[-5,5],term(age)+term(gen))
+gencocpmapHCP(TsR1_HxI_Rmap,TsR1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{5},'TsR-1vTA',[-10,10],term(age)+term(gen))
+gencocpmapHCP(TsR2_HxI_Rmap,TsR2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{6},'TsR2vTA',[-10,10],term(age)+term(gen))
 
 %% Part 4 add  Homo&Intra interaction between state 
 geninteractionHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,filecorrcppath{1},'R1vR2');

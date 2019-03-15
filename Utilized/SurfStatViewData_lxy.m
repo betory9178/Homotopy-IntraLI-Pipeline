@@ -1,4 +1,4 @@
-function [ a, cb ] = SurfStatViewData_lxy( data, surf, caxis_range, figtitle)
+function [ a, cb ] = SurfStatViewData_lxy( data, surf, caxis_range, figtitle, BrainType)
 
 %Basic viewer for surface data.
 % 
@@ -15,7 +15,7 @@ function [ a, cb ] = SurfStatViewData_lxy( data, surf, caxis_range, figtitle)
 % a  = vector of handles to the axes, left to right, top to bottom. 
 % cb = handle to the colorbar.
 
-BrainType='Vert';
+% BrainType='Vert';
 % BrainType='Hori';
 
 
