@@ -49,11 +49,11 @@ clf;
 %     ones(511,1)    (0:510)'/511  zeros(511,1)];
 % cm(1,:)=ones(1,3)*0.7;
 
-cm=spectral(512);
-cm(end-26:end,:)=[];
+% cm=spectral(512);
+% cm(end-26:end,:)=[];
 
 
-% cm=parula;
+cm=parula;
 % 
 % % cmorig=parula;
 % % n = length(cmorig);
@@ -62,11 +62,11 @@ cm(end-26:end,:)=[];
 
 clim = [min(caxis_range),max(caxis_range)];
 if clim(1) ==0
-    cm=cm(round(size(cm,1)/2):end,:);
+%     cm=cm(round(size(cm,1)/2):end,:);
     Pos=[1];
     cm(Pos, :)=repmat([0.75, 0.75, 0.75],1,1);
 elseif clim(2) ==0
-    cm=cm(1:round(size(cm,1)/2),:);
+%     cm=cm(1:round(size(cm,1)/2),:);
     Pos=[size(cm,1)-1:size(cm,1)];
     cm(Pos, :)=repmat([0.75, 0.75, 0.75],2,1);
    
@@ -159,8 +159,8 @@ else
     elseif strcmp(BrainType,'Hori')
         bg_ords=[50, tmp(2) ,tmp(4)*2.8, tmp(4)*1];
         dorsal_ords=[-0.18 0.1 0.85 0.85];
-        ventral_ords=[0.32 0.1 0.85 0.85];
-        cb_ords=[0.485 0.18 0.025 0.7];
+        ventral_ords=[0.28 0.1 0.85 0.85];
+        cb_ords=[0.95 0.18 0.025 0.7];
         title_ords=[1 -120 -50];
     end
     

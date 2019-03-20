@@ -1,0 +1,12 @@
+function SaveAsAtlasMZ3(metric,savepath,name)
+
+
+[faces, vertices, vertexColors, data] = fileUtils.mz3.readMz3('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/AICHA_test.mz3');
+for i=1:192
+    vertexColors()
+    
+end
+
+fileUtils.mz3.writeMz3([savepath,filesep,name,'.mz3'], faces, vertices,vertexColors);
+end
+

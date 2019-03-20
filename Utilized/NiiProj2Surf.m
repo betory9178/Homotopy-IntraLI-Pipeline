@@ -6,10 +6,9 @@ function [] = NiiProj2Surf(Nii,surftype,projtype,hemitype,cbm)
 %
 %
 
-SurfAvgMidL='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.L.midthickness_MSMAll.32k_fs_LR.surf.gii';
-SurfAvgMidR='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.R.midthickness_MSMAll.32k_fs_LR.surf.gii';
-
 if strcmp(surftype,'mid')
+    SurfAvgMidL='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.L.midthickness_MSMAll.32k_fs_LR.surf.gii';
+    SurfAvgMidR='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.R.midthickness_MSMAll.32k_fs_LR.surf.gii';
     sL=gifti(SurfAvgMidL);
     sR=gifti(SurfAvgMidR);
     
@@ -32,27 +31,28 @@ avsurfr.tri=sR.faces;
 avsurf.coord=[avsurfl.coord,avsurfr.coord];
 avsurf.tri=[avsurfl.tri;avsurfr.tri+32492];
 
-
+SurfAvgPialL='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.L.pial_MSMAll.32k_fs_LR.surf.gii';
+SurfAvgPialR='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.R.pial_MSMAll.32k_fs_LR.surf.gii';
 [niipath,niiname,~]=fileparts(Nii);
 if strcmp(projtype,'ec')
-    cmd_projLec=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -enclosing ' Nii ' ' SurfAvgMidL ' ' niipath '/' niiname '_L_ec.func.gii'];
-    cmd_projRec=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -enclosing ' Nii ' ' SurfAvgMidR ' ' niipath '/' niiname '_R_ec.func.gii'];
+    cmd_projLec=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -enclosing ' Nii ' ' SurfAvgPialL ' ' niipath '/' niiname '_L_ec.func.gii'];
+    cmd_projRec=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -enclosing ' Nii ' ' SurfAvgPialR ' ' niipath '/' niiname '_R_ec.func.gii'];
     system(cmd_projLec)
     system(cmd_projRec)
     smetricL=gifti([niipath '/' niiname '_L_ec.func.gii']);
     smetricR=gifti([niipath '/' niiname '_R_ec.func.gii']);
     
 elseif strcmp(projtype,'tri')
-    cmd_projLti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -trilinear ' Nii ' ' SurfAvgMidL ' ' niipath '/' niiname '_L_tri.func.gii'];
-    cmd_projRti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -trilinear ' Nii ' ' SurfAvgMidR ' ' niipath '/' niiname '_R_tri.func.gii'];
+    cmd_projLti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -trilinear ' Nii ' ' SurfAvgPialL ' ' niipath '/' niiname '_L_tri.func.gii'];
+    cmd_projRti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -trilinear ' Nii ' ' SurfAvgPialR ' ' niipath '/' niiname '_R_tri.func.gii'];
     system(cmd_projLti);
     system(cmd_projRti);
     smetricL=gifti([niipath '/' niiname '_L_tri.func.gii']);
     smetricR=gifti([niipath '/' niiname '_R_tri.func.gii']);   
     
 elseif strcmp(projtype,'cubic')
-    cmd_projLti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgMidL ' ' niipath '/' niiname '_L_tri.func.gii'];
-    cmd_projRti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgMidR ' ' niipath '/' niiname '_R_tri.func.gii'];
+    cmd_projLti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgPialL ' ' niipath '/' niiname '_L_tri.func.gii'];
+    cmd_projRti=['unset LD_LIBRARY_PATH;source /etc/profile;wb_command -volume-to-surface-mapping -cubic ' Nii ' ' SurfAvgPialR ' ' niipath '/' niiname '_R_tri.func.gii'];
     system(cmd_projLti);
     system(cmd_projRti);
     smetricL=gifti([niipath '/' niiname '_L_tri.func.gii']);

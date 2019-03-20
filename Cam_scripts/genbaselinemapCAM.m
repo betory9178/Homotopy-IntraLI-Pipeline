@@ -7,6 +7,10 @@ statspath3=statpath{1};
 % statspath4=statpath{3};
 statspath5=statpath{2};
 
+surftype = 'inf';
+% projtype = 'tri';
+projtype = 'ec';
+
 %% Group mean - Across subject
 
 [~,~,iS]=intersect(subid,FCS.subid);
@@ -45,19 +49,19 @@ SaveAsAtlasNii(HomoFC_mean,[atlasflag '3'],[statspath3,'/',statename],'HomoFC_me
 SaveAsAtlasNii(HomoFC_std,[atlasflag '3'],[statspath3,'/',statename],'HomoFC_std',1)
 
 if colorflag==-1
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_mean','.nii'],'inf','tri','hemi',[-40 0]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_mean','.nii'],'inf','tri','hemi',[-40 0]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_mean','.nii'],'inf','tri','hemi',[-1 0]);
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_std','.nii'],'inf','tri','hemi',[0 30]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_std','.nii'],'inf','tri','hemi',[0 30]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_std','.nii'],'inf','tri','hemi',[0 0.5]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_mean','.nii'],surftype,projtype,'hemi',[-40 0]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_mean','.nii'],surftype,projtype,'hemi',[-40 0]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_mean','.nii'],surftype,projtype,'hemi',[-1 0]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_std','.nii'],surftype,projtype,'hemi',[0 30]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_std','.nii'],surftype,projtype,'hemi',[0 30]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_std','.nii'],surftype,projtype,'hemi',[0 0.5]);
 else
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_mean','.nii'],'inf','tri','hemi',[0 80]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_mean','.nii'],'inf','tri','hemi',[0 80]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_mean','.nii'],'inf','tri','hemi',[0 1.8]);
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_std','.nii'],'inf','tri','hemi',[0 20]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_std','.nii'],'inf','tri','hemi',[0 20]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_std','.nii'],'inf','tri','hemi',[0 0.4]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_mean','.nii'],surftype,projtype,'hemi',[0 80]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_mean','.nii'],surftype,projtype,'hemi',[0 80]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_mean','.nii'],surftype,projtype,'hemi',[0 1.8]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_std','.nii'],surftype,projtype,'hemi',[0 20]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_std','.nii'],surftype,projtype,'hemi',[0 20]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_std','.nii'],surftype,projtype,'hemi',[0 0.4]);
 end
 
 % AI_mean=mean(AI_intra)';
@@ -72,15 +76,15 @@ SaveAsAtlasNii(AI_abs_mean,[atlasflag '3'],[statspath5,'/',statename],'IntraFC_L
 SaveAsAtlasNii(AI_abs_std,[atlasflag '3'],[statspath5,'/',statename],'IntraFC_LIabs_std',1)
 
 if colorflag==-1
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 0.6]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],'inf','tri','hemi',[0 0.6]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 0.6]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],surftype,projtype,'hemi',[-0.3 0.3]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],surftype,projtype,'hemi',[0 0.6]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],surftype,projtype,'hemi',[0 0.6]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],surftype,projtype,'hemi',[0 0.6]);
 else
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],'inf','tri','hemi',[-0.3 0.3]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],'inf','tri','hemi',[0 limrange]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],'inf','tri','hemi',[0 0.2]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],'inf','tri','hemi',[0 lisrange]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_mean','.nii'],surftype,projtype,'hemi',[-0.3 0.3]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],surftype,projtype,'hemi',[0 limrange]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_std','.nii'],surftype,projtype,'hemi',[0 0.2]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],surftype,projtype,'hemi',[0 lisrange]);
 end
 
 % IntraL_CV=IntraL_std ./ abs(IntraL_mean);
@@ -108,30 +112,30 @@ SaveAsAtlasNii(HomoFC_qcd,[atlasflag '3'],[statspath3,'/',statename],'HomoFC_qcd
 SaveAsAtlasNii(AI_abs_qcd,[atlasflag '3'],[statspath5,'/',statename],'IntraFC_LIabs_qcd',1)
 
 if colorflag==-1
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_CV','.nii'],'inf','tri','hemi',[-3 3]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_CV','.nii'],'inf','tri','hemi',[-3 3]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],'inf','tri','hemi',[-3 3]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_CV','.nii'],'inf','tri','hemi',[-35 35]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],'inf','tri','hemi',[0 1]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_CV','.nii'],surftype,projtype,'hemi',[-3 3]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_CV','.nii'],surftype,projtype,'hemi',[-3 3]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],surftype,projtype,'hemi',[-3 3]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_CV','.nii'],surftype,projtype,'hemi',[-35 35]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],surftype,projtype,'hemi',[0 1]);
 
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_qcd','.nii'],'inf','tri','hemi',[-1.5 1.5]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_qcd','.nii'],surftype,projtype,'hemi',[-1.5 1.5]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
     
 else
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_CV','.nii'],'inf','tri','hemi',[-1 1]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_CV','.nii'],'inf','tri','hemi',[-1 1]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],'inf','tri','hemi',[-1 1]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_CV','.nii'],'inf','tri','hemi',[-15 15]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],'inf','tri','hemi',[-2 2]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_CV','.nii'],surftype,projtype,'hemi',[-1 1]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_CV','.nii'],surftype,projtype,'hemi',[-1 1]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],surftype,projtype,'hemi',[-1 1]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_CV','.nii'],surftype,projtype,'hemi',[-15 15]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],surftype,projtype,'hemi',[-2 2]);
     
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_qcd','.nii'],'inf','tri','hemi',[-1.5 1.5]);
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],'inf','tri','hemi',[0 0.5]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+    NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI_qcd','.nii'],surftype,projtype,'hemi',[-1.5 1.5]);
+    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
 end
 %% single sub
 % load('/data/stalxy/Pipeline4JIN/ResultsRe/unirandsub.mat');
@@ -146,9 +150,9 @@ end
 %     SaveAsAtlasNii(IntraR_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath2,'/',statename],['IntraR' '_sub' num2str(unirandsub(i))],1)
 %     SaveAsAtlasNii(HomoFC_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath3,'/',statename],['HomoFC' '_sub' num2str(unirandsub(i))],1)
 %     
-%     NiiProj2Surf([statspath1,'/',statename,'IntraL','_sub' num2str(unirandsub(i)),'.nii'],'inf','tri','hemi',[0 80]);
-%     NiiProj2Surf([statspath2,'/',statename,'IntraR','_sub' num2str(unirandsub(i)),'.nii'],'inf','tri','hemi',[0 80]);
-%     NiiProj2Surf([statspath3,'/',statename,'HomoFC','_sub' num2str(unirandsub(i)),'.nii'],'inf','tri','hemi',[0 1.8]);
+%     NiiProj2Surf([statspath1,'/',statename,'IntraL','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 80]);
+%     NiiProj2Surf([statspath2,'/',statename,'IntraR','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 80]);
+%     NiiProj2Surf([statspath3,'/',statename,'HomoFC','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 1.8]);
 %     
 %     
 %     AI_sub=AI_intra(Cid,:)';
@@ -157,7 +161,7 @@ end
 %     SaveAsAtlasNii(AI_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath4,'/',statename],['IntraFC_LI' '_sub' num2str(unirandsub(i))],1)
 %     SaveAsAtlasNii(AI_abs_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath5,'/',statename],['IntraFC_LIabs' '_sub' num2str(unirandsub(i))],1)
 %     
-%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI','_sub' num2str(unirandsub(i)),'.nii'],'inf','tri','hemi',[-0.3 0.3]);
-%     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs','_sub' num2str(unirandsub(i)),'.nii'],'inf','tri','hemi',[0 0.3]);
+%     NiiProj2Surf([statspath4,'/',statename,'IntraFC_LI','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[-0.3 0.3]);
+%     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 0.3]);
 %     
 % end

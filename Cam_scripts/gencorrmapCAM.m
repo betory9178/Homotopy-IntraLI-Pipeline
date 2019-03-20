@@ -8,7 +8,9 @@ elseif strcmp(atlasflag,'BNA')
     nid=[1:123];
 end
 
-
+surftype = 'inf';
+% projtype = 'tri';
+projtype = 'ec';
 %% Group mean - Across subject
 [~,~,iS]=intersect(subid,FCS.subid);
 
@@ -88,21 +90,21 @@ if figflag==1
 %     SaveAsAtlasNii(intraLxintraRc_R_thrd,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath,'/',statename],['_IntraLxIntraR' '_R' '_THRD'],1)
     
     
-%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_T' '_map','.nii'],'inf','tri','hemi',cba);
+%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_T' '_map','.nii'],surftype,projtype,'hemi',cba);
 %     
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_R' '_map','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_R' '_map','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_R' '_map','.nii'],'inf','tri','hemi',cbc);
-    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_map','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_R' '_map','.nii'],'inf','tri','hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
+    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
 %     
-%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_T' '_THRD','.nii'],'inf','tri','hemi',cba);
+%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_T' '_THRD','.nii'],surftype,projtype,'hemi',cba);
 %     
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
-    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
-%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_R' '_THRD','.nii'],'inf','tri','hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraL' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraR' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLI' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_IntraLxIntraR' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
 %     
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraL_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_LL(:,nid),2),FCS_global);
 %     PlotCorr([statspath '/'],[statename '_HomoxIntraR_avgsubR'],mean(ho_FC(:,nid),2),mean(intra_RR(:,nid),2),FCS_global);
