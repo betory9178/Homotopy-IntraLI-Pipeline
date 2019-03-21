@@ -14,9 +14,6 @@ elseif strcmp(atlasflag,'BNA')
     nid=[1:123];
 end
 
-surftype = 'inf';
-projtype = 'tri';
-
 %% Group mean - Across subject
 [~,~,iS1]=intersect(subid,FCS1.subid);
 [~,~,iS2]=intersect(subid,FCS2.subid);
@@ -39,10 +36,10 @@ titles(unadj_removed)=[];
 % [Brain_Weight1,Behaviour_Weight1,CCA_T_r1,Brain_ComScore1,Behaviour_ComScore1,CCA_T_stats1] = canoncorr([ho_FC1(~absences,:),LI_intra_abs1(~absences,:)],behaviours_ageadj(~absences,:));
 % [Brain_Weight2,Behaviour_Weight2,CCA_T_r2,Brain_ComScore2,Behaviour_ComScore2,CCA_T_stats2] = canoncorr([ho_FC2(~absences,:),LI_intra_abs2(~absences,:)],behaviours_ageadj(~absences,:));
 
-[Homo_Weight1,BehxHomo_Weight1,CCA_Homo_r1,Homo_ComScore1,BehxHomo_ComScore1,CCA_Homo_stats1] = canoncorr(ho_FC1(~absences,:),behaviours_ageadj(~absences,:));
-[Homo_Weight2,BehxHomo_Weight2,CCA_Homo_r2,Homo_ComScore2,BehxHomo_ComScore2,CCA_Homo_stats2] = canoncorr(ho_FC2(~absences,:),behaviours_ageadj(~absences,:));
-[LIabs_Weight1,BehxLIabs_Weight1,CCA_LIabs_r1,LIabs_ComScore1,BehxLIabs_ComScore1,CCA_LIabs_stats1] = canoncorr(LI_intra_abs1(~absences,:),behaviours_ageadj(~absences,:));
-[LIabs_Weight2,BehxLIabs_Weight2,CCA_LIabs_r2,LIabs_ComScore2,BehxLIabs_ComScore2,CCA_LIabs_stats2] = canoncorr(LI_intra_abs2(~absences,:),behaviours_ageadj(~absences,:));
+[Homo_Weight1,BehxHomo_Weight1,CCA_Homo_r1,Homo_ComScore1,BehxHomo_ComScore1,CCA_Homo_stats1,Xld,Yld,XCrsld,YCrsld] = ZCX_canoncorr(ho_FC1(~absences,:),behaviours_ageadj(~absences,:));
+[Homo_Weight2,BehxHomo_Weight2,CCA_Homo_r2,Homo_ComScore2,BehxHomo_ComScore2,CCA_Homo_stats2,Xld,Yld,XCrsld,YCrsld] = ZCX_canoncorr(ho_FC2(~absences,:),behaviours_ageadj(~absences,:));
+[LIabs_Weight1,BehxLIabs_Weight1,CCA_LIabs_r1,LIabs_ComScore1,BehxLIabs_ComScore1,CCA_LIabs_stats1,Xld,Yld,XCrsld,YCrsld] = ZCX_canoncorr(LI_intra_abs1(~absences,:),behaviours_ageadj(~absences,:));
+[LIabs_Weight2,BehxLIabs_Weight2,CCA_LIabs_r2,LIabs_ComScore2,BehxLIabs_ComScore2,CCA_LIabs_stats2,Xld,Yld,XCrsld,YCrsld] = ZCX_canoncorr(LI_intra_abs2(~absences,:),behaviours_ageadj(~absences,:));
 
 % titles(abs(round(Behaviour_Weight1(:,1)./10))>0)
 % titles(abs(round(Behaviour_Weight2(:,1)./10))>0)
@@ -64,11 +61,9 @@ homo_brain2=zeros(192,1);
 homo_brain1(nid)=Homo_Weight1(:,i);
 homo_brain2(nid)=Homo_Weight2(:,i);
 
-SaveAsAtlasNii(homo_brain1,[atlasflag '2'],[statspath,'/Homo/'],['Brian_Homo_Rest1_Weight_' num2str(i)],1)
-NiiProj2Surf([[statspath,'/Homo/'],'/',['Brian_Homo_Rest1_Weight_' num2str(i)],'.nii'],surftype,projtype,'hemi',[-1,1]);
+SaveAsAtlasMZ3_Plot(homo_brain1,[statspath,'/Homo/'],['Brian_Homo_Rest1_Weight_' num2str(i)],[-0.2,0.2]);
 
-SaveAsAtlasNii(homo_brain2,[atlasflag '2'],[statspath,'/Homo/'],['Brian_Homo_Task_Weight_' num2str(i)],1)
-NiiProj2Surf([[statspath,'/Homo/'],'/',['Brian_Homo_Task_Weight_' num2str(i)],'.nii'],surftype,projtype,'hemi',[-1,1]);
+SaveAsAtlasMZ3_Plot(homo_brain2,[statspath,'/Homo/'],['Brian_Homo_Task_Weight_' num2str(i)],[-0.2,0.2]);
 
 % ['BehavxHomo_Rest_Com',num2str(i),' r=',num2str(CCA_Homo_r1(i)),' p=',num2str(CCA_Homo_stats1.p(i))]
 % ['BehavxHomo_Task_Com',num2str(i),' r=',num2str(CCA_Homo_r2(i)),' p=',num2str(CCA_Homo_stats2.p(i))]
@@ -90,11 +85,10 @@ liabs_brain2=zeros(192,1);
 liabs_brain1(nid)=LIabs_Weight1(:,i);
 liabs_brain2(nid)=LIabs_Weight2(:,i);
 
-SaveAsAtlasNii(liabs_brain1,[atlasflag '2'],[statspath,'/LIabs/'],['Brian_LIabs_Rest1_Weight_' num2str(i)],1)
-NiiProj2Surf([[statspath,'/LIabs/'],'/',['Brian_LIabs_Rest1_Weight_' num2str(i)],'.nii'],surftype,projtype,'hemi',[-1,1]);
 
-SaveAsAtlasNii(liabs_brain2,[atlasflag '2'],[statspath,'/LIabs/'],['Brian_LIabs_Task_Weight_' num2str(i)],1)
-NiiProj2Surf([[statspath,'/LIabs/'],'/',['Brian_LIabs_Task_Weight_' num2str(i)],'.nii'],surftype,projtype,'hemi',[-1,1]);
+SaveAsAtlasMZ3_Plot(liabs_brain1,[statspath,'/LIabs/'],['Brian_LIabs_Rest1_Weight_' num2str(i)],[-0.2,0.2]);
+
+SaveAsAtlasMZ3_Plot(liabs_brain2,[statspath,'/LIabs/'],['Brian_LIabs_Task_Weight_' num2str(i)],[-0.2,0.2]);
 
 % ['BehavxLIabs_Rest_Com',num2str(i),' r=',num2str(CCA_LIabs_r1(i)),' p=',num2str(CCA_LIabs_stats1.p(i))]
 % ['BehavxLIabs_Task_Com',num2str(i),' r=',num2str(CCA_LIabs_r2(i)),' p=',num2str(CCA_LIabs_stats2.p(i))]
