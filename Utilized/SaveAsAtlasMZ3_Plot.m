@@ -1,4 +1,4 @@
-function SaveAsAtlasMZ3_Plot(metric,savepath,name,cbrange)
+function SaveAsAtlasMZ3_Plot(metric,savepath,name,cbrange,shpath)
 
 [faces, vertices, vertexColors, ~] = fileUtils.mz3.readMz3('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/AICHA_lh.mz3');
 
@@ -87,7 +87,7 @@ fprintf(fidm,'\t%s\n','quit;');
 fprintf(fidm,'%s\n','end.');
 fclose(fidm);
 
-if isempty(dir('/data/stalxy/ArticleJResults/plot.sh'))
+if isempty(dir(shpath))
     fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','w');
 else
     fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','a');

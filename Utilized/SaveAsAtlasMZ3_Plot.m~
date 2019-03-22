@@ -1,4 +1,4 @@
-function SaveAsAtlasMZ3_Plot(metric,savepath,name,cbrange)
+function SaveAsAtlasMZ3_Plot(metric,savepath,name,cbrange,shpath)
 
 [faces, vertices, vertexColors, ~] = fileUtils.mz3.readMz3('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/AICHA_lh.mz3');
 
@@ -53,7 +53,6 @@ fprintf(fidl,'\t%s\n','quit;');
 fprintf(fidl,'%s\n','end.');
 fclose(fidl);
 
-
 fidm = fopen([savepath,filesep,name,'_medial.gls'],'w');
 fprintf(fidm,'%s\n','begin');
 fprintf(fidm,'\t%s\n','resetdefaults()');
@@ -88,11 +87,15 @@ fprintf(fidm,'\t%s\n','quit;');
 fprintf(fidm,'%s\n','end.');
 fclose(fidm);
 
-fidcmd = fopen([savepath,filesep,name,'_medial.gls'],'w');
-fprintf(fidm,'\t%s\n','bmpzoom(1000);');
+if isempty(dir(shpath'/data/stalxy/ArticleJResults/plot.sh'))
+    fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','w');
+else
+    fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','a');
+end
+fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_lateral.gls;wait']);
+fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_medial.gls;wait']);
+fclose(fidcmd);
 
-system(['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_lateral.gls']);
-system(['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_medial.gls']);
 
 
 end
