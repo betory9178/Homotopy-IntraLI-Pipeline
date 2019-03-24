@@ -31,7 +31,6 @@ SaveAsAtlasNii(LIabs_diff.Data(:,1).*(LIabs_diff.Data(:,2)<(0.05/190)),[atlasfla
 NiiProj2Surf([[HCP_heri_path,'/Figures/'],'/','LIabs_diff_heritability','.nii'],surftype,projtype,'hemi',[0,0.5]);
 
 
-
 H_homo_r=Homo_r1.Data(:,1);
 H_homo_t=Homo_t.Data(:,1);
 diff_homo=H_homo_t-H_homo_r;
@@ -51,3 +50,17 @@ diff_LIabs_thr=diff_LIabs.* diff_LIabs_std.*(LIabs_r1.Data(:,2)<(0.05/190)).*(LI
 
 SaveAsAtlasNii(diff_LIabs_thr,[atlasflag '2'],[HCP_heri_path,'/Figures/'],'LIabs_StateDiff_Sig',1);
 NiiProj2Surf([[HCP_heri_path,'/Figures/'],'/','LIabs_StateDiff_Sig','.nii'],surftype,projtype,'hemi',[-0.5 0.5]);
+
+% relation between heritability and original value 
+[~,~,iS]=intersect(subid,FCS.subid);
+
+ho_FC=FCS.homo(iS,:);
+LI_intra_abs=FCS.intra_absAI(iS,:);
+
+
+HomoFC_mean=mean(ho_FC)';
+LI_abs_mean=mean(LI_intra_abs)';
+
+
+PlotCorr([statspath '/'],[statename '_HexHomoM_avgmapR'],Homo_he_V(nid,:),HomoFC_mean(nid,:));
+PlotCorr([statspath '/'],[statename '_HexIntraLIabsM_avgmapR'],LIabs_he_V(nid,:),LI_abs_mean(nid,:));

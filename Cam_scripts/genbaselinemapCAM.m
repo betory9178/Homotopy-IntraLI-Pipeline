@@ -58,18 +58,8 @@ SaveAsAtlasMZ3_Plot(AI_abs_std,statspath5,[statename,'IntraFC_LIabs_std','_SFICE
 % SaveAsAtlasNii(HomoFC_qcd,[atlasflag '3'],[statspath3,'/',statename],'HomoFC_qcd',1)
 % SaveAsAtlasNii(AI_abs_qcd,[atlasflag '3'],[statspath5,'/',statename],'IntraFC_LIabs_qcd',1)
 
-% if colorflag==-1
-% 
-%     NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],surftype,projtype,'hemi',[-3 3]);
-%     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],surftype,projtype,'hemi',[0 1]);
-% 
-%     NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
-%     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
-%     
-% else
 %     NiiProj2Surf([statspath3,'/',statename,'HomoFC_CV','.nii'],surftype,projtype,'hemi',[-1 1]);
 %     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_CV','.nii'],surftype,projtype,'hemi',[-2 2]);
 %     
 %     NiiProj2Surf([statspath3,'/',statename,'HomoFC_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
 %     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_qcd','.nii'],surftype,projtype,'hemi',[0 0.5]);
-% end

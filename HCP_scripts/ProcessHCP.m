@@ -40,9 +40,9 @@ elseif k==2 || k==4
     lisrange=0.2;
 end
 
-genbaselinemapHCP(FCS_Rstate1,af,ID.StID,filepath,'Rstate1_',0,limrange,lisrange)
-genbaselinemapHCP(FCS_Rstate2,af,ID.StID,filepath,'Rstate2_',0,limrange,lisrange)
-genbaselinemapHCP(FCS_TstateA,af,ID.StID,filepath,'TstateA_',0,limrange,lisrange)
+genbaselinemapHCP(FCS_Rstate1,af,ID.StID,filepath,'Rstate1_',limrange,lisrange)
+genbaselinemapHCP(FCS_Rstate2,af,ID.StID,filepath,'Rstate2_',limrange,lisrange)
+genbaselinemapHCP(FCS_TstateA,af,ID.StID,filepath,'TstateA_',limrange,lisrange)
 
 %% Part2 compare between STATES
 system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/Rstat1vsRstat2']);
@@ -98,8 +98,10 @@ geninteractionHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,filecorrcppath{2},'R1vTS');
 geninteractionHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,filecorrcppath{3},'R2vTS');
 
 %% Part5 heritability and its relation 
+run('genheriHCP.m')
 
-%Mediation
+
+%% Mediation
 [~,~,iS1]=intersect(ID.StID,FCS_Rstate1.subid);
 [~,~,iS2]=intersect(ID.StID,FCS_TstateA.subid);
 
