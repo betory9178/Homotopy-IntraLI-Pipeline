@@ -5,7 +5,7 @@ FCS2=FCS_TstateA;
 atlasflag='AIC';
 subid=ID.StID;
 statspath='/data/stalxy/ArticleJResults/HCP/Results/CCA_AICHA_NGR/';
-shp='/data/stalxy/ArticleJResults/HCP/Results/CCA_AICHA_NGR/plot.sh';
+shp='/data/stalxy/ArticleJResults/plot.sh';
 
 [numericData, textData, ~]=xlsread('/data/stalxy/github/Homotopy-IntraLI-Pipeline/Utilized/HCP_Cognition_byLXY0318.xlsx');
 
@@ -27,6 +27,7 @@ ho_FC2=FCS2.homo(iS2,nid);
 LI_intra_abs2=FCS2.intra_absAI(iS2,nid);
 
 behaviours=numericData(iSB,3:end);
+absences=logical(sum(isnan(behaviours),2));
 titles=textData(1,3:end)';
 unadj_removed=[1,3,5,10,12,14,16:27,35,36,43,45,47,49,51];
 
@@ -35,7 +36,7 @@ behaviours_ageadj(:,unadj_removed)=[];
 titles(unadj_removed)=[];
 
 % remove NaNs subjects in behaviours
-absences=logical(sum(isnan(behaviours_ageadj),2));
+nansubj=sum(isnan(behaviours_ageadj),2);
 
 
 %% type 1
@@ -47,8 +48,8 @@ absences=logical(sum(isnan(behaviours_ageadj),2));
 %% type 3
 %combined Homotopy and LIabs, covariances are involved
 
-% [Brain_COEF1_wCOV,Behaviour_COEF1_wCOV,CCA_T_r1_wCOV,Brain_ComSR1_wCOV,Behaviour_ComSR1_wCOV,CCA_T_stats1_wCOV,Brain_LD1_wCOV,Behaviour_LD1_wCOV,Brain_CrsLD1_wCOV,Behaviour_CrsLD1_wCOV] = ZCX_canoncorr([ho_FC1(~absences,:),LI_intra_abs1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
-% [Brain_COEF2_wCOV,Behaviour_COEF2_wCOV,CCA_T_r2_wCOV,Brain_ComSR2_wCOV,Behaviour_ComSR2_wCOV,CCA_T_stats2_wCOV,Brain_LD2_wCOV,Behaviour_LD2_wCOV,Brain_CrsLD2_wCOV,Behaviour_CrsLD2_wCOV] = ZCX_canoncorr([ho_FC2(~absences,:),LI_intra_abs2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[Brain_COEF1_wCOV,Behaviour_COEF1_wCOV,CCA_T_r1_wCOV,Brain_ComSR1_wCOV,Behaviour_ComSR1_wCOV,CCA_T_stats1_wCOV,Brain_LD1_wCOV,Behaviour_LD1_wCOV,Brain_CrsLD1_wCOV,Behaviour_CrsLD1_wCOV] = ZCX_canoncorr([ho_FC1(~absences,:),LI_intra_abs1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[Brain_COEF2_wCOV,Behaviour_COEF2_wCOV,CCA_T_r2_wCOV,Brain_ComSR2_wCOV,Behaviour_ComSR2_wCOV,CCA_T_stats2_wCOV,Brain_LD2_wCOV,Behaviour_LD2_wCOV,Brain_CrsLD2_wCOV,Behaviour_CrsLD2_wCOV] = ZCX_canoncorr([ho_FC2(~absences,:),LI_intra_abs2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
 
 % brain_CCA_num=max(sum(CCA_T_stats1.pChisq<0.05),sum(CCA_T_stats2.pChisq<0.05));
 brain_CCA_num1=sum(CCA_T_stats1.pChisq<0.05);
@@ -117,26 +118,24 @@ end
 %% type 4
 % seperated Homotopy and LIabs, covariances are involved
 
-% [Homo_COEF1_wCOV,BehxHomo_COEF1_wCOV,CCA_Homo_r1_wCOV,Homo_ComSR1_wCOV,BehxHomo_ComSR1_wCOV,CCA_Homo_stats1_wCOV,Homo_LD1_wCOV,BehxHomo_LD1_wCOV,Homo_CrsLD1_wCOV,BehxHomo_CrsLD1_wCOV] = ZCX_canoncorr([ho_FC1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
-% [Homo_COEF2_wCOV,BehxHomo_COEF2_wCOV,CCA_Homo_r2_wCOV,Homo_ComSR2_wCOV,BehxHomo_ComSR2_wCOV,CCA_Homo_stats2_wCOV,Homo_LD2_wCOV,BehxHomo_LD2_wCOV,Homo_CrsLD2_wCOV,BehxHomo_CrsLD2_wCOV] = ZCX_canoncorr([ho_FC2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
-% [LIabs_COEF1_wCOV,BehxLIabs_COEF1_wCOV,CCA_LIabs_r1_wCOV,LIabs_ComSR1_wCOV,BehxLIabs_ComSR1_wCOV,CCA_LIabs_stats1_wCOV,LIabs_LD1_wCOV,BehxLIabs_LD1_wCOV,LIabs_CrsLD1_wCOV,BehxLIabs_CrsLD1_wCOV] = ZCX_canoncorr([LI_intra_abs1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
-% [LIabs_COEF2_wCOV,BehxLIabs_COEF2_wCOV,CCA_LIabs_r2_wCOV,LIabs_ComSR2_wCOV,BehxLIabs_ComSR2_wCOV,CCA_LIabs_stats2_wCOV,LIabs_LD2_wCOV,BehxLIabs_LD2_wCOV,LIabs_CrsLD2_wCOV,BehxLIabs_CrsLD2_wCOV] = ZCX_canoncorr([LI_intra_abs2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[Homo_COEF1_wCOV,BehxHomo_COEF1_wCOV,CCA_Homo_r1_wCOV,Homo_ComSR1_wCOV,BehxHomo_ComSR1_wCOV,CCA_Homo_stats1_wCOV,Homo_LD1_wCOV,BehxHomo_LD1_wCOV,Homo_CrsLD1_wCOV,BehxHomo_CrsLD1_wCOV] = ZCX_canoncorr([ho_FC1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[Homo_COEF2_wCOV,BehxHomo_COEF2_wCOV,CCA_Homo_r2_wCOV,Homo_ComSR2_wCOV,BehxHomo_ComSR2_wCOV,CCA_Homo_stats2_wCOV,Homo_LD2_wCOV,BehxHomo_LD2_wCOV,Homo_CrsLD2_wCOV,BehxHomo_CrsLD2_wCOV] = ZCX_canoncorr([ho_FC2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[LIabs_COEF1_wCOV,BehxLIabs_COEF1_wCOV,CCA_LIabs_r1_wCOV,LIabs_ComSR1_wCOV,BehxLIabs_ComSR1_wCOV,CCA_LIabs_stats1_wCOV,LIabs_LD1_wCOV,BehxLIabs_LD1_wCOV,LIabs_CrsLD1_wCOV,BehxLIabs_CrsLD1_wCOV] = ZCX_canoncorr([LI_intra_abs1(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
+[LIabs_COEF2_wCOV,BehxLIabs_COEF2_wCOV,CCA_LIabs_r2_wCOV,LIabs_ComSR2_wCOV,BehxLIabs_ComSR2_wCOV,CCA_LIabs_stats2_wCOV,LIabs_LD2_wCOV,BehxLIabs_LD2_wCOV,LIabs_CrsLD2_wCOV,BehxLIabs_CrsLD2_wCOV] = ZCX_canoncorr([LI_intra_abs2(~absences,:),age,gennum],behaviours_ageadj(~absences,:));
 
 
 % titles(abs(round(Behaviour_COEF1(:,1)./10))>0)
 % titles(abs(round(Behaviour_COEF2(:,1)./10))>0)
 
-homo_CCA_num1=sum(CCA_Homo_stats1.pChisq<0.05);
+homo_CCA_num1=CCA_Homo_stats1.pChisq<0.05;
 homo_CCA_num2=sum(CCA_Homo_stats2.pChisq<0.05);
-homo_CCA_num=max(homo_CCA_num1,homo_CCA_num2);
-liabs_CCA_num1=sum(CCA_LIabs_stats1.pChisq<0.05);
+liabs_CCA_num1=CCA_LIabs_stats1.pChisq<0.05;
 liabs_CCA_num2=sum(CCA_LIabs_stats2.pChisq<0.05);
-liabs_CCA_num=max(liabs_CCA_num1,liabs_CCA_num2);
 
-for i=1:homo_CCA_num
+for i=1:homo_CCA_num1
 % titles(abs(round(BehxHomo_COEF1(:,i)./10))>0);
 % titles(abs(round(BehxHomo_COEF2(:,i)./10))>0);
-for j=1:homo_CCA_num
+for j=1:homo_CCA_num2
 
 PlotCorr([statspath,'/Separate/Homo/'],['HomoxBehav_Rest1_CCA_',num2str(i)],Homo_ComSR1(:,i),BehxHomo_ComSR1(:,i));
 PlotCorr([statspath,'/Separate/Homo/'],['HomoxBehav_Task_CCA_',num2str(j)],Homo_ComSR2(:,j),BehxHomo_ComSR2(:,j));
@@ -167,10 +166,10 @@ SaveAsAtlasMZ3_Plot(homo_brain_ld2,[statspath,'/Separate/Homo/'],['Brian_Homo_Ta
 end
 end
 
-for i=1:liabs_CCA_num
+for i=1:liabs_CCA_num1
 % titles(abs(round(BehxLIabs_COEF1(:,i)./10))>0);
 % titles(abs(round(BehxLIabs_COEF2(:,i)./10))>0);
-for j=1:liabs_CCA_num
+for j=1:liabs_CCA_num2
 
 PlotCorr([statspath,'/Separate/LIabs/'],['LIabsxBehav_Rest1_CCA_',num2str(i)],LIabs_ComSR1(:,i),BehxLIabs_ComSR1(:,i));
 PlotCorr([statspath,'/Separate/LIabs/'],['LIabsxBehav_Task_CCA_',num2str(j)],LIabs_ComSR2(:,j),BehxLIabs_ComSR2(:,j));
@@ -201,8 +200,8 @@ SaveAsAtlasMZ3_Plot(liabs_brain_ld2,[statspath,'/Separate/LIabs/'],['Brian_LIabs
 end
 end
 
-for i=1:homo_CCA_num
-    for j=1:liabs_CCA_num
+for i=1:homo_CCA_num1
+    for j=1:liabs_CCA_num1
         PlotCorr([statspath,'/Separate/'],['Behav_HoxLI_Rest1_COEF_H',num2str(i),'&LI',num2str(j)],BehxHomo_COEF1(:,i),BehxLIabs_COEF1(:,j));
         PlotCorr([statspath,'/Separate/'],['Brian_HoxLI_Rest1_COEF_H',num2str(i),'&LI',num2str(j)],Homo_COEF1(:,i),LIabs_COEF1(:,j));
         PlotCorr([statspath,'/Separate/'],['Behav_HoxLI_Rest1_LOAD_H',num2str(i),'&LI',num2str(j)],BehxHomo_LD1(:,i),BehxLIabs_LD1(:,j));
@@ -211,8 +210,8 @@ for i=1:homo_CCA_num
     end
 end
 
-for i=1:homo_CCA_num
-    for j=1:liabs_CCA_num
+for i=1:homo_CCA_num2
+    for j=1:liabs_CCA_num2
         PlotCorr([statspath,'/Separate/'],['Behav_HoxLI_Task_COEF_H',num2str(i),'&LI',num2str(j)],BehxHomo_COEF2(:,i),BehxLIabs_COEF2(:,j));
         PlotCorr([statspath,'/Separate/'],['Brian_HoxLI_Task_COEF_H',num2str(i),'&LI',num2str(j)],Homo_COEF2(:,i),LIabs_COEF2(:,j));
         PlotCorr([statspath,'/Separate/'],['Behav_HoxLI_Task_LOAD_H',num2str(i),'&LI',num2str(j)],BehxHomo_LD2(:,i),BehxLIabs_LD2(:,j));

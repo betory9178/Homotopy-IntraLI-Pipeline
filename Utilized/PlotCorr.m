@@ -1,5 +1,10 @@
 function [r,p] = PlotCorr(savepath,tname,VarA,VarB,Cov,Group)
 % ,range
+
+if isempty(dir(savepath))
+    system(['mkdir -p ' savepath])
+end
+
 if nargin<4
     fig = figure,hist(VarA),
     title(tname,'Interpreter','none'),

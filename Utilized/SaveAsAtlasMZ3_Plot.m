@@ -12,7 +12,9 @@ for i=1:max(vertexColors)
         alpha(vertexColors==i)=1;
     end
 end
-
+if isempty(dir(savepath))
+    system(['mkdir -p ' savepath]);
+end
 fileUtils.mz3.writeMz3([savepath,filesep,name,'.mz3'], faces, vertices,vertexColors,alpha);
 
 colormapname='Viridis';
@@ -27,6 +29,9 @@ fprintf(fidl,'\t%s\n','overlayvisible(1, false);'); % we don't use the basic mes
 fprintf(fidl,'\t%s\n',['overlayload(''',savepath,filesep,name,'.mz3',''');']); % secondly, add the regional values on atlas
 fprintf(fidl,'\t%s\n',['overlayminmax(2, ',num2str(cbrange(1)),', ',num2str(cbrange(2)),');']); % colormap range
 fprintf(fidl,'\t%s\n',['overlaycolorname(2, ''',colormapname,''');']); % colormap type
+if cbrange(1)<0 && cbrange(2)<0
+    fprintf(fidl,'\t%s\n','overlayinvert(2, true)'); % Surf-Ice auto-reverse the colormap if all value below zero, so we need to invert it
+end
 fprintf(fidl,'\t%s\n',['overlayload(''',surfbase,''');']); % finally, add the surf below atlas, using white surface
 fprintf(fidl,'\t%s\n','overlaycolorname(3, ''gray'');'); % set the white surface as gray
 fprintf(fidl,'\t%s\n','shaderxray(0, 0);');  % make the regions transparency 
@@ -53,6 +58,9 @@ fprintf(fidl,'\t%s\n','quit;');
 fprintf(fidl,'%s\n','end.');
 fclose(fidl);
 
+% system(['/opt/Surf_Ice/surfice -S ',savepath,filesep,name,'_lateral.gls;']);
+
+
 fidm = fopen([savepath,filesep,name,'_medial.gls'],'w');
 fprintf(fidm,'%s\n','begin');
 fprintf(fidm,'\t%s\n','resetdefaults()');
@@ -61,6 +69,9 @@ fprintf(fidm,'\t%s\n','overlayvisible(1, false);');
 fprintf(fidm,'\t%s\n',['overlayload(''',savepath,filesep,name,'.mz3',''');']);
 fprintf(fidm,'\t%s\n',['overlayminmax(2, ',num2str(cbrange(1)),', ',num2str(cbrange(2)),');']);
 fprintf(fidm,'\t%s\n',['overlaycolorname(2, ''',colormapname,''');']);
+if cbrange(1)<0 && cbrange(2)<0
+    fprintf(fidl,'\t%s\n','overlayinvert(2, true)'); % Surf-Ice auto-reverse the colormap if all value below zero, so we need to invert it
+end
 fprintf(fidm,'\t%s\n',['overlayload(''',surfbase,''');']);
 fprintf(fidm,'\t%s\n','overlaycolorname(3, ''gray'');');
 fprintf(fidm,'\t%s\n','shaderxray(0, 0);');
@@ -87,16 +98,16 @@ fprintf(fidm,'\t%s\n','quit;');
 fprintf(fidm,'%s\n','end.');
 fclose(fidm);
 
+% system(['/opt/Surf_Ice/surfice -S ',savepath,filesep,name,'_medial.gls;']);
+
 if isempty(dir(shpath))
-    fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','w');
+    fidcmd = fopen(shpath,'w');
 else
-    fidcmd = fopen('/data/stalxy/ArticleJResults/plot.sh','a');
+    fidcmd = fopen(shpath,'a');
 end
 fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_lateral.gls;wait']);
 fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_medial.gls;wait']);
 fclose(fidcmd);
-
-
 
 end
 
