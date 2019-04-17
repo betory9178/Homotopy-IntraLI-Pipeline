@@ -6,17 +6,10 @@ if isempty(dir(savepath))
 end
 
 if nargin<4
-    fig = figure,
-    [no,xo] = hist(VarA),
+    fig = figure,hist(VarA),
     title(tname,'Interpreter','none'),
     saveas(fig,[savepath tname '.tif'],'tif'),
     close(fig);
-    
-    Data2xls1=table(VarA);
-    Data2xls2=table(no,xo);
-    filename = [savepath '/' tname '.xlsx'];
-    writetable(Data2xls1,filename,'Sheet',1,'Range','A1');
-    writetable(Data2xls2,filename,'Sheet',2,'Range','A1');
     return
     
 elseif nargin<5 || isempty(Cov)
@@ -44,11 +37,8 @@ if iscolumn(VarA) && iscolumn(VarB)
 %     axis(range),
     saveas(fig,[savepath tname '.tif'],'tif'),
     close(fig);
-    if Group == 1
-        Data2xls=table(VarA,VarB,SSS,Cov(:));
-    else
-        Data2xls=table(VarA,VarB,SSS,Cov(:),Group(:));
-    end
+    if
+    Data2xls=table(VarA,VarB,SSS,LIaOutput,Cov,LIaAvg);
     filename = [savepath '/' tname '.xlsx'];
     writetable(Data2xls,filename,'Sheet',1,'Range','A1');
 
