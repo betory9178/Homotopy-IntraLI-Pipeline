@@ -1,4 +1,4 @@
-function [HxI_Rmap,HxI_Rsub]=gencorrmapHCP(FCS,atlasflag,subid,cov,statspath,statename,COV,cbc)
+function [HxI_Rmap,HxI_Rsub]=gencorrmapHCP(FCS,atlasflag,subid,cov,statspath,statename,COV,cbc,shp)
 % relation of HomoxIntra within each STATE
 
 figflag=1;
@@ -43,6 +43,9 @@ if figflag==1
     SaveAsAtlasNii(homoxintraLIabsc_R_thrd,[atlasflag '2'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_THRD'],1)
     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+    SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R,statspath,[statename,'_HomoxIntraLIabs' '_R' '_map','_SFICE'],[-0.5,-0.001],shp);
+    SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R_thrd,statspath,[statename,'_HomoxIntraLIabs' '_R' '_THRD','_SFICE'],[-0.5,-0.001],shp);
+    
     PlotCorr([statspath '/'],[statename '_HomoxIntraLIabs_avgsubR'],mean(ho_FC(:,nid),2),mean(LI_intra_abs(:,nid),2),term(FCS_global)+cov);
 %     SysDiv2Plot('Yeo7',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
     SysDiv2Plot('Hierarchy',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));

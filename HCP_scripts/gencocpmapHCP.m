@@ -1,4 +1,4 @@
-function [MostPos,MostNeg]=gencocpmapHCP(S1_Rmap,S1_Rsub,S2_Rmap,S2_Rsub,atlasflag,statspath,statename,cba,cov)
+function [MostPos,MostNeg]=gencocpmapHCP(S1_Rmap,S1_Rsub,S2_Rmap,S2_Rsub,atlasflag,statspath,statename,cba,cov,shp)
 % compare relations of HomoxIntra across STATES
 
 if strcmp(atlasflag,'AIC')
@@ -28,7 +28,9 @@ MostNeg=find(Z_hiLIabs_map_thr==min(Z_hiLIabs_map_thr));
 NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Z' '_map','.nii'],surftype,projtype,'hemi',cba);
 NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Zpos' '_map_THRD','.nii'],surftype,projtype,'hemi',cba);
 NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_Zneg' '_map_THRD','.nii'],surftype,projtype,'hemi',cba);
-
+SaveAsAtlasMZ3_Plot(Z_hiLIabs_map,[statspath,'/'],[statename '_HomoxIntraLIabs' '_Z' '_map','_SFICE'],[-5 5],shp);
+SaveAsAtlasMZ3_Plot(Z_hiLIabs_map_thr.*(Z_hiLIabs_map_thr>0),[statspath,'/'],[statename '_HomoxIntraLIabs' '_Zpos' '_map_THRD','_SFICE'],[0.001 5],shp);
+SaveAsAtlasMZ3_Plot(Z_hiLIabs_map_thr.*(Z_hiLIabs_map_thr<0),[statspath,'/'],[statename '_HomoxIntraLIabs' '_Zneg' '_map_THRD','_SFICE'],[-5 -0.001],shp);
 
 [sub_intraLIabs,~] =PlotCorr([statspath '/'],[statename '_intraLIabs_RsubR'],S1_Rsub.homoxintraLIabs_R,S2_Rsub.homoxintraLIabs_R,cov);
 

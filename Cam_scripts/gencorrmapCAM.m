@@ -39,10 +39,10 @@ pbon=0.05/length(nid);
 homoxintraLIabsc_R_thrd=homoxintraLIabsc_R .* (homoxintraLIabsc_P<pbon);
 
 if figflag==1
-    SaveAsAtlasNii(homoxintraLIabsc_R,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_map'],1)
-    SaveAsAtlasNii(homoxintraLIabsc_R_thrd,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_THRD'],1)
-    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
-    NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
+%     SaveAsAtlasNii(homoxintraLIabsc_R,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_map'],1)
+%     SaveAsAtlasNii(homoxintraLIabsc_R_thrd,[atlasflag '3'],[statspath,'/',statename],['_HomoxIntraLIabs' '_R' '_THRD'],1)
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_map','.nii'],surftype,projtype,'hemi',cbc);
+%     NiiProj2Surf([statspath,'/',statename,'_HomoxIntraLIabs' '_R' '_THRD','.nii'],surftype,projtype,'hemi',cbc);
     SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R,statspath,[statename,'_HomoxIntraLIabs' '_R' '_map','_SFICE'],cbc,shp);
     SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R_thrd,statspath,[statename,'_HomoxIntraLIabs' '_R' '_THRD','_SFICE'],cbc,shp);
 

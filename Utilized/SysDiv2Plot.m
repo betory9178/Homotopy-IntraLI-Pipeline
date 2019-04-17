@@ -55,8 +55,8 @@ end
 
 Vpot=figure,
 tmp=get(gcf,'Position'),
-set(gcf,'Position', [50, tmp(2) ,tmp(4)*3, tmp(4)*1.5]),
-violinplot(nets,a2n_l,'Width',0.3,'ViolinAlpha',0.1,'BoxColor',[0.1 0.1 0.1],'ShowMean',true),
+set(gcf,'Position', [50, tmp(2) ,tmp(4)*3.5, tmp(4)*1.5]),
+violinplot(nets,a2n_l,'Width',0.4,'ViolinAlpha',0.2,'BoxColor',[0.1 0.1 0.1],'ShowMean',true),
 yticks(Yrange),
 set(gca,'FontSize',10,'FontWeight','Bold','FontName','Ubuntu Light'),
 

@@ -122,20 +122,20 @@ p_HTA=2*tcdf(-1*abs(slmH_TA.t),slmH_TA.df);
 
 statspath=['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/COM_' nm '/'];
 system(['mkdir -p ' statspath]);
-SaveAsAtlasNii(slmH_FAG.t,[af '3'],statspath,['AgexGenderONhomo' '_F' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgexGenderONhomo' '_F' '_map'],'.nii'],'inf',projtype,'hemi',[0,10]);
-SaveAsAtlasNii(slmH_FAG.t.*(p_HFTAG<0.05/length(nid)),[af '3'],statspath,['AgexGenderONhomo' '_F' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgexGenderONhomo' '_F' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[0,10]);
+% SaveAsAtlasNii(slmH_FAG.t,[af '3'],statspath,['AgexGenderONhomo' '_F' '_map'],1)
+% NiiProj2Surf([statspath,'/',['AgexGenderONhomo' '_F' '_map'],'.nii'],'inf',projtype,'hemi',[0,10]);
+% SaveAsAtlasNii(slmH_FAG.t.*(p_HFTAG<0.05/length(nid)),[af '3'],statspath,['AgexGenderONhomo' '_F' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgexGenderONhomo' '_F' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[0,10]);
 SaveAsAtlasMZ3_Plot(slmH_FAG.t,statspath,['AgexGenderONhomo' '_F' '_map','_SFICE'],[0.001,10],shp);
 SaveAsAtlasMZ3_Plot(slmH_FAG.t.*(p_HFTAG<0.05/length(nid)),statspath,['AgexGenderONhomo' '_F' '_map_thresh','_SFICE'],[0.001,10],shp);
 
-SaveAsAtlasNii(slmH_TA.t,[af '3'],statspath,['AgeONhomo' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf',projtype,'hemi',[-5,5]);
-SaveAsAtlasNii(slmH_TA.t.*(slmH_TA.t>0).*(p_HTA<0.05/length(nid)),[af '3'],statspath,['AgeONhomo' '_Tpos' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONhomo' '_Tpos' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
-SaveAsAtlasNii(slmH_TA.t.*(slmH_TA.t<0).*(p_HTA<0.05/length(nid)),[af '3'],statspath,['AgeONhomo' '_Tneg' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONhomo' '_Tneg' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
-SaveAsAtlasMZ3_Plot(slmH_TA.t,statspath,['AgeONhomo' '_T' '_map','_SFICE'],[-5,5],shp);
+% SaveAsAtlasNii(slmH_TA.t,[af '3'],statspath,['AgeONhomo' '_T' '_map'],1)
+% NiiProj2Surf([statspath,'/',['AgeONhomo' '_T' '_map'],'.nii'],'inf',projtype,'hemi',[-5,5]);
+% SaveAsAtlasNii(slmH_TA.t.*(slmH_TA.t>0).*(p_HTA<0.05/length(nid)),[af '3'],statspath,['AgeONhomo' '_Tpos' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgeONhomo' '_Tpos' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
+% SaveAsAtlasNii(slmH_TA.t.*(slmH_TA.t<0).*(p_HTA<0.05/length(nid)),[af '3'],statspath,['AgeONhomo' '_Tneg' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgeONhomo' '_Tneg' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
+% SaveAsAtlasMZ3_Plot(slmH_TA.t,statspath,['AgeONhomo' '_T' '_map','_SFICE'],[-5,5],shp);
 SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t>0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tpos' '_map_thresh','_SFICE'],[0.001,8],shp);
 SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t<0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tneg' '_map_thresh','_SFICE'],[-8,-0.001],shp);
 
@@ -154,21 +154,21 @@ slmL_TA=SurfStatT(slmL,age);
 p_LFTAG=1-fcdf(slmL_FAG.t,slmL_FAG.df(1),slmL_FAG.df(2));
 p_LTA=2*tcdf(-1*abs(slmL_TA.t),slmL_TA.df);
 
-SaveAsAtlasNii(slmL_FAG.t,[af '3'],statspath,['AgexGenderONLIabs' '_F' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgexGenderONLIabs' '_F' '_map'],'.nii'],'inf',projtype,'hemi',[0,10]);
-SaveAsAtlasNii(slmL_FAG.t.*(p_LFTAG<0.05/length(nid)),[af '3'],statspath,['AgexGenderONLIabs' '_F' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgexGenderONLIabs' '_F' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[0,10]);
+% SaveAsAtlasNii(slmL_FAG.t,[af '3'],statspath,['AgexGenderONLIabs' '_F' '_map'],1)
+% NiiProj2Surf([statspath,'/',['AgexGenderONLIabs' '_F' '_map'],'.nii'],'inf',projtype,'hemi',[0,10]);
+% SaveAsAtlasNii(slmL_FAG.t.*(p_LFTAG<0.05/length(nid)),[af '3'],statspath,['AgexGenderONLIabs' '_F' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgexGenderONLIabs' '_F' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[0,10]);
 SaveAsAtlasMZ3_Plot(slmL_FAG.t,statspath,['AgexGenderONLIabs' '_F' '_map','_SFICE'],[0.001,10],shp);
 SaveAsAtlasMZ3_Plot(slmL_FAG.t.*(p_LFTAG<0.05/length(nid)),statspath,['AgexGenderONLIabs' '_F' '_map_thresh','_SFICE'],[0.001,10],shp);
 
 
-SaveAsAtlasNii(slmL_TA.t,[af '3'],statspath,['AgeONLIabs' '_T' '_map'],1)
-NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map'],'.nii'],'inf',projtype,'hemi',[-5,5]);
-SaveAsAtlasNii(slmL_TA.t.*(slmL_TA.t>0).*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIabs' '_Tpos' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONLIabs' '_Tpos' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
-SaveAsAtlasNii(slmL_TA.t.*(slmL_TA.t<0).*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIabs' '_Tneg' '_map_thresh'],1)
-NiiProj2Surf([statspath,'/',['AgeONLIabs' '_Tneg' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
-SaveAsAtlasMZ3_Plot(slmL_TA.t,statspath,['AgeONLIabs' '_T' '_map','_SFICE'],[-5,5],shp);
+% SaveAsAtlasNii(slmL_TA.t,[af '3'],statspath,['AgeONLIabs' '_T' '_map'],1)
+% NiiProj2Surf([statspath,'/',['AgeONLIabs' '_T' '_map'],'.nii'],'inf',projtype,'hemi',[-5,5]);
+% SaveAsAtlasNii(slmL_TA.t.*(slmL_TA.t>0).*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIabs' '_Tpos' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgeONLIabs' '_Tpos' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
+% SaveAsAtlasNii(slmL_TA.t.*(slmL_TA.t<0).*(p_LTA<0.05/length(nid)),[af '3'],statspath,['AgeONLIabs' '_Tneg' '_map_thresh'],1)
+% NiiProj2Surf([statspath,'/',['AgeONLIabs' '_Tneg' '_map_thresh'],'.nii'],'inf',projtype,'hemi',[-8,8]);
+% SaveAsAtlasMZ3_Plot(slmL_TA.t,statspath,['AgeONLIabs' '_T' '_map','_SFICE'],[-5,5],shp);
 SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t>0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tpos' '_map_thresh','_SFICE'],[0.001,8],shp);
 SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t<0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tneg' '_map_thresh','_SFICE'],[-8,-0.001],shp);
 
@@ -187,20 +187,20 @@ end
 pbon=0.05/length(nid);
 homoxage_R_thrd=homoxage_R .* (homoxage_P<pbon);
 liabsxage_R_thrd=liabsxage_R .* (liabsxage_P<pbon);
-SaveAsAtlasNii(homoxage_R,[af '3'],statspath,['AgexHomo' '_R' '_map'],1);
-NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
+% SaveAsAtlasNii(homoxage_R,[af '3'],statspath,['AgexHomo' '_R' '_map'],1);
+% NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
 SaveAsAtlasMZ3_Plot(homoxage_R,statspath,['AgexHomo' '_R' '_map','_SFICE'],[-0.3 0.3],shp);
 
-SaveAsAtlasNii(homoxage_R_thrd,[af '3'],statspath,['AgexHomo' '_R' '_THRD_map'],1);
-NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_THRD_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
+% SaveAsAtlasNii(homoxage_R_thrd,[af '3'],statspath,['AgexHomo' '_R' '_THRD_map'],1);
+% NiiProj2Surf([statspath,'/','AgexHomo' '_R' '_THRD_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
 SaveAsAtlasMZ3_Plot(homoxage_R_thrd,statspath,['AgexHomo' '_R' '_THRD_map','_SFICE'],[-0.3 0.3],shp);
 
-SaveAsAtlasNii(liabsxage_R,[af '3'],statspath,['AgexLIabs' '_R' '_map'],1);
-NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
+% SaveAsAtlasNii(liabsxage_R,[af '3'],statspath,['AgexLIabs' '_R' '_map'],1);
+% NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
 SaveAsAtlasMZ3_Plot(liabsxage_R,statspath,['AgexLIabs' '_R' '_map','_SFICE'],[-0.3 0.3],shp);
 
-SaveAsAtlasNii(liabsxage_R_thrd,[af '3'],statspath,['AgexLIabs' '_R' '_THRD_map'],1);
-NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_THRD_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
+% SaveAsAtlasNii(liabsxage_R_thrd,[af '3'],statspath,['AgexLIabs' '_R' '_THRD_map'],1);
+% NiiProj2Surf([statspath,'/','AgexLIabs' '_R' '_THRD_map','.nii'],'inf',projtype,'hemi',[-0.3 0.3]);
 SaveAsAtlasMZ3_Plot(liabsxage_R_thrd,statspath,['AgexLIabs' '_R' '_THRD_map','_SFICE'],[-0.3 0.3],shp);
 
 % Mediation
@@ -230,8 +230,8 @@ if sum(age_mediation)>0
     MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput,HomAvg,LIaAvg);
     filename = ['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/MediationAge_' nm '.xlsx'];
     writetable(MediationAge,filename,'Sheet',1,'Range','A1');
-    SaveAsAtlasNii(age_mediation,[af '3'],'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/',['AgeMediation_' nm '_map'],1)
-    NiiProj2Surf(['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/','/',['AgeMediation_' nm '_map'],'.nii'],'inf',projtype,'hemi',[0,1]);
+%     SaveAsAtlasNii(age_mediation,[af '3'],'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/',['AgeMediation_' nm '_map'],1)
+%     NiiProj2Surf(['/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/','/',['AgeMediation_' nm '_map'],'.nii'],'inf',projtype,'hemi',[0,1]);
     SaveAsAtlasMZ3_Plot(age_mediation,'/data/stalxy/ArticleJResults/CAMCAN_Gretna/Results/Mediation/',[['AgeMediation_' nm '_map'],'_SFICE'],[0.001,1],shp);
 
 end

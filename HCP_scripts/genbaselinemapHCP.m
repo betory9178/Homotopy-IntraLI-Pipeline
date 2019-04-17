@@ -1,4 +1,4 @@
-function genbaselinemapHCP(FCS,atlasflag,subid,statpath,statename,limrange,lisrange)
+function genbaselinemapHCP(FCS,atlasflag,subid,statpath,statename,limrange,lisrange,shp)
 % baseline
 
 statspath3=statpath{1};
@@ -29,7 +29,9 @@ SaveAsAtlasNii(HomoFC_std,[atlasflag '2'],[statspath3,'/',statename],'HomoFC_std
 
     NiiProj2Surf([statspath3,'/',statename,'HomoFC_mean','.nii'],surftype,projtype,'hemi',[0 1.8]);
     NiiProj2Surf([statspath3,'/',statename,'HomoFC_std','.nii'],surftype,projtype,'hemi',[0 0.3]);
-
+    
+SaveAsAtlasMZ3_Plot(HomoFC_mean,statspath3,[statename,'HomoFC_mean','_SFICE'],[0.001 1.8],shp);
+SaveAsAtlasMZ3_Plot(HomoFC_std,statspath3,[statename,'HomoFC_std','_SFICE'],[0.001 0.3],shp);
 
 AI_abs_mean=mean(AI_intra_abs)';
 AI_abs_std=std(AI_intra_abs)';
@@ -40,6 +42,8 @@ SaveAsAtlasNii(AI_abs_std,[atlasflag '2'],[statspath5,'/',statename],'IntraFC_LI
     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_mean','.nii'],surftype,projtype,'hemi',[0 limrange]);
     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs_std','.nii'],surftype,projtype,'hemi',[0 lisrange]);
 
+SaveAsAtlasMZ3_Plot(AI_abs_mean,statspath5,[statename,'IntraFC_LIabs_mean','_SFICE'],[0.001 limrange],shp);
+SaveAsAtlasMZ3_Plot(AI_abs_std,statspath5,[statename,'IntraFC_LIabs_std','_SFICE'],[0.001 lisrange],shp);
 % 
 % HomoFC_CV=HomoFC_std ./ abs(HomoFC_mean);
 % AI_abs_CV=AI_abs_std ./ abs(AI_abs_mean);
@@ -62,11 +66,13 @@ for i=1:2
     [~,~,Cid]=intersect(unirandsub(i),subid);
     HomoFC_sub=ho_FC(Cid,:)';
     
-    SaveAsAtlasNii(HomoFC_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath3,'/',statename],['HomoFC' '_sub' num2str(unirandsub(i))],1)
-    NiiProj2Surf([statspath3,'/',statename,'HomoFC','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 1.8]);
-    
+%     SaveAsAtlasNii(HomoFC_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath3,'/',statename],['HomoFC' '_sub' num2str(unirandsub(i))],1)
+%     NiiProj2Surf([statspath3,'/',statename,'HomoFC','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 1.8]);
+    SaveAsAtlasMZ3_Plot(HomoFC_sub,statspath3,[statename,'HomoFC','_sub' num2str(unirandsub(i)),'_SFICE'],[0.001 1.8],shp);
+
     AI_abs_sub=AI_intra_abs(Cid,:)';
-    SaveAsAtlasNii(AI_abs_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath5,'/',statename],['IntraFC_LIabs' '_sub' num2str(unirandsub(i))],1)
-    NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 0.3]);
+%     SaveAsAtlasNii(AI_abs_sub,'/data/stalxy/sharefolder/HCP/AICHA/AICHA.nii',[statspath5,'/',statename],['IntraFC_LIabs' '_sub' num2str(unirandsub(i))],1)
+%     NiiProj2Surf([statspath5,'/',statename,'IntraFC_LIabs','_sub' num2str(unirandsub(i)),'.nii'],surftype,projtype,'hemi',[0 limrange]);
+    SaveAsAtlasMZ3_Plot(AI_abs_sub,statspath5,[statename,'IntraFC_LIabs','_sub' num2str(unirandsub(i)),'_SFICE'],[0.001 limrange],shp);
     
 end

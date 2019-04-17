@@ -1,4 +1,4 @@
-function gencpmapHCP(FCS1,FCS2,atlasflag,subid,cov,statspath,statename,cba,COV,cbc,cbd)
+function gencpmapHCP(FCS1,FCS2,atlasflag,subid,cov,statspath,statename,cba,COV,shp)
 % compare between STATES
 figflag=1;
 if strcmp(atlasflag,'AIC')
@@ -95,14 +95,29 @@ if figflag==1
     NiiProj2Surf([statspath,'/',statename,'_HomoFC' '_R' '_THRD','.nii'],surftype,projtype,'hemi',[0,1]);
     NiiProj2Surf([statspath,'/',statename,'_IntraLIabs' '_R' '_THRD','.nii'],surftype,projtype,'hemi',[0,0.5]);
     
-    NiiProj2Surf([statspath,'/',statename,'_SUB' '_R' ,'.nii'],surftype,projtype,'hemi',[-0.5,0.5]);
+    SaveAsAtlasMZ3_Plot(t_homot,statspath,[statename,'_HomoFC','_T','_map','_SFICE'],cba,shp);
+    SaveAsAtlasMZ3_Plot(t_intraLIabst,statspath,[statename,'_IntraLIabs','_T','_map','_SFICE'],[-25,25],shp);
+    SaveAsAtlasMZ3_Plot(homoc_R,statspath,[statename,'_HomoFC','_R','_map','_SFICE'],[0.001,1],shp);
+    SaveAsAtlasMZ3_Plot(intraLIabsc_R,statspath,[statename,'_IntraLIabs','_R','_map','_SFICE'],[0.001,0.5],shp);
+    SaveAsAtlasMZ3_Plot(t_homot_thrd,statspath,[statename,'_HomoFC','_T','_map','_THRD','_SFICE'],cba,shp);
+    SaveAsAtlasMZ3_Plot(t_intraLIabst_thrd,statspath,[statename,'_IntraLIabs','_T','_map','_THRD','_SFICE'],[-25,25],shp);
+    SaveAsAtlasMZ3_Plot(homoc_R_thrd,statspath,[statename,'_HomoFC','_R','_map','_THRD','_SFICE'],[0.001,1],shp);
+    SaveAsAtlasMZ3_Plot(intraLIabsc_R_thrd,statspath,[statename,'_IntraLIabs','_R','_map','_THRD','_SFICE'],[0.001,0.5],shp);
+    
+    NiiProj2Surf([statspath,'/',statename,'_SUB' '_R' '_map','.nii'],surftype,projtype,'hemi',[-0.5,0.5]);
     NiiProj2Surf([statspath,'/',statename,'_SUB' '_R' '_THRD','.nii'],surftype,projtype,'hemi',[-0.5,0.5]);
 
     NiiProj2Surf([statspath,'/',statename,'_ICC_Homo','.nii'],surftype,projtype,'hemi',[0,1]);
     NiiProj2Surf([statspath,'/',statename,'_ICC_IntraLIabs','.nii'],surftype,projtype,'hemi',[0,0.5]);
     
     NiiProj2Surf([statspath,'/',statename,'_IntraLIabs_2sub1','.nii'],surftype,projtype,'hemi',[-0.1,0.1]);
-
+    
+    SaveAsAtlasMZ3_Plot(sub_R,statspath,[statename,'_SUB','_R','_map','_SFICE'],[-0.5,0.5],shp);
+    SaveAsAtlasMZ3_Plot(sub_R_thrd,statspath,[statename,'_SUB','_R','_THRD','_map','_SFICE'],[-0.5,0.5],shp);
+    SaveAsAtlasMZ3_Plot(ICC_homo,statspath,[statename,'_ICC_Homo','_map','_SFICE'],[0.001,1],shp);
+    SaveAsAtlasMZ3_Plot(ICC_LIabs,statspath,[statename,'_ICC_IntraLIabs','_map','_SFICE'],[0.001,0.5],shp);
+    SaveAsAtlasMZ3_Plot(LI_abs_mean2-LI_abs_mean1,statspath,[statename,'_IntraLIabs_2sub1','_map','_SFICE'],[-0.1,0.1],shp);  
+    
     PlotCorr([statspath '/'],[statename '_homo_avgsubR'],mean(ho_FC1,2),mean(ho_FC2,2),term(FCS_global1)+term(FCS_global2)+cov);
     PlotCorr([statspath '/'],[statename '_intraLIabs_avgsubR'],mean(LI_intra_abs1,2),mean(LI_intra_abs2,2),term(FCS_global1)+term(FCS_global2)+cov);
     
