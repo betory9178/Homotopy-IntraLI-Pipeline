@@ -21,10 +21,24 @@ surftransparencyflag=0;
 cms={'Viridis_revised','Blue2Red'};
 sds={'Toon','Metal'};
 surfbase='/data/pastlxy/HCP_S1200_GroupAvg_v1/S1200.L.white_MSMAll.32k_fs_LR.surf.gii';
-for i=1:2
-for j=1
+i=2;
+    j=1;
+% for j=1
     colormapname=cms{i};
     shadername=sds{j};
+%     if i==2
+%        if min(cbrange)==0
+%            cbrange=[-max(cbrange),max(cbrange)];
+%        elseif max(cbrange)==0
+%            cbrange=[min(cbrange),-min(cbrange)];
+%        end
+%     elseif i==1
+%        if min(cbrange)==0
+%            cbrange=[0.001,max(cbrange)];
+%        elseif max(cbrange)==0
+%            cbrange=[min(cbrange),-0.001];
+%        end
+%     end
 fidl = fopen([savepath,filesep,name,'_',shadername,num2str(surftransparencyflag),'_',colormapname,'_lateral.gls'],'w');
 fprintf(fidl,'%s\n','begin');
 fprintf(fidl,'\t%s\n','resetdefaults()'); % reset parameters
@@ -44,8 +58,8 @@ fprintf(fidl,'\t%s\n','shaderforbackgroundonly(false);'); % use the shader both 
 fprintf(fidl,'\t%s\n',['shadername(''',shadername,''');']);  % shader name
 if surftransparencyflag==1
     fprintf(fidl,'\t%s\n','shaderxray(0, 0);');  % make the regions transparency
-    fprintf(fidl,'\t%s\n','shaderadjust(''Ambient'', 0.8);');
-    fprintf(fidl,'\t%s\n','shaderadjust(''Diffuse'', 0.55);');
+    fprintf(fidl,'\t%s\n','shaderadjust(''Ambient'', 0.6);');
+    fprintf(fidl,'\t%s\n','shaderadjust(''Diffuse'', 0.45);');
     fprintf(fidl,'\t%s\n','shaderadjust(''Specular'', 0);');
     fprintf(fidl,'\t%s\n','shaderadjust(''Roughness'', 0);');
     fprintf(fidl,'\t%s\n','shaderadjust(''Smooth'', 1.5);');
@@ -105,8 +119,8 @@ fprintf(fidm,'\t%s\n','shaderforbackgroundonly(false);');
 fprintf(fidm,'\t%s\n',['shadername(''',shadername,''');']);
 if surftransparencyflag==1
     fprintf(fidm,'\t%s\n','shaderxray(0, 0);');  % make the regions transparency
-    fprintf(fidm,'\t%s\n','shaderadjust(''Ambient'', 0.8);');
-    fprintf(fidm,'\t%s\n','shaderadjust(''Diffuse'', 0.55);');
+    fprintf(fidm,'\t%s\n','shaderadjust(''Ambient'', 0.6);');
+    fprintf(fidm,'\t%s\n','shaderadjust(''Diffuse'', 0.45);');
     fprintf(fidm,'\t%s\n','shaderadjust(''Specular'', 0);');
     fprintf(fidm,'\t%s\n','shaderadjust(''Roughness'', 0);');
     fprintf(fidm,'\t%s\n','shaderadjust(''Smooth'', 1.5);');
@@ -155,8 +169,8 @@ fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_',shader
 fprintf(fidcmd,'%s\n',['/opt/Surf_Ice/surfice ',savepath,filesep,name,'_',shadername,num2str(surftransparencyflag),'_',colormapname,'_medial.gls;wait']);
 fclose(fidcmd);
 
-end
-end
+% end
+% end
 
 end
 

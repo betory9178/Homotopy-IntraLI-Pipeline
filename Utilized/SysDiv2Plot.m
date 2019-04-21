@@ -60,6 +60,12 @@ violinplot(nets,a2n_l,'Width',0.4,'ViolinAlpha',0.2,'BoxColor',[0.1 0.1 0.1],'Sh
 yticks(Yrange),
 set(gca,'FontSize',10,'FontWeight','Bold','FontName','Ubuntu Light'),
 
+VolTab=table(nets);
+VolName=table(a2n_l);
+filename = [FigPath '/' FigTitle '_ViolinData.xlsx'];
+writetable(VolTab,filename,'Sheet',1,'Range','A1');
+writetable(VolName,filename,'Sheet',2,'Range','A1');
+
 %xlabel(SysName,'FontName','Ubuntu Light','FontSize',15,'Interpreter','none'),
 %ylabel(FigTitle,'FontName','Ubuntu Light','FontSize',15,'Rotation',90,'Interpreter','none'),
 

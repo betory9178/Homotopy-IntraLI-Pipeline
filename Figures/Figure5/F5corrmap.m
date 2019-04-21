@@ -35,8 +35,8 @@ homoxintraLIabsc_R_thrd=homoxintraLIabsc_R .* (homoxintraLIabsc_P<pbon);
 SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R,statspath,[statename,'_HomoxIntraLIabs' '_R' '_map','_SFICE'],cbc,shp);
 SaveAsAtlasMZ3_Plot(homoxintraLIabsc_R_thrd,statspath,[statename,'_HomoxIntraLIabs' '_R' '_THRD','_SFICE'],cbc,shp);
 
-SysDiv2Plot('Yeo7',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
-SysDiv2Plot('Hierarchy',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+% SysDiv2Plot('Yeo7',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
+% SysDiv2Plot('Hierarchy',atlasflag,[-1,1],[statename,'_HomoxIntraLIabs_avgsubR'],[statspath '/'],fisherR2Z(homoxintraLIabsc_R));
 
 
 

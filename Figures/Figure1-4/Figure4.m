@@ -3,7 +3,6 @@ ID=load('/data/stalxy/Pipeline4JIN/Results1228/SUBID.mat');
 [numData2, textData2, rawData2]=xlsread('/data/stalxy/HCP_CC/HCP_baseinform.xlsx','Sheet2');
 
 FCS_R1path=g_ls('/data/stalxy/ArticleJResults/HCP/FCSmat/REST1_*.mat');
-FCS_R2path=g_ls('/data/stalxy/ArticleJResults/HCP/FCSmat/REST2_*.mat');
 FCS_MTpath=g_ls('/data/stalxy/ArticleJResults/HCP/FCSmat/MTASK_*.mat');
 
 atlas_flag={'AIC','AIC','BNA','BNA'};
@@ -19,68 +18,33 @@ gen=textData1(iSg+1,2);
 age=numData2(iSa,2);
 gennum=strcmp(gen,'F')+1;
 
-%% Part1 baseline
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/Baseline_' nm '/Homo']);
-system(['mkdir /data/stalxy/ArticleJResults/HCP/Results/Baseline_' nm '/IntraLIabs']);
+filepath='/data/stalxy/ArticleJResults/Figures/Figure4/';
+shp='/data/stalxy/ArticleJResults/Figures/Figure4_plot.sh';
+system(['rm ' shp]);
 
-filepath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/Baseline_' nm '/*/']);
+%% Part1 baseline
+
 FCS_R1=load(FCS_R1path{k});
-FCS_R2=load(FCS_R2path{k});
 FCS_MT=load(FCS_MTpath{k});
 
 FCS_Rstate1=FCS_R1.finalFCS;
-FCS_Rstate2=FCS_R2.finalFCS;
 FCS_TstateA=FCS_MT.finalFCS;
 
-if k==1 || k==3
-    limrange=0.8;
-    lisrange=0.5;
-elseif k==2 || k==4
-    limrange=0.3;
-    lisrange=0.2;
-end
-
-shp1=['/data/stalxy/ArticleJResults/HCP/Results/Baseline_' nm '/plot.sh'];
-genbaselinemapHCP(FCS_Rstate1,af,ID.StID,filepath,'Rstate1_',limrange,lisrange,shp1)
-genbaselinemapHCP(FCS_Rstate2,af,ID.StID,filepath,'Rstate2_',limrange,lisrange,shp1)
-genbaselinemapHCP(FCS_TstateA,af,ID.StID,filepath,'TstateA_',limrange,lisrange,shp1)
+Fbase(FCS_TstateA,af,ID.StID,filepath,'TstateA_',0.3,shp)
 
 %% Part2 compare between STATES
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/Rstat1vsRstat2']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/Rstat1vsTstate']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/Rstat2vsTstate']);
 
-filecppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/*/']);
-
-shp2=['/data/stalxy/ArticleJResults/HCP/Results/StateCP_' nm '/plot.sh'];
-gencpmapHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecppath{1},'R1vR2',[-5,5],[age,gennum],shp2)
-gencpmapHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{2},'R1vTA',[-120,10],[age,gennum],shp2)
-gencpmapHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,term(age)+term(gen),filecppath{3},'R2vTA',[-10,120],[age,gennum],shp2)
+Fcp(FCS_Rstate1,FCS_TstateA,af,ID.StID,term(age)+term(gen),filepath,'R1vTA',[-60,60],[age,gennum],shp)
 
 
 %% Part3 relation of HomoxIntra within each STATE
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/Rstat1']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/Rstat2']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/Tstat']);
 
-filecorrpath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/*/']);
-
-shp3=['/data/stalxy/ArticleJResults/HCP/Results/RelatedinState_' nm '/plot.sh'];
-[R1_HxI_Rmap,R1_HxI_Rsub]=gencorrmapHCP(FCS_Rstate1,af,ID.StID,term(age)+term(gen),filecorrpath{1},'Rstate1',[age,gennum],[-0.5,0.5],shp3)
-[R2_HxI_Rmap,R2_HxI_Rsub]=gencorrmapHCP(FCS_Rstate2,af,ID.StID,term(age)+term(gen),filecorrpath{2},'Rstate2',[age,gennum],[-0.5,0.5],shp3)
-[Tk_HxI_Rmap,Tk_HxI_Rsub]=gencorrmapHCP(FCS_TstateA,af,ID.StID,term(age)+term(gen),filecorrpath{3},'Tstate',[age,gennum],[-0.5,0.5],shp3)
+[R1_HxI_Rmap]=Fcorr(FCS_Rstate1,af,ID.StID,term(age)+term(gen),filepath,'Rstate1',[age,gennum],[-0.5,0.5],shp)
+[Tk_HxI_Rmap]=Fcorr(FCS_TstateA,af,ID.StID,term(age)+term(gen),filepath,'Tstate',[age,gennum],[-0.5,0.5],shp)
 
 %% Part4 compare relations of HomoxIntra across STATES
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/Rstat1vsRstat2']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/Rstat1vsTstate']);
-system(['mkdir -p /data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/Rstat2vsTstate']);
 
-filecorrcppath=g_ls(['/data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/*/']);
-shp4=['/data/stalxy/ArticleJResults/HCP/Results/StateRelatedCP_' nm '/plot.sh'];
-
-gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,R2_HxI_Rmap,R2_HxI_Rsub,af,filecorrcppath{1},'R1vR2',[-5,5],term(age)+term(gen),shp4)
-[Mpos,Mneg]=gencocpmapHCP(R1_HxI_Rmap,R1_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{2},'R1vTA',[-5,5],term(age)+term(gen),shp4)
-gencocpmapHCP(R2_HxI_Rmap,R2_HxI_Rsub,Tk_HxI_Rmap,Tk_HxI_Rsub,af,filecorrcppath{3},'R2vTA',[-5,5],term(age)+term(gen),shp4)
+[Mpos,Mneg]=Fcorrcp(R1_HxI_Rmap,Tk_HxI_Rmap,af,filepath,'R1vTA',[-5,5],term(age)+term(gen),shp)
 
 
 [~,~,iS1]=intersect(ID.StID,FCS_Rstate1.subid);
@@ -95,17 +59,9 @@ Nth=FCS_TstateA.homo(iS2,Mneg);
 Nr1la=FCS_Rstate1.intra_absAI(iS1,Mneg);
 Ntla=FCS_TstateA.intra_absAI(iS2,Mneg);
 
-PlotCorr([filecorrcppath{2} '/'],['HomoxLIabs_TAvsR1StateDiff_MostPos'],[Pr1h;Pth],[Pr1la;Ptla],term([age;age])+term([gen;gen])+term([FCS_Rstate1.global(iS1);FCS_TstateA.global(iS2)]),StateGroup);
-PlotCorr([filecorrcppath{2} '/'],['HomoxLIabs_TAvsR1StateDiff_MostNeg'],[Nr1h;Nth],[Nr1la;Ntla],term([age;age])+term([gen;gen])+term([FCS_Rstate1.global(iS1);FCS_TstateA.global(iS2)]),StateGroup);
+PlotCorr([filepath '/'],['HomoxLIabs_TAvsR1StateDiff_MostPos'],[Pr1h;Pth],[Pr1la;Ptla],term([age;age])+term([gen;gen])+term([FCS_Rstate1.global(iS1);FCS_TstateA.global(iS2)]),StateGroup);
+PlotCorr([filepath '/'],['HomoxLIabs_TAvsR1StateDiff_MostNeg'],[Nr1h;Nth],[Nr1la;Ntla],term([age;age])+term([gen;gen])+term([FCS_Rstate1.global(iS1);FCS_TstateA.global(iS2)]),StateGroup);
 
-
-%% Part 4 add  Homo&Intra interaction between state 
-geninteractionHCP(FCS_Rstate1,FCS_Rstate2,af,ID.StID,filecorrcppath{1},'R1vR2');
-geninteractionHCP(FCS_Rstate1,FCS_TstateA,af,ID.StID,filecorrcppath{2},'R1vTS');
-geninteractionHCP(FCS_Rstate2,FCS_TstateA,af,ID.StID,filecorrcppath{3},'R2vTS');
-
-%% Part5 heritability and its relation 
-run('/data/stalxy/github/Homotopy-IntraLI-Pipeline/HCP_scripts/genheriHCP.m')
 
 %% Mediation
 [~,~,iS1]=intersect(ID.StID,FCS_Rstate1.subid);
@@ -142,8 +98,7 @@ Ho_flag=TsHomo.*(PsHomo<0.05/length(nid));
 LI_flag=TsLIab.*(PsLIab<0.05/length(nid));
 Re_flag=RHoxLI.*(PHoxLI<0.05/length(nid));
 
-medpath='/data/stalxy/ArticleJResults/HCP/Results/Mediation/';
-shp_m=[medpath 'plot.sh'];
+medpath=[filepath '/Mediation/'];
 if isempty(dir(medpath))
    system(['mkdir -p ' medpath]); 
 end
@@ -169,8 +124,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type1)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',1,'Range','A1');
-        SaveAsAtlasNii(type1,[af '2'],medpath,['StateMediation1_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation1_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type1,medpath,[['StateMediation1_' nm '_map'],'_SFICE'],[0.001 1],shp);
 
     end
@@ -183,8 +136,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type2)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',2,'Range','A1');
-        SaveAsAtlasNii(type2,[af '2'],medpath,['StateMediation2_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation2_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type2,medpath,[['StateMediation2_' nm '_map'],'_SFICE'],[0.001 1],shp);
         
     end
@@ -197,8 +148,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type3)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',3,'Range','A1');
-        SaveAsAtlasNii(type3,[af '2'],medpath,['StateMediation3_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation3_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type3,medpath,[['StateMediation3_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     if sum(type4)>0
@@ -210,8 +159,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type4)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',4,'Range','A1');
-        SaveAsAtlasNii(type4,[af '2'],medpath,['StateMediation4_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation4_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type4,medpath,[['StateMediation4_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     if sum(type5)>0
@@ -223,8 +170,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type5)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',5,'Range','A1');
-        SaveAsAtlasNii(type5,[af '2'],medpath,['StateMediation5_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation5_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type5,medpath,[['StateMediation5_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     if sum(type6)>0
@@ -236,8 +181,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type6)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',6,'Range','A1');
-        SaveAsAtlasNii(type6,[af '2'],medpath,['StateMediation6_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation6_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type6,medpath,[['StateMediation6_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     if sum(type7)>0
@@ -249,8 +192,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type7)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',7,'Range','A1');
-        SaveAsAtlasNii(type7,[af '2'],medpath,['StateMediation7_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation7_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type7,medpath,[['StateMediation7_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     if sum(type8)>0
@@ -262,8 +203,6 @@ if sum(state_mediation)>0
         TaLIaAvg=mean(Stla(:,logical(type8)),2);
         MediationState=table(AgeOutput,GenOutput,R1HomAvg,R1LIaAvg,TaHomAvg,TaLIaAvg);
         writetable(MediationState,filename,'Sheet',8,'Range','A1');
-        SaveAsAtlasNii(type8,[af '2'],medpath,['StateMediation8_' nm '_map'],1)
-        NiiProj2Surf([medpath,'/',['StateMediation8_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
         SaveAsAtlasMZ3_Plot(type8,medpath,[['StateMediation8_' nm '_map'],'_SFICE'],[0.001 1],shp);
     end
     
@@ -285,11 +224,8 @@ if sum(state_mediation)>0
     filename = [medpath '/Mediation_' nm '.xlsx'];
     writetable(MediationState1,filename,'Sheet',1,'Range','A1');
     writetable(MediationState2,filename,'Sheet',2,'Range','A1');
-    SaveAsAtlasNii(state_mediation,[af '2'],medpath,['StateMediation_' nm '_map'],1)
-    NiiProj2Surf([medpath,'/',['StateMediation_' nm '_map'],'.nii'],'inf','tri','hemi',[-1,1]);
     SaveAsAtlasMZ3_Plot(state_mediation,medpath,[['StateMediationALL_' nm '_map'],'_SFICE'],[0.001 1],shp);
 end
 
 
 
-% end

@@ -21,6 +21,7 @@ end
 
 filepath='/data/stalxy/ArticleJResults/Figures/Figure5/';
 shp='/data/stalxy/ArticleJResults/Figures/Figure5_plot.sh';
+system(['rm ' shp]);
 
 %
 for i=1:652
@@ -59,9 +60,9 @@ Agen=Caminfo(ACam,4);
 Agender=Camtext(ACam+1,4);
 
 
-F5corrmap(FCS_Rstate,af,Yid,term(Yage)+term(Ygender),filepath,['Youth_' nm],[Yage,Ygen],[-0.5,-0.001],shp);
-F5corrmap(FCS_Rstate,af,Mid,term(Mage)+term(Mgender),filepath,['Middle_' nm],[Mage,Mgen],[-0.5,-0.001],shp);
-F5corrmap(FCS_Rstate,af,Oid,term(Oage)+term(Ogender),filepath,['Old_' nm],[Oage,Ogen],[-0.5,-0.001],shp);
+F5corrmap(FCS_Rstate,af,Yid,term(Yage)+term(Ygender),filepath,['Youth_' nm],[Yage,Ygen],[-0.5,0.5],shp);
+F5corrmap(FCS_Rstate,af,Mid,term(Mage)+term(Mgender),filepath,['Middle_' nm],[Mage,Mgen],[-0.5,0.5],shp);
+F5corrmap(FCS_Rstate,af,Oid,term(Oage)+term(Ogender),filepath,['Old_' nm],[Oage,Ogen],[-0.5,0.5],shp);
 
 %% Part5 age effect
 if strcmp(af,'AIC')
@@ -102,8 +103,8 @@ p_HTA=2*tcdf(-1*abs(slmH_TA.t),slmH_TA.df);
 % SaveAsAtlasMZ3_Plot(slmH_FAG.t,statspath,['AgexGenderONhomo' '_F' '_map','_SFICE'],[0.001,10],shp);
 % SaveAsAtlasMZ3_Plot(slmH_FAG.t.*(p_HFTAG<0.05/length(nid)),statspath,['AgexGenderONhomo' '_F' '_map_thresh','_SFICE'],[0.001,10],shp);
 
-SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t>0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tpos' '_map_thresh','_SFICE'],[0.001,8],shp);
-SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t<0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tneg' '_map_thresh','_SFICE'],[-8,-0.001],shp);
+SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t>0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tpos' '_map_thresh','_SFICE'],[-8,8],shp);
+SaveAsAtlasMZ3_Plot(slmH_TA.t.*(slmH_TA.t<0).*(p_HTA<0.05/length(nid)),statspath,['AgeONhomo' '_Tneg' '_map_thresh','_SFICE'],[-8,8],shp);
 
 PlotCorr([statspath '/'],['HomoSigPosxAge_subR'],age,mean(Homo(:,logical(slmH_TA.t.*(p_HTA<0.05/length(nid))>0)),2),term(gl)+term(GD));
 PlotCorr([statspath '/'],['HomoSigNegxAge_subR'],age,mean(Homo(:,logical(slmH_TA.t.*(p_HTA<0.05/length(nid))<0)),2),term(gl)+term(GD));
@@ -122,8 +123,8 @@ p_LTA=2*tcdf(-1*abs(slmL_TA.t),slmL_TA.df);
 % SaveAsAtlasMZ3_Plot(slmL_FAG.t,statspath,['AgexGenderONLIabs' '_F' '_map','_SFICE'],[0.001,10],shp);
 % SaveAsAtlasMZ3_Plot(slmL_FAG.t.*(p_LFTAG<0.05/length(nid)),statspath,['AgexGenderONLIabs' '_F' '_map_thresh','_SFICE'],[0.001,10],shp);
 
-SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t>0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tpos' '_map_thresh','_SFICE'],[0.001,8],shp);
-SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t<0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tneg' '_map_thresh','_SFICE'],[-8,-0.001],shp);
+SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t>0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tpos' '_map_thresh','_SFICE'],[-8,8],shp);
+SaveAsAtlasMZ3_Plot(slmL_TA.t.*(slmL_TA.t<0).*(p_LTA<0.05/length(nid)),statspath,['AgeONLIabs' '_Tneg' '_map_thresh','_SFICE'],[-8,8],shp);
 
 PlotCorr([statspath '/'],['LIabsSigPosxAge_subR'],age,mean(LIabs(:,logical(slmL_TA.t.*(p_LTA<0.05/length(nid))>0)),2),term(gl)+term(GD));
 PlotCorr([statspath '/'],['LIabsSigNegxAge_subR'],age,mean(LIabs(:,logical(slmL_TA.t.*(p_LTA<0.05/length(nid))<0)),2),term(gl)+term(GD));
@@ -170,7 +171,7 @@ if sum(age_mediation)>0
     MediationAge=table(AgeOutput,GenOutput,HomOutput,LIaOutput,HomAvg,LIaAvg);
     filename = [filepath '/Mediation/MediationAge_' nm '.xlsx'];
     writetable(MediationAge,filename,'Sheet',1,'Range','A1');
-    SaveAsAtlasMZ3_Plot(age_mediation,[filepath '/Mediation/'],[['AgeMediation_' nm '_map'],'_SFICE'],[0.001,1],shp);
+    SaveAsAtlasMZ3_Plot(age_mediation,[filepath '/Mediation/'],[['AgeMediation_' nm '_map'],'_SFICE'],[-1,1],shp);
 
 end
 

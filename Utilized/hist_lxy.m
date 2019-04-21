@@ -5,13 +5,18 @@ tmp=get(gcf,'Position');
 set(gcf,'Position', [50, tmp(2) ,tmp(4)*2, tmp(4)*0.9]);
 if size(subv,2)==1
     histdata = histogram(subv,10);
+    histdata.NumBins = 10;
+    histdata.FaceColor = [0 0.3 0.9];
+    histdata.EdgeColor = 'w';
     hold on;
     y=min(histdata.Values):(max(histdata.Values)/10):max(histdata.Values);
-    x=repmat(pointv,length(y),1);
+    if ~isempty(pointv)
+        x=repmat(pointv,length(y),1);
     plot(x,y,'LineWidth',3,...
         'MarkerEdgeColor','k',...
         'MarkerFaceColor','g',...
         'MarkerSize',10)
+    end
 else
     histdata1 = histogram(subv(:,1),10,'Normalization','pdf','FaceColor','r','FaceAlpha',0.5);
     fitdata1 = fitdist(subv(:,1),'Normal');
